@@ -16,5 +16,9 @@ public interface TasksService {
 	List<NatureOfAssignmentDto> getTasksByCustomerId(int id);
 
 	List<TasksDto> getPendingTasks();
+	
+	void saveTasks(TasksDto tasksDto);
+
+	List<TasksDto> listOfAssignedTasks();
 
 }

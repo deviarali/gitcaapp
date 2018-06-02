@@ -1,0 +1,17 @@
+*.class
+/AJAHSMA-server.log 
+target/
+data 
+
+/bin/
+*.log 
+
+.classpath
+.project
+.settings/
+*/target/
+*/WEB_INF/
+
+*.xml
+
+/.metadata/

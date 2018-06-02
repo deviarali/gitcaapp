@@ -13,8 +13,22 @@ public class TasksDto
 	private EmployeeDto taskAssigneeId;
 	private Date taskCreatedDate;
 	private Date taskStartDate;
-	private TaskStatusDto taskStatusId;
+	private TasksStatusDto taskStatusId;
 	private String[] tasks;
+	private String startDate;
+	
+	/**
+	 * @return the startDate
+	 */
+	public String getStartDate() {
+		return startDate;
+	}
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
+	}
 	/**
 	 * @return the id
 	 */
@@ -114,6 +128,7 @@ public class TasksDto
 	/**
 	 * @return the taskStartDate
 	 */
+	
 	public Date getTaskStartDate() {
 		return taskStartDate;
 	}
@@ -126,13 +141,13 @@ public class TasksDto
 	/**
 	 * @return the taskStatusId
 	 */
-	public TaskStatusDto getTaskStatusId() {
+	public TasksStatusDto getTaskStatusId() {
 		return taskStatusId;
 	}
 	/**
 	 * @param taskStatusId the taskStatusId to set
 	 */
-	public void setTaskStatusId(TaskStatusDto taskStatusId) {
+	public void setTaskStatusId(TasksStatusDto taskStatusId) {
 		this.taskStatusId = taskStatusId;
 	}
 	/**

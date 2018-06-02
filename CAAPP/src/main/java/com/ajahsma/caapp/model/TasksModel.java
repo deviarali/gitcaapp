@@ -13,10 +13,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.ajahsma.caapp.dto.ClientDto;
+import com.ajahsma.caapp.dto.EmployeeDto;
+import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
+import com.ajahsma.caapp.dto.TasksStatusDto;
+
 @Entity
 @Table(name = "tasks")
-public class TasksModel extends AbstractIdDomain {
-	
+public class TasksModel 
+{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "task_id")
@@ -53,85 +58,146 @@ public class TasksModel extends AbstractIdDomain {
 	@JoinColumn(name = "task_status_id")
 	private TasksStatusModel tasksStatusModel;
 
+	/**
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * @param id the id to set
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return the clientDto
+	 */
 	public ClientModel getClientModel() {
 		return clientModel;
 	}
 
+	/**
+	 * @param clientDto the clientDto to set
+	 */
 	public void setClientModel(ClientModel clientModel) {
 		this.clientModel = clientModel;
 	}
 
+	/**
+	 * @return the natureOfAssignmentDto
+	 */
 	public NatureOfAssignmentModel getNatureOfAssignmentModel() {
 		return natureOfAssignmentModel;
 	}
 
+	/**
+	 * @param natureOfAssignmentDto the natureOfAssignmentDto to set
+	 */
 	public void setNatureOfAssignmentModel(NatureOfAssignmentModel natureOfAssignmentModel) {
 		this.natureOfAssignmentModel = natureOfAssignmentModel;
 	}
 
+	/**
+	 * @return the taskRemarksByEmployee
+	 */
 	public String getTaskRemarksByEmployee() {
 		return taskRemarksByEmployee;
 	}
 
+	/**
+	 * @param taskRemarksByEmployee the taskRemarksByEmployee to set
+	 */
 	public void setTaskRemarksByEmployee(String taskRemarksByEmployee) {
 		this.taskRemarksByEmployee = taskRemarksByEmployee;
 	}
 
+	/**
+	 * @return the taskRemarksByAdmin
+	 */
 	public String getTaskRemarksByAdmin() {
 		return taskRemarksByAdmin;
 	}
 
+	/**
+	 * @param taskRemarksByAdmin the taskRemarksByAdmin to set
+	 */
 	public void setTaskRemarksByAdmin(String taskRemarksByAdmin) {
 		this.taskRemarksByAdmin = taskRemarksByAdmin;
 	}
 
+	/**
+	 * @return the taskVerifiedBy
+	 */
 	public String getTaskVerifiedBy() {
 		return taskVerifiedBy;
 	}
 
+	/**
+	 * @param taskVerifiedBy the taskVerifiedBy to set
+	 */
 	public void setTaskVerifiedBy(String taskVerifiedBy) {
 		this.taskVerifiedBy = taskVerifiedBy;
 	}
 
-	public EmployeeModel getEmployeeModel() {
+	/**
+	 * @return the taskAssigneeId
+	 */
+	public EmployeeModel getTaskAssigneeId() {
 		return employeeModel;
 	}
 
-	public void setEmployeeModel(EmployeeModel employeeModel) {
+	/**
+	 * @param taskAssigneeId the taskAssigneeId to set
+	 */
+	public void setTaskAssigneeId(EmployeeModel employeeModel) {
 		this.employeeModel = employeeModel;
 	}
 
+	/**
+	 * @return the taskCreatedDate
+	 */
 	public Date getTaskCreatedDate() {
 		return taskCreatedDate;
 	}
 
+	/**
+	 * @param taskCreatedDate the taskCreatedDate to set
+	 */
 	public void setTaskCreatedDate(Date taskCreatedDate) {
 		this.taskCreatedDate = taskCreatedDate;
 	}
 
+	/**
+	 * @return the taskStartDate
+	 */
 	public Date getTaskStartDate() {
 		return taskStartDate;
 	}
 
+	/**
+	 * @param taskStartDate the taskStartDate to set
+	 */
 	public void setTaskStartDate(Date taskStartDate) {
 		this.taskStartDate = taskStartDate;
 	}
 
-	public TasksStatusModel getTasksStatusModel() {
+	/**
+	 * @return the taskStatusId
+	 */
+	public TasksStatusModel getTaskStatusId() {
 		return tasksStatusModel;
 	}
 
-	public void setTasksStatusModel(TasksStatusModel tasksStatusModel) {
+	/**
+	 * @param taskStatusId the taskStatusId to set
+	 */
+	public void setTaskStatusId(TasksStatusModel tasksStatusModel) {
 		this.tasksStatusModel = tasksStatusModel;
 	}
-
-		
+	
+	
+	
 }

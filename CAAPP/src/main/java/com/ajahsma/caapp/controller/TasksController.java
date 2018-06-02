@@ -42,18 +42,21 @@ public class TasksController
 	}
 	
 	@RequestMapping(value = "/tasks/saveTasks", method = RequestMethod.POST )
-	public ModelAndView saveTasks(TasksDto tasksDto)
+	public ModelAndView saveTasks(TasksDto tasksDto, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)
 	{
-		List<ClientDto> clientsList = tasksService.getAllClients();
+		tasksService.saveTasks(tasksDto);
+		redirectAttributes.addAttribute("msg", "Tasks created successfully");
+		return new ModelAndView("redirect:/caapp/tasks/createTasks");
+		
+		/*List<ClientDto> clientsList = tasksService.getAllClients();
 		List<EmployeeDto> assigneeList = tasksService.getAssigneeList();
 		List<NatureOfAssignmentDto> listOfTasks = tasksService.getTasksByCustomerId(tasksDto.getClientDto().getClientId());
-
 		Map<String, Object> model = new HashMap<>();
 		model.put("clientsList", clientsList);
 		model.put("assigneeList", assigneeList);
 		model.put("taskList", listOfTasks);
 		model.put("tasks", tasksDto);
-		return new ModelAndView("creattask", model);
+		return new ModelAndView("creattask", model);*/
 	}
 	
 	@RequestMapping(value = "/tasks/getTasksByCustomerId/{id}", method = RequestMethod.GET)
@@ -64,17 +67,26 @@ public class TasksController
 		return listOfTasks;
 	}
 	
-	@RequestMapping(value = "/tasks/assignTasks", method = RequestMethod.POST)
-	public String assignTasks(@ModelAttribute("tasks") TasksDto tasksDto, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)
+	@RequestMapping(value = "/tasks/assignedTasks", method = RequestMethod.GET)
+	public String listOfAssignedTasks(Model model)
 	{
-		redirectAttributes.addAttribute("msg", "Tasks created successfully");
-		return "redirect:/tasks/createTasks";
+		List<TasksDto> listOfAssignedTasks = tasksService.listOfAssignedTasks();
+		model.addAttribute("listOfAssignedTasks", listOfAssignedTasks);
+		return "assignedtasks";
 	}
 	
 	@RequestMapping(value = "/tasks/pendingTasks", method = RequestMethod.GET)
 	public String getPendingTasks(Model model)
 	{
 		List<TasksDto> pendingTasksList = tasksService.getPendingTasks();
+		model.addAttribute("pendingTasksList", pendingTasksList);
 		return "pendingtasks";
+	}
+	
+	@RequestMapping(value = "/tasks/updateEmployeeRemarks/{id}/{tasksRemarksByEmployee}", method = RequestMethod.GET)
+	public String updateEmployeeRemarks(@PathVariable("id") int id, @PathVariable("tasksRemarksByEmployee") String tasksRemarksByEmployee)
+	{
+		
+		return "redirect:/caapp/tasks/pendingTasks";
 	}
 }
