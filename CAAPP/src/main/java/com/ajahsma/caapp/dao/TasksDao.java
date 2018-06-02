@@ -10,6 +10,8 @@ public interface TasksDao extends GenericsDao
 
 	List<ClientNatureOfAssignmentModel> getTasksByCustomerId(int id);
 
-	List<TasksModel> getPendingTasks();
+	List<TasksModel> getPendingTasks(int id);
+	
+	List<TasksModel> listOfAssignedTasks();
 
 }

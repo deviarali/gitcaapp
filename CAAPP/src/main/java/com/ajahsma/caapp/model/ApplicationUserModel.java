@@ -87,7 +87,7 @@ public class ApplicationUserModel extends AbstractIdDomain {
 		this.isActive = isActive;
 	}
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.DETACH, fetch=FetchType.EAGER)
     @JoinTable(name = "userroles", joinColumns = @JoinColumn(name = "applicationuser_id"), inverseJoinColumns = @JoinColumn(name = "userrole_id"))
 	public Set<UserRoleModel> getUserRoles() {
 		return userRoles;

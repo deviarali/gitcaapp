@@ -1,6 +1,8 @@
 package com.ajahsma.caapp.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,15 @@ import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
+import com.ajahsma.caapp.dto.TasksStatusDto;
+import com.ajahsma.caapp.model.ApplicationUserModel;
 import com.ajahsma.caapp.model.ClientModel;
 import com.ajahsma.caapp.model.ClientNatureOfAssignmentModel;
 import com.ajahsma.caapp.model.EmployeeModel;
+import com.ajahsma.caapp.model.NatureOfAssignmentModel;
 import com.ajahsma.caapp.model.TasksModel;
+import com.ajahsma.caapp.model.TasksStatusModel;
+import com.ajahsma.caapp.security.SecurityContextHelper;
 import com.ajahsma.caapp.service.ClientService;
 import com.ajahsma.caapp.service.EmployeeService;
 import com.ajahsma.caapp.service.TasksService;
@@ -22,6 +29,11 @@ import com.ajahsma.caapp.service.TasksService;
 @Service
 public class TasksServiceImpl implements TasksService
 {
+	
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	
+	SecurityContextHelper securityContextHelper = new SecurityContextHelper();
+	
 	@Autowired
 	ClientService clientService;
 	
@@ -75,9 +87,73 @@ public class TasksServiceImpl implements TasksService
 
 	@Override
 	public List<TasksDto> getPendingTasks() {
-		List<TasksModel> pendingTasksList = tasksDao.getPendingTasks();
-		List<TasksDto> pendingTasks = new ArrayList<>();
-		return null;
+		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
+		List<TasksModel> pendingTasksList = tasksDao.getPendingTasks(applicationUser.getId());
+		List<TasksDto> pendingTasksDto = new ArrayList<>();
+		for(TasksModel tasksModel : pendingTasksList)
+		{
+			TasksDto tasksDto = new TasksDto();
+			ClientDto clientDto = new ClientDto();
+			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
+			clientDto.setClientName(tasksModel.getClientModel().getClientName());
+			natureOfAssignmentDto.setNatureOfAssignmentName(tasksModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
+			tasksDto.setId(tasksModel.getId());
+			tasksDto.setClientDto(clientDto);
+			tasksDto.setTaskRemarksByEmployee(tasksModel.getTaskRemarksByEmployee());
+			tasksDto.setNatureOfAssignmentDto(natureOfAssignmentDto);
+			pendingTasksDto.add(tasksDto);
+		}
+		return pendingTasksDto;
+	}
+
+	@Override
+	public void saveTasks(TasksDto tasksDto) 
+	{
+		TasksModel tasksModel = new TasksModel();
+		ClientModel clientModel = new ClientModel();
+		EmployeeModel employeeModel = new EmployeeModel();
+		TasksStatusModel tasksStatusModel = new TasksStatusModel();
+		tasksStatusModel.setTasksStatusId(1);
+		employeeModel.setEmployeeId(tasksDto.getTaskAssigneeId().getEmployeeId());
+		clientModel.setClientId(tasksDto.getClientDto().getClientId());
+		
+		tasksModel.setClientModel(clientModel);
+		tasksModel.setTaskAssigneeId(employeeModel);
+		tasksModel.setTaskCreatedDate(new Date());
+		tasksModel.setTaskStartDate(tasksDto.getTaskStartDate());
+		tasksModel.setTaskStatusId(tasksStatusModel);
+		String[] tasks = tasksDto.getTasks();
+		for (String tasksId : tasks) {
+			NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
+			natureOfAssignmentModel.setNatureOfAssignmentId(Integer.parseInt(tasksId));
+			tasksModel.setNatureOfAssignmentModel(natureOfAssignmentModel);
+			tasksDao.save(tasksModel);
+		}
+	}
+
+	@Override
+	public List<TasksDto> listOfAssignedTasks() {
+		List<TasksModel> listOftasksModel = tasksDao.listOfAssignedTasks();
+		List<TasksDto> listOfTasksDto = new ArrayList<>();
+		for(TasksModel tasksModel : listOftasksModel)
+		{
+			TasksDto tasksDto = new TasksDto();
+			EmployeeDto employeeDto = new EmployeeDto();
+			ClientDto clientDto = new ClientDto();
+			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
+			TasksStatusDto tasksStatusDto = new  TasksStatusDto();
+			natureOfAssignmentDto.setNatureOfAssignmentName(tasksModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
+			employeeDto.setEmployeeName(tasksModel.getTaskAssigneeId().getEmployeeName());
+			clientDto.setClientName(tasksModel.getClientModel().getClientName());
+			tasksStatusDto.setTasksStatusName(tasksModel.getTaskStatusId().getTasksStatusName());
+			tasksDto.setTaskAssigneeId(employeeDto);
+			tasksDto.setClientDto(clientDto);
+			tasksDto.setNatureOfAssignmentDto(natureOfAssignmentDto);
+			tasksDto.setStartDate(sdf.format(tasksModel.getTaskStartDate()));
+			tasksDto.setTaskStatusId(tasksStatusDto);
+			listOfTasksDto.add(tasksDto);
+		}
+		return listOfTasksDto;
 	}
 	
 }

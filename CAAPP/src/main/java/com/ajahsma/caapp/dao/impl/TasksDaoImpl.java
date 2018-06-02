@@ -27,10 +27,21 @@ public class TasksDaoImpl extends GenericsDaoImpl implements TasksDao
 		return clientNatureOfAssignmentModels;
 	}
 
+	
+	public List<TasksModel> getPendingTasks(int id) 
+	{
+		Query query = getSession().createQuery("from TasksModel tasks where tasks.employeeModel.employeeId=:id");
+		query.setParameter("id", id);
+		List<TasksModel> list = (List<TasksModel>) query.list();
+		return list;
+	}
 
-	public List<TasksModel> getPendingTasks() {
-		// TODO Auto-generated method stub
-		return null;
+
+	@Override
+	public List<TasksModel> listOfAssignedTasks() {
+		Query query = getSession().createQuery("from TasksModel tasks");
+		List<TasksModel> listOfTasks = query.list();
+		return listOfTasks;
 	}
 	
 }
