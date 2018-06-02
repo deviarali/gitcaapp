@@ -2,6 +2,15 @@ package com.ajahsma.caapp.dto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.ajahsma.caapp.model.PriorityStatus;
+import com.ajahsma.caapp.model.TaskStatus;
+
 public class TasksDto 
 {
 	private int id;
@@ -11,12 +20,19 @@ public class TasksDto
 	private String taskRemarksByAdmin;
 	private String taskVerifiedBy;
 	private EmployeeDto taskAssigneeId;
+
+	@DateTimeFormat(pattern = "mm/dd/yyyy")
 	private Date taskCreatedDate;
+
+	@DateTimeFormat(pattern = "mm/dd/yyyy")
 	private Date taskStartDate;
+
 	private TasksStatusDto taskStatusId;
 	private String[] tasks;
 	private String startDate;
-	
+	private PriorityStatus priorityStatus;
+	private TaskStatus taskStatus;
+
 	/**
 	 * @return the startDate
 	 */
@@ -163,6 +179,20 @@ public class TasksDto
 		this.tasks = tasks;
 	}
 	
+	public PriorityStatus getPriorityStatus() {
+		return priorityStatus;
+	}
 	
+	public void setPriorityStatus(PriorityStatus priorityStatus) {
+		this.priorityStatus = priorityStatus;
+	}
+	
+	public TaskStatus getTaskStatus() {
+		return taskStatus;
+	}
+	
+	public void setTaskStatus(TaskStatus taskStatus) {
+		this.taskStatus = taskStatus;
+	}
 	
 }

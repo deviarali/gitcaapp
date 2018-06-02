@@ -1,8 +1,6 @@
 package com.ajahsma.caapp.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,6 +19,8 @@ import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
+import com.ajahsma.caapp.model.PriorityStatus;
+import com.ajahsma.caapp.model.TaskStatus;
 import com.ajahsma.caapp.service.TasksService;
 
 @Controller
@@ -38,8 +38,22 @@ public class TasksController
 		List<EmployeeDto> assigneeList = tasksService.getAssigneeList();
 		model.addAttribute("clientsList", clientsList);
 		model.addAttribute("assigneeList", assigneeList);
+//		model.addAttribute("priorityStatusList", PriorityStatus.values());
+//		model.addAttribute("taskStatusList", TaskStatus.values());
 		return new ModelAndView("creattask", "tasks", new TasksDto());
 	}
+	
+	@ModelAttribute("priorityStatusList")
+    public PriorityStatus[] populatePriorityStatus()
+    {
+        return PriorityStatus.values();
+    }
+	
+	@ModelAttribute("taskStatusList")
+    public TaskStatus[] populateTaskStatus()
+    {
+        return TaskStatus.values();
+    }
 	
 	@RequestMapping(value = "/tasks/saveTasks", method = RequestMethod.POST )
 	public ModelAndView saveTasks(TasksDto tasksDto, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)

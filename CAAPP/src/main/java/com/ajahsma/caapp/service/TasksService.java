@@ -7,7 +7,7 @@ import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
 
-public interface TasksService {
+public interface TasksService extends DefaultManager {
 
 	List<ClientDto> getAllClients();
 

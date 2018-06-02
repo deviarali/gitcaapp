@@ -10,27 +10,8 @@
 	<jsp:include page="/sticky_nav_bar.jsp"></jsp:include>
 	<div class="container-fluid">
 		<div class="row-fluid">
-
-			<div class="span3">
-				<div class="widget-box">
-					<div class="widget-title" style="background-color: #848d97;">
-						<p>Important News</p>
-					</div>
-					<div class="widget-content">
-						<div align="left">
-							<h5>1. GST</h5>
-							<h5>2. INCOME TAX</h5>
-							<h5>3. ESI/EPF/PT</h5>
-							<h5>4. OFFICE</h5>
-							<h5>5. ROC</h5>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="span6">
-
-
+			<div class="span1"></div>
+			<div class="span10">
 				<div class="widget-box">
 					<div class="widget-title">
 						<p align="center">Pending Tasks</p>
@@ -42,20 +23,38 @@
 									<th>Sl No.</th>
 									<th>Client</th>
 									<th>Task</th>
-									<th>Remarks</th>
-									<th>Completed?</th>
+									<th>Employee Remarks</th>
+									<th>Manager Remarks</th>
+									<th>Status</th>
 									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${pendingTasksList}" var="pendingtasks" varStatus="status">
 									<tr>	
-										<td><c:out value="${status.index}"></c:out></td>
+										<td><c:out value="${status.index + 1}"></c:out></td>
 										<td><c:out value="${pendingtasks.clientDto.clientName}"></c:out></td>
 										<td><c:out value="${pendingtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
-										<td><textarea name="tasksRemarksByEmployee" rows="" cols="">${pendingtasks.taskRemarksByEmployee}</textarea></td>
-										<td><input type="checkbox" name="completed" onclick="alert('Task Completed?')"></td>  
-										 <td><a href="/caapp/tasks/updateEmployeeRemarks/${pendingtasks.id}/${pendingtasks.taskRemarksByEmployee}">Update</a></td>  
+										<td><textarea name="tasksRemarksByEmployee" rows="" cols="" style="width: 400px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
+										<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 400px">${pendingtasks.taskRemarksByAdmin}</textarea></td>
+										<td>
+										
+											<select name="taskStatus" value="${pendingtasks.taskStatus}"  style="width: 200px">
+												<option value="-1">-</option>
+												<c:forEach items="${taskStatusList}" var="status" varStatus="vs">
+													<c:choose>
+													    <c:when test="${pendingtasks.taskStatus == status }">
+													        <option value="${status }" selected="selected">${status.name}</option>
+													    </c:when>    
+													    <c:otherwise>
+													        <option value="${status }">${status.name}</option>
+													    </c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</select>
+										
+										</td>  
+										 <td style="text-align: center;"><a href="/caapp/tasks/updateEmployeeRemarks/${pendingtasks.id}/${pendingtasks.taskRemarksByEmployee}" class="btn btn-primary">Update</a></td>  
 										
 									</tr>
 								</c:forEach>							
@@ -65,27 +64,11 @@
 				</div>
 
 			</div>
-
-			<div class="span2">
-				<div class="widget-box">
-					<div class="widget-title" style="background-color: #848d97;">
-						<p>Important Links</p>
-					</div>
-					<div class="widget-content">
-						<div align="left">
-							<a href="WWW.GST.GOV.IN">WWW.GST.GOV.IN</a><br /> <a
-								href="WWW.ICAI.ORG">WWW.ICAI.ORG</a><br /> <a
-								href="WWW.MCA.GOV.IN">WWW.MCA.GOV.IN</a><br /> <a
-								href="WWW.PT.KAR.NIC.IN">WWW.PT.KAR.NIC.IN</a><br /> <a
-								href="WWW.ESI">WWW.ESI</a><br /> <a href="WWW.EPF">WWW.EPF</a><br />
-							<a href="WWW. S & E">WWW. S & E</a><br /> <a href="WWW.RBI.ORG">WWW.GST.GOV.IN</a><br />
-							<a href="WWW.HDFCBANK.OCM">WWW.HDFCBANK.OCM</a><br />
-						</div>
-					</div>
-				</div>
-			</div>
-
+			<div class="span1"></div>
 		</div>
+	</div>
+</div>
+		
 		<!-- Import Bottom Body -->
 		<jsp:include page="import_js.jsp"></jsp:include>
 		<!-- Import Bottom Body -->

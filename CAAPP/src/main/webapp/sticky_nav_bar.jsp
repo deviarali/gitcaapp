@@ -12,11 +12,11 @@
 				</a></li>
 				<li><a href="/caapp/tasks/createTasks"> <i class="icon-people"></i> Add Tasks
 				</a></li>
-				<li><a href="assigned-tasks.html"> <i class="icon-people"></i> Assigned tasks
+				<li><a href="/caapp/tasks/assignedTasks"> <i class="icon-people"></i> Assigned tasks
 				</a></li>
-				<li><a href="#"> <i class="icon-calendar"></i> Pending tasks
+				<li><a href="/caapp/tasks/pendingTasks"> <i class="icon-calendar"></i> Pending tasks
 				</a></li>
-				<li><a href="#"> <i class="icon-calendar"></i> Completed tasks
+				<li><a href="/caapp/tasks/assignedTasks"> <i class="icon-calendar"></i> Completed tasks
 				</a></li>
 			</ul>
 		</div>

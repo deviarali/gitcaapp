@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,19 +15,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.ajahsma.caapp.dto.ClientDto;
-import com.ajahsma.caapp.dto.EmployeeDto;
-import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
-import com.ajahsma.caapp.dto.TasksStatusDto;
-
 @Entity
 @Table(name = "tasks")
-public class TasksModel 
-{
+public class TaskModel extends AbstractIdDomain {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "task_id")
-	private int id;
+	private Integer id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "client_id")
@@ -57,18 +53,26 @@ public class TasksModel
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "task_status_id")
 	private TasksStatusModel tasksStatusModel;
-
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "prioritystatus", nullable=false)
+	private PriorityStatus priorityStatus;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tasktatus", nullable=false)
+	private TaskStatus taskStatus;
+	
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -198,6 +202,20 @@ public class TasksModel
 		this.tasksStatusModel = tasksStatusModel;
 	}
 	
+	public PriorityStatus getPriorityStatus() {
+		return priorityStatus;
+	}
 	
+	public void setPriorityStatus(PriorityStatus priorityStatus) {
+		this.priorityStatus = priorityStatus;
+	}
+	
+	public TaskStatus getTaskStatus() {
+		return taskStatus;
+	}
+	
+	public void setTaskStatus(TaskStatus taskStatus) {
+		this.taskStatus = taskStatus;
+	}
 	
 }
