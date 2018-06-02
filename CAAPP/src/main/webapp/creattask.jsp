@@ -81,27 +81,6 @@
 									</div>
 								</div>
 	
-								<div class="control-group">
-									<label class="control-label">Priority</label>
-									<div class="controls">
-										<form:select type="text" class="form-control" path="priorityStatus" id="clients">
-											<form:option value="-1">-</form:option>
-											<form:options path="priorityStatus" items="${priorityStatusList}" itemLabel="name"/>
-										</form:select>
-										<form:errors path="priorityStatus" />
-									</div>
-								</div>
-	
-								<div class="control-group">
-									<label class="control-label">Status</label>
-									<div class="controls">
-										<form:select type="text" class="form-control" path="taskStatus" id="clients">
-											<form:option value="-1">-</form:option>
-											<form:options path="taskStatus" items="${taskStatusList}" itemLabel="name"/>
-										</form:select>
-										<form:errors path="taskStatus" />
-									</div>
-								</div>
 	
 								<div class="control-group">
 									<label class="control-label">Assignee</label>

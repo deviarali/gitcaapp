@@ -20,7 +20,6 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 
 	@Autowired
 	EmployeeDao employeeDao;
-
 	@Autowired
 	public void setDefaultDao(EmployeeDao defaultDao) {
 		this.defaultDao = defaultDao;
