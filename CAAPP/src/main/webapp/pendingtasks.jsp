@@ -99,7 +99,7 @@ $(document).ready(function(){
 		if ($selectedTaskIds.length > 0) {
 			return true;
 		}
-		alert('Select atleast one tasks to update');
+		alert('Select atleast one tasks...');
 		return false;
 	});
 

@@ -33,7 +33,7 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("from TaskModel tasks ");
-		builder.append("where taskStatus in ('IN_PROGRESS', 'RE_ASSIGNED') ");
+		builder.append("where taskStatus in ('IN_PROGRESS', 'ASSIGNED', 'RE_ASSIGNED') ");
 		if(SecurityContextHelper.isAdmin()) {
 			return getSession().createQuery(builder.toString()).list();
 		}
