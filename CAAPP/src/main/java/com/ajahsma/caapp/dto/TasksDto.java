@@ -13,7 +13,7 @@ import com.ajahsma.caapp.model.TaskStatus;
 
 public class TasksDto 
 {
-	private int id;
+	private Integer id;
 	private ClientDto clientDto;
 	private NatureOfAssignmentDto natureOfAssignmentDto;
 	private String taskRemarksByEmployee;
@@ -48,13 +48,13 @@ public class TasksDto
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**

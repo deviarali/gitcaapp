@@ -202,6 +202,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		employeeModel.setEmployeeId(tasksDto.getTaskAssigneeId().getEmployeeId());
 		clientModel.setClientId(tasksDto.getClientDto().getClientId());
 		
+		tasksModel.setId(tasksDto.getId());
 		tasksModel.setClientModel(clientModel);
 		tasksModel.setTaskAssigneeId(employeeModel);
 		tasksModel.setTaskCreatedDate(new Date());
@@ -209,6 +210,9 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		tasksModel.setTaskStatusId(tasksStatusModel);
 		tasksModel.setPriorityStatus(tasksDto.getPriorityStatus());
 		tasksModel.setTaskStatus(TaskStatus.ASSIGNED);
+		tasksModel.setTaskRemarksByAdmin(tasksDto.getTaskRemarksByAdmin());
+		tasksModel.setTaskRemarksByEmployee(tasksDto.getTaskRemarksByEmployee());
+
 		if(tasksDto.getTaskStatus() != null) {
 			tasksModel.setTaskStatus(tasksDto.getTaskStatus());
 		}
@@ -226,6 +230,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		employeeDto.setEmployeeName(tasksModel.getTaskAssigneeId().getEmployeeName());
 		clientDto.setClientName(tasksModel.getClientModel().getClientName());
 		tasksStatusDto.setTasksStatusName(tasksModel.getTaskStatusId().getTasksStatusName());
+		tasksDto.setId(tasksModel.getId());
 		tasksDto.setTaskAssigneeId(employeeDto);
 		tasksDto.setClientDto(clientDto);
 		tasksDto.setNatureOfAssignmentDto(natureOfAssignmentDto);
@@ -235,6 +240,8 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		tasksDto.setTaskStartDate(tasksModel.getTaskStartDate());
 		tasksDto.setPriorityStatus(tasksModel.getPriorityStatus());
 		tasksDto.setTaskStatus(tasksModel.getTaskStatus());
+		tasksDto.setTaskRemarksByAdmin(tasksModel.getTaskRemarksByAdmin());
+		tasksDto.setTaskRemarksByEmployee(tasksModel.getTaskRemarksByEmployee());
 		
 		return tasksDto;
 	}

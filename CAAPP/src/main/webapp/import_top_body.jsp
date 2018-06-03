@@ -9,9 +9,9 @@
 
 </head>
 <script type="text/javascript">
-	var message = "${alert_msg}";
+	/* var message = "${alert_msg}";
 	if(message) {
 		alert(message);
-	}
+	} */
 </script>
 <body>

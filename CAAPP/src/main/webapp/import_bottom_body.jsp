@@ -17,5 +17,17 @@
 		</div>
 	</div>
 </div>
+
 </body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	var message = "${alert_msg}";
+	
+	if(message) {
+		alert(message)
+	}
+});
+</script>
+
 </html>

@@ -1,6 +1,11 @@
 package com.ajahsma.caapp.controller;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +25,7 @@ import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
 import com.ajahsma.caapp.model.PriorityStatus;
+import com.ajahsma.caapp.model.TaskModel;
 import com.ajahsma.caapp.model.TaskStatus;
 import com.ajahsma.caapp.service.TasksService;
 
@@ -102,6 +108,30 @@ public class TasksController
 	{
 		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
 		model.addAttribute("completedTasksList", completedTasksList);
+		return "completedTasks";
+	}
+	
+	@RequestMapping(value = "/tasks/updateCompletedTask", method = RequestMethod.POST)
+	public String updateCompletedTask(HttpServletRequest request, Model model)
+	{
+		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
+		String taskIds[] = request.getParameterValues("taskId");
+		String taskRemarksByEmployee[] = request.getParameterValues("taskRemarksByEmployee");
+		String taskRemarksByAdmin[] = request.getParameterValues("taskRemarksByAdmin");
+		String taskStatus[] = request.getParameterValues("taskStatus");
+		for (int i = 0; i < taskIds.length; i++) {
+			if(Arrays.asList(selectedTaskIds).contains(taskIds[i])) {
+				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, Integer.valueOf(taskIds[i]));
+				taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
+				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
+				tasksService.updateDomain(taskModel);
+			}
+		}
+		
+		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
+		model.addAttribute("completedTasksList", completedTasksList);
+		model.addAttribute("alert_msg", "Tasks updated successfully");
 		return "completedTasks";
 	}
 	

@@ -9,6 +9,14 @@
     top: 7px;
 
 }
+.info::before { 
+    content: " * ";
+    color: #000000;
+    font-size: 20px;
+    position: relative;
+    top: 7px;
+
+}
 .black-blue {
 	background-color: #083C5D;
 }
