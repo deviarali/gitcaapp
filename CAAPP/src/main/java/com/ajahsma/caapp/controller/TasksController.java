@@ -135,6 +135,30 @@ public class TasksController
 		return "completedTasks";
 	}
 	
+	@RequestMapping(value = "/tasks/updatePendingTask", method = RequestMethod.POST)
+	public String updatePendingTask(HttpServletRequest request, Model model)
+	{
+		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
+		String taskIds[] = request.getParameterValues("taskId");
+		String taskRemarksByEmployee[] = request.getParameterValues("taskRemarksByEmployee");
+		String taskRemarksByAdmin[] = request.getParameterValues("taskRemarksByAdmin");
+		String taskStatus[] = request.getParameterValues("taskStatus");
+		for (int i = 0; i < taskIds.length; i++) {
+			if(Arrays.asList(selectedTaskIds).contains(taskIds[i])) {
+				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, Integer.valueOf(taskIds[i]));
+				taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
+				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
+				tasksService.updateDomain(taskModel);
+			}
+		}
+		
+		List<TasksDto> pendingTasksList = tasksService.getPendingTasks();
+		model.addAttribute("pendingTasksList", pendingTasksList);
+		model.addAttribute("alert_msg", "Tasks updated successfully");
+		return "pendingtasks";
+	}
+	
 	@RequestMapping(value = "/tasks/updateEmployeeRemarks/{id}/{tasksRemarksByEmployee}", method = RequestMethod.GET)
 	public String updateEmployeeRemarks(@PathVariable("id") int id, @PathVariable("tasksRemarksByEmployee") String tasksRemarksByEmployee)
 	{
