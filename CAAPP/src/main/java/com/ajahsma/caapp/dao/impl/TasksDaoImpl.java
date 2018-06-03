@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.ajahsma.caapp.dao.TasksDao;
 import com.ajahsma.caapp.model.ClientNatureOfAssignmentModel;
 import com.ajahsma.caapp.model.TaskModel;
+import com.ajahsma.caapp.security.SecurityContextHelper;
 
 /**
  * @author Dev
@@ -42,6 +43,9 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 		StringBuilder builder = new StringBuilder();
 		builder.append("from TaskModel tasks ");
 		builder.append("where 1 = 1 ");
+		if(SecurityContextHelper.isAdmin()) {
+			return getSession().createQuery(builder.toString()).list();
+		}
 		if(id != null) {
 			builder.append(" and tasks.employeeModel.employeeId=:id ");
 		}

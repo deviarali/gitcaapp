@@ -28,7 +28,7 @@
 							<p align="center">Client Registration</p>
 						</div>
 						<div class="widget-content nopadding">
-							<div style="padding-right: 300px">
+							<div style="padding-right: 100px">
 								<form:form action="../client/clientRegister" method="post" class="form-horizontal" modelAttribute="clientRegistration">
 									<div class="control-group">
 										<label class="control-label required">First Name </label>
@@ -147,9 +147,12 @@
 										<label class="control-label required">Nature Of Assignment :</label>
 										<div class="controls" align="left">
 											<c:forEach items="${natureOfAssignmentDtos}" var="role" varStatus="status">
-												<span style="line-height: 3"> <form:checkbox path="natureOfAssignmentList" value="${role.natureOfAssignmentId}" /> <c:out value="${role.natureOfAssignmentName}" />
+												<span style="line-height: 3"> <form:checkbox path="natureOfAssignmentList" value="${role.natureOfAssignmentId}" /><c:out value="${role.natureOfAssignmentName} " /> &nbsp; &nbsp; 
 												</span>
-												<br>
+												
+												<c:if test="${(status.index + 1) % 5 == '0'}">
+													<br>
+												</c:if>
 											</c:forEach>
 											<form:errors class="errors" path="natureOfAssignmentList" />
 										</div>

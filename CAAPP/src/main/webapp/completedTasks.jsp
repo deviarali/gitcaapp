@@ -17,49 +17,54 @@
 						<p align="center">Completed Tasks</p>
 					</div>
 					<div class="widget-content nopadding">
-						<table class="table table-bordered table-striped">
-							<thead>
-								<tr>
-									<th>Sl No.</th>
-									<th>Client</th>
-									<th>Task</th>
-									<th>Employee Remarks</th>
-									<th>Manager Remarks</th>
-									<th>Status</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<c:forEach items="${completedTasksList}" var="completedtasks" varStatus="status">
-									<tr>	
-										<td><c:out value="${status.index + 1}"></c:out></td>
-										<td><c:out value="${completedtasks.clientDto.clientName}"></c:out></td>
-										<td><c:out value="${completedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
-										<td><textarea name="tasksRemarksByEmployee" rows="" cols="" style="width: 400px">${completedtasks.taskRemarksByEmployee}</textarea></td>
-										<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 400px">${completedtasks.taskRemarksByAdmin}</textarea></td>
-										<td>
-										
-											<select name="taskStatus" value="${completedtasks.taskStatus}"  style="width: 200px">
-												<option value="-1">-</option>
-												<c:forEach items="${taskStatusList}" var="status" varStatus="vs">
-													<c:choose>
-													    <c:when test="${completedtasks.taskStatus == status }">
-													        <option value="${status }" selected="selected">${status.name}</option>
-													    </c:when>    
-													    <c:otherwise>
-													        <option value="${status }">${status.name}</option>
-													    </c:otherwise>
-													</c:choose>
-												</c:forEach>
-											</select>
-										
-										</td>  
-										 <td style="text-align: center;"><a href="/caapp/tasks/updateEmployeeRemarks/${completedtasks.id}/${completedtasks.taskRemarksByEmployee}" class="btn btn-primary">Update</a></td>  
-										
+						<br>
+						<div>
+							<table class="table table-bordered table-striped">
+								<thead style="background: #CCC;color: #FFF;font-size: 22px;">
+									<tr>
+										<th>SN#</th>
+										<th>Select</th>
+										<th>Client</th>
+										<th>Task</th>
+										<th>Employee Remarks</th>
+										<th>Manager Remarks</th>
+										<th>Status</th>
+										<th><a class="btn btn-success">Update All</a></th>
 									</tr>
-								</c:forEach>							
-							</tbody>
-						</table>
+								</thead>
+								<tbody>
+									<c:forEach items="${completedTasksList}" var="completedtasks" varStatus="status">
+										<tr>	
+											<td><c:out value="${status.index + 1}"></c:out></td>
+											<td><input type="checkbox" value="taskIds"></td>
+											<td><c:out value="${completedtasks.clientDto.clientName}"></c:out></td>
+											<td><c:out value="${completedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
+											<td><textarea name="tasksRemarksByEmployee" rows="" cols="" style="width: 350px">${completedtasks.taskRemarksByEmployee}</textarea></td>
+											<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${completedtasks.taskRemarksByAdmin}</textarea></td>
+											<td>
+											
+												<select name="taskStatus" value="${completedtasks.taskStatus}"  style="width: 200px">
+													<option value="-1">-</option>
+													<c:forEach items="${taskStatusList}" var="status" varStatus="vs">
+														<c:choose>
+														    <c:when test="${completedtasks.taskStatus == status }">
+														        <option value="${status }" selected="selected">${status.name}</option>
+														    </c:when>    
+														    <c:otherwise>
+														        <option value="${status }">${status.name}</option>
+														    </c:otherwise>
+														</c:choose>
+													</c:forEach>
+												</select>
+											
+											</td>  
+											 <td style="text-align: center;"><a href="/caapp/tasks/updateEmployeeRemarks/${completedtasks.id}/${completedtasks.taskRemarksByEmployee}" class="btn btn-primary">Update</a></td>  
+											
+										</tr>
+									</c:forEach>							
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 
