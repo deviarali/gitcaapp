@@ -12,6 +12,8 @@ public interface TasksDao extends DefaultDao
 
 	List<TaskModel> getPendingTasks(int id);
 	
+	List<TaskModel> getCompletedTasks(Integer id);
+	
 	List<TaskModel> listOfAssignedTasks();
 
 }

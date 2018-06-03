@@ -16,7 +16,7 @@
 				</a></li>
 				<li><a href="/caapp/tasks/pendingTasks"> <i class="icon-calendar"></i> Pending tasks
 				</a></li>
-				<li><a href="/caapp/tasks/assignedTasks"> <i class="icon-calendar"></i> Completed tasks
+				<li><a href="/caapp/tasks/completedTasks"> <i class="icon-calendar"></i> Completed tasks
 				</a></li>
 			</ul>
 		</div>

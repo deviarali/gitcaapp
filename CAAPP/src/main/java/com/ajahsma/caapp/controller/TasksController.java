@@ -97,6 +97,14 @@ public class TasksController
 		return "pendingtasks";
 	}
 	
+	@RequestMapping(value = "/tasks/completedTasks", method = RequestMethod.GET)
+	public String getCompletedTasks(Model model)
+	{
+		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
+		model.addAttribute("completedTasksList", completedTasksList);
+		return "completedTasks";
+	}
+	
 	@RequestMapping(value = "/tasks/updateEmployeeRemarks/{id}/{tasksRemarksByEmployee}", method = RequestMethod.GET)
 	public String updateEmployeeRemarks(@PathVariable("id") int id, @PathVariable("tasksRemarksByEmployee") String tasksRemarksByEmployee)
 	{

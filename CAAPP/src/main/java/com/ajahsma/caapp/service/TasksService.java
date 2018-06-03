@@ -17,6 +17,8 @@ public interface TasksService extends DefaultManager {
 
 	List<TasksDto> getPendingTasks();
 	
+	List<TasksDto> getCompletedTasks();
+	
 	void saveTasks(TasksDto tasksDto);
 
 	List<TasksDto> listOfAssignedTasks();

@@ -20,6 +20,7 @@ import com.ajahsma.caapp.model.ClientNatureOfAssignmentModel;
 import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.model.NatureOfAssignmentModel;
 import com.ajahsma.caapp.model.TaskModel;
+import com.ajahsma.caapp.model.TaskStatus;
 import com.ajahsma.caapp.model.TasksStatusModel;
 import com.ajahsma.caapp.security.SecurityContextHelper;
 import com.ajahsma.caapp.service.ClientService;
@@ -117,6 +118,27 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	}
 
 	@Override
+	public List<TasksDto> getCompletedTasks() {
+		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
+		List<TaskModel> completedTasksList = tasksDao.getCompletedTasks(applicationUser.getId());
+		List<TasksDto> completedTasksDto = new ArrayList<>();
+		for(TaskModel tasksModel : completedTasksList)
+		{
+			TasksDto tasksDto = convertTaskModelToTaskDto(tasksModel);
+			/*ClientDto clientDto = new ClientDto();
+			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
+			clientDto.setClientName(tasksModel.getClientModel().getClientName());
+			natureOfAssignmentDto.setNatureOfAssignmentName(tasksModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
+			tasksDto.setId(tasksModel.getId());
+			tasksDto.setClientDto(clientDto);
+			tasksDto.setTaskRemarksByEmployee(tasksModel.getTaskRemarksByEmployee());
+			tasksDto.setNatureOfAssignmentDto(natureOfAssignmentDto);*/
+			completedTasksDto.add(tasksDto);
+		}
+		return completedTasksDto;
+	}
+
+	@Override
 	public void saveTasks(TasksDto tasksDto) 
 	{
 		/*TaskModel tasksModel = new TaskModel();
@@ -140,6 +162,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 			NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
 			natureOfAssignmentModel.setNatureOfAssignmentId(Integer.parseInt(tasksId));
 			tasksModel.setNatureOfAssignmentModel(natureOfAssignmentModel);
+			tasksModel.setTaskStatus(TaskStatus.ASSIGNED);
 			tasksDao.saveDomain(tasksModel);
 		}
 	}
@@ -185,7 +208,10 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		tasksModel.setTaskStartDate(tasksDto.getTaskStartDate());
 		tasksModel.setTaskStatusId(tasksStatusModel);
 		tasksModel.setPriorityStatus(tasksDto.getPriorityStatus());
-		tasksModel.setTaskStatus(tasksDto.getTaskStatus());
+		tasksModel.setTaskStatus(TaskStatus.ASSIGNED);
+		if(tasksDto.getTaskStatus() != null) {
+			tasksModel.setTaskStatus(tasksDto.getTaskStatus());
+		}
 		
 		return tasksModel;
 	}

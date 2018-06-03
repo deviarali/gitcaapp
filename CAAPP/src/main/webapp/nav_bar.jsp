@@ -38,5 +38,10 @@
 <!--close-top-Header-menu-->
 
 <div id="sidebar">
-	<h4 align="center">SANJAY K & CO,CHARTERED ACCOUNTANT</h4>
+	<marquee>
+		<div class="span4" align="center">
+			<p style="color: #000000; padding-top: 5px;">GST: Due date is on 30th of this month.</p>
+		</div>
+	</marquee>
+	
 </div>

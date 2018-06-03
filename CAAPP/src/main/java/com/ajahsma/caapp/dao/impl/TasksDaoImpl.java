@@ -36,6 +36,25 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 		return list;
 	}
 
+	@Override
+	public List<TaskModel> getCompletedTasks(Integer id) 
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("from TaskModel tasks ");
+		builder.append("where 1 = 1 ");
+		if(id != null) {
+			builder.append(" and tasks.employeeModel.employeeId=:id ");
+		}
+		
+		Query query = getSession().createQuery(builder.toString());
+		
+		if(id != null) {
+			query.setParameter("id", id);
+		}
+		
+		return query.list();
+	}
+
 
 	@Override
 	public List<TaskModel> listOfAssignedTasks() {
