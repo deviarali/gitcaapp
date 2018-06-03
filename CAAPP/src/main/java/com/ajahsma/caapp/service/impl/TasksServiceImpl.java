@@ -83,7 +83,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	}
 	
 	@Override
-	public List<NatureOfAssignmentDto> getTasksByCustomerId(int id) {
+	public List<NatureOfAssignmentDto> getTasksByCustomerId(Integer id) {
 		List<ClientNatureOfAssignmentModel> clientNatureOfAssignmentModels = tasksDao.getTasksByCustomerId(id);
 		List<NatureOfAssignmentDto> natureOfAssignmentDtos = new ArrayList<>();
 		for(ClientNatureOfAssignmentModel assignmentModel : clientNatureOfAssignmentModels)
@@ -99,7 +99,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	@Override
 	public List<TasksDto> getPendingTasks() {
 		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
-		List<TaskModel> pendingTasksList = tasksDao.getPendingTasks(applicationUser.getId());
+		List<TaskModel> pendingTasksList = tasksDao.findPendingTasks(applicationUser.getId());
 		List<TasksDto> pendingTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : pendingTasksList)
 		{
@@ -120,7 +120,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	@Override
 	public List<TasksDto> getCompletedTasks() {
 		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
-		List<TaskModel> completedTasksList = tasksDao.getCompletedTasks(applicationUser.getId());
+		List<TaskModel> completedTasksList = tasksDao.findCompletedTasks(applicationUser.getId());
 		List<TasksDto> completedTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : completedTasksList)
 		{
@@ -169,7 +169,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 
 	@Override
 	public List<TasksDto> listOfAssignedTasks() {
-		List<TaskModel> listOftasksModel = tasksDao.listOfAssignedTasks();
+		List<TaskModel> listOftasksModel = tasksDao.findAssignedTasks(securityContextHelper.getApplicationUser().getId());
 		List<TasksDto> listOfTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : listOftasksModel)
 		{

@@ -20,7 +20,7 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 {
 
 	@Override
-	public List<ClientNatureOfAssignmentModel> getTasksByCustomerId(int id) {
+	public List<ClientNatureOfAssignmentModel> getTasksByCustomerId(Integer id) {
 		Query query = getSession().createQuery("from ClientNatureOfAssignmentModel cnoam where cnoam.clientModel.clientId=:id and cnoam.natureStatus=:natureStatus");
 		query.setParameter("id", id);
 		query.setParameter("natureStatus", "CREATED");
@@ -29,20 +29,33 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	}
 
 	
-	public List<TaskModel> getPendingTasks(int id) 
-	{
-		Query query = getSession().createQuery("from TaskModel tasks where tasks.employeeModel.employeeId=:id");
-		query.setParameter("id", id);
-		List<TaskModel> list = (List<TaskModel>) query.list();
-		return list;
-	}
-
-	@Override
-	public List<TaskModel> getCompletedTasks(Integer id) 
+	public List<TaskModel> findPendingTasks(Integer id) 
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("from TaskModel tasks ");
-		builder.append("where 1 = 1 ");
+		builder.append("where taskStatus in ('IN_PROGRESS', 'RE_ASSIGNED') ");
+		if(SecurityContextHelper.isAdmin()) {
+			return getSession().createQuery(builder.toString()).list();
+		}
+		if(id != null) {
+			builder.append(" and tasks.employeeModel.employeeId=:id ");
+		}
+		
+		Query query = getSession().createQuery(builder.toString());
+		
+		if(id != null) {
+			query.setParameter("id", id);
+		}
+		
+		return query.list();	
+	}
+
+	@Override
+	public List<TaskModel> findCompletedTasks(Integer id) 
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("from TaskModel tasks ");
+		builder.append("where taskStatus in ('COMPLETED', 'PARTIALLY_COMPLETED') ");
 		if(SecurityContextHelper.isAdmin()) {
 			return getSession().createQuery(builder.toString()).list();
 		}
@@ -61,10 +74,24 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 
 
 	@Override
-	public List<TaskModel> listOfAssignedTasks() {
-		Query query = getSession().createQuery("from TaskModel tasks");
-		List<TaskModel> listOfTasks = query.list();
-		return listOfTasks;
+	public List<TaskModel> findAssignedTasks(Integer id) {
+		StringBuilder builder = new StringBuilder();
+		builder.append("from TaskModel tasks ");
+		builder.append("where taskStatus in ('ASSIGNED', 'RE_ASSIGNED') ");
+		if(SecurityContextHelper.isAdmin()) {
+			return getSession().createQuery(builder.toString()).list();
+		}
+		if(id != null) {
+			builder.append(" and tasks.employeeModel.employeeId=:id ");
+		}
+		
+		Query query = getSession().createQuery(builder.toString());
+		
+		if(id != null) {
+			query.setParameter("id", id);
+		}
+		
+		return query.list();
 	}
 	
 }

@@ -19,8 +19,9 @@
 						<p align="center">Assigned Tasks</p>
 					</div>
 					<div class="widget-content nopadding">
+						<br>
 						<table class="table table-bordered table-striped">
-							<thead>
+								<thead style="background: #CCC;">
 								<tr>
 									<th>Sl No.</th>
 									<th>Assignee</th>
@@ -32,15 +33,15 @@
 							</thead>
 							<tbody>
 								<c:forEach items="${listOfAssignedTasks}" var="assignedtasks" varStatus="status">
-											<tr>
-											<td><c:out value="${status.index + 1}"></c:out></td>
-												<td><c:out value="${assignedtasks.taskAssigneeId.employeeName}"></c:out></td>
-												<td><c:out value="${assignedtasks.clientDto.clientName}"></c:out></td>
-												<td><c:out value="${assignedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
-												<td style="text-align: center;"><c:out value="${assignedtasks.startDate}"></c:out></td>
-												<td style="text-align: center;"><c:out value="${assignedtasks.taskStatus}"></c:out></td>
-											</tr>
-										</c:forEach>
+									<tr>
+										<td><c:out value="${status.index + 1}"></c:out></td>
+										<td><c:out value="${assignedtasks.taskAssigneeId.employeeName}"></c:out></td>
+										<td><c:out value="${assignedtasks.clientDto.clientName}"></c:out></td>
+										<td><c:out value="${assignedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
+										<td style="text-align: center;"><c:out value="${assignedtasks.startDate}"></c:out></td>
+										<td style="text-align: center;"><c:out value="${assignedtasks.taskStatus}"></c:out></td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

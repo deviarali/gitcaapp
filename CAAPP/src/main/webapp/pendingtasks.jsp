@@ -17,8 +17,10 @@
 						<p align="center">Pending Tasks</p>
 					</div>
 					<div class="widget-content nopadding">
+						<br>
+						
 						<table class="table table-bordered table-striped">
-							<thead>
+							<thead style="background: #CCC;">
 								<tr>
 									<th>Sl No.</th>
 									<th>Client</th>

@@ -24,11 +24,13 @@
 										<label class="info"><c:out value="${alert_msg}"></c:out></label>
 									</c:if>
 								</div>
-								<div align="right" style="padding: 10px;">
-									<input type="submit" id="updateCompletedTask" class="btn btn-primary" value="Update All" title="Update Selected">
-								</div>
+								<c:if test="${not empty completedTasksList }">
+									<div align="right" style="padding: 10px;">
+										<input type="submit" id="updateCompletedTask" class="btn btn-primary" value="Update All" title="Update Selected">
+									</div>
+								</c:if>
 								<table class="table table-bordered table-striped">
-									<thead style="background: #CCC;color: #FFF;font-size: 22px;">
+									<thead style="background: #CCC;">
 										<tr>
 											<th>SN#</th>
 											<th>Select</th>
