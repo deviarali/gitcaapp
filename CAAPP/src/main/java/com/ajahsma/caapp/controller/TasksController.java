@@ -1,9 +1,7 @@
 package com.ajahsma.caapp.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +22,7 @@ import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
+import com.ajahsma.caapp.mail.EmailService;
 import com.ajahsma.caapp.model.PriorityStatus;
 import com.ajahsma.caapp.model.TaskModel;
 import com.ajahsma.caapp.model.TaskStatus;
@@ -36,6 +35,9 @@ public class TasksController
 	
 	@Autowired
 	TasksService tasksService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@RequestMapping(value = "/tasks/createTasks", method = RequestMethod.GET )
 	public ModelAndView createTasks(Model model)
@@ -59,6 +61,18 @@ public class TasksController
     public TaskStatus[] populateTaskStatus()
     {
         return TaskStatus.values();
+    }
+	
+	@ModelAttribute("pendingTasksList")
+    public List<TasksDto> findPendingTasks()
+    {
+        return tasksService.findPendingTasks();
+    }
+	
+	@ModelAttribute("completedTasksList")
+    public List<TasksDto> findCompletedTasks()
+    {
+        return tasksService.findCompletedTasks();
     }
 	
 	@RequestMapping(value = "/tasks/saveTasks", method = RequestMethod.POST )
@@ -98,16 +112,16 @@ public class TasksController
 	@RequestMapping(value = "/tasks/pendingTasks", method = RequestMethod.GET)
 	public String getPendingTasks(Model model)
 	{
-		List<TasksDto> pendingTasksList = tasksService.getPendingTasks();
-		model.addAttribute("pendingTasksList", pendingTasksList);
+//		List<TasksDto> pendingTasksList = tasksService.getPendingTasks();
+//		model.addAttribute("pendingTasksList", pendingTasksList);
 		return "pendingtasks";
 	}
 	
 	@RequestMapping(value = "/tasks/completedTasks", method = RequestMethod.GET)
 	public String getCompletedTasks(Model model)
 	{
-		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
-		model.addAttribute("completedTasksList", completedTasksList);
+//		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
+//		model.addAttribute("completedTasksList", completedTasksList);
 		return "completedTasks";
 	}
 	
@@ -129,8 +143,8 @@ public class TasksController
 			}
 		}
 		
-		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
-		model.addAttribute("completedTasksList", completedTasksList);
+//		List<TasksDto> completedTasksList = tasksService.findCompletedTasks();
+//		model.addAttribute("completedTasksList", completedTasksList);
 		model.addAttribute("alert_msg", "Tasks updated successfully");
 		return "completedTasks";
 	}
@@ -150,15 +164,59 @@ public class TasksController
 				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
 				tasksService.updateDomain(taskModel);
+				
+				if(TaskStatus.PARTIALLY_COMPLETED.equals(TaskStatus.valueOf(taskStatus[i]))) {
+					sendPartiallyCompletedEmail(taskModel.getId());
+				}
 			}
 		}
 		
-		List<TasksDto> pendingTasksList = tasksService.getPendingTasks();
-		model.addAttribute("pendingTasksList", pendingTasksList);
+//		List<TasksDto> pendingTasksList = tasksService.findPendingTasks();
+//		model.addAttribute("pendingTasksList", pendingTasksList);
 		model.addAttribute("alert_msg", "Tasks updated successfully");
 		return "pendingtasks";
 	}
 	
+	private void sendPartiallyCompletedEmail(Integer taskId) {
+		
+		try {
+			String[] tos= new String[] {"sharanu.ainapur@gmail.com"};
+			String subject = "Task " + taskId + " waiting for Approval";
+			String body = generatePartiallyCompletedEmailBody(taskId);
+			emailService.sendEmail(tos, subject, body);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private String generatePartiallyCompletedEmailBody(Integer taskId) {
+
+		StringBuilder builder = new StringBuilder();
+		builder.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">");
+		builder.append("<div class=\"container\">");
+
+		builder.append("<div class=\"row\">");
+		builder.append("<div class=\"col-sm-12 col-md-12\">");
+		builder.append("<p>Hi</p>");
+		builder.append("<br>");
+		builder.append("<p>I just wanted to remind you that the task '<a href=\"http://localhost:8095/caapp/tasks/completedTasks\">"+taskId+"</a>'  is waiting for your approval. </p>");
+		builder.append("<p>You can approve it on <a href=\"http://localhost:8095/caapp/tasks/completedTasks\">http://localhost:8095/caapp.</a></p>");
+		builder.append("<br>");
+		builder.append("<p style=\"font-size: 10px;\">This email was sent by:");
+		builder.append("<br>");
+		builder.append("Ajahsma Org Applications suite");
+		builder.append("<br> ");
+		builder.append("<a href=\"http://www.ajahsma.com\">www.ajahsma.com</a>");
+		builder.append("<br>");
+		builder.append("Bangalore");
+		builder.append("</p>");
+		builder.append("</div>");
+		builder.append("</div>");
+		builder.append("</div>");
+
+		return builder.toString();
+	}
+
 	@RequestMapping(value = "/tasks/updateEmployeeRemarks/{id}/{tasksRemarksByEmployee}", method = RequestMethod.GET)
 	public String updateEmployeeRemarks(@PathVariable("id") int id, @PathVariable("tasksRemarksByEmployee") String tasksRemarksByEmployee)
 	{

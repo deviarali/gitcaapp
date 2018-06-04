@@ -1,5 +1,7 @@
 package com.ajahsma.caapp.mail;
 
+import java.util.Date;
+
 import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,13 @@ public class EmailServiceImpl implements EmailService {
 	@Override
 	public String sendEmail(String[] tos, String subject, String body) throws Exception {
 		MimeMessage message = sender.createMimeMessage();
+		message.setContent(body, "text/html; charset=utf-8");
+		message.setSentDate(new Date());
 		MimeMessageHelper helper = new MimeMessageHelper(message);
 
 		helper.setTo(tos);
 		helper.setSubject(subject);
-		helper.setText(body);
+//		helper.setText(body);
 
 		sender.send(message);
 

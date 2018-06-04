@@ -97,7 +97,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	}
 
 	@Override
-	public List<TasksDto> getPendingTasks() {
+	public List<TasksDto> findPendingTasks() {
 		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
 		List<TaskModel> pendingTasksList = tasksDao.findPendingTasks(applicationUser.getId());
 		List<TasksDto> pendingTasksDto = new ArrayList<>();
@@ -118,7 +118,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	}
 
 	@Override
-	public List<TasksDto> getCompletedTasks() {
+	public List<TasksDto> findCompletedTasks() {
 		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
 		List<TaskModel> completedTasksList = tasksDao.findCompletedTasks(applicationUser.getId());
 		List<TasksDto> completedTasksDto = new ArrayList<>();

@@ -55,7 +55,6 @@
 												<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByAdmin}</textarea></td>
 												<td>
 													<select name="taskStatus" value="${pendingtasks.taskStatus}"  style="width: 200px">
-														<option value="-1">-</option>
 														<c:forEach items="${taskStatusList}" var="status" varStatus="vs">
 															<c:choose>
 															    <c:when test="${pendingtasks.taskStatus == status }">
@@ -68,7 +67,6 @@
 														</c:forEach>
 													</select>
 												</td>
-												
 											</tr>
 										</c:forEach>							
 									</tbody>
