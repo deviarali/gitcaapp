@@ -44,7 +44,7 @@
 									<tbody>
 										<c:forEach items="${pendingTasksList}" var="pendingtasks" varStatus="status">
 											<tr>	
-												<td><c:out value="${status.index + 1}"></c:out></td>
+												<td style="text-align: center;"><c:out value="${status.index + 1}"></c:out></td>
 												<td>
 													<input type="checkbox" class="selectedTaskIds" name="selectedTaskIds" value="${pendingtasks.id }">
 													<input type="hidden" name="taskId" value="${pendingtasks.id }">
@@ -53,7 +53,7 @@
 												<td><c:out value="${pendingtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
 												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
 												<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByAdmin}</textarea></td>
-												<td>
+												<td style="text-align: center;">
 													<select name="taskStatus" value="${pendingtasks.taskStatus}"  style="width: 200px">
 														<c:forEach items="${taskStatusList}" var="status" varStatus="vs">
 															<c:choose>

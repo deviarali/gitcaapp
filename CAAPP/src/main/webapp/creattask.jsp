@@ -59,7 +59,7 @@
 						<div style="padding-right: 300px">
 							<form:form action="/caapp/tasks/saveTasks" method="post" class="form-horizontal" modelAttribute="tasks">
 								<div class="control-group">
-									<label class="control-label">Client Name :</label>
+									<label class="control-label required">Client Name </label>
 									<div class="controls">
 										<form:select type="text" class="form-control" path="clientDto.clientId" id="clients">
 											<form:option value="-1">-select client-</form:option>
@@ -71,7 +71,7 @@
 								</div>
 	
 								<div class="control-group">
-									<label class="control-label">Nature Of Work :</label>
+									<label class="control-label required">Nature Of Work </label>
 									<div class="controls" id="nature-of-assignments">
 										<c:forEach items="${taskList}" var="task" varStatus="status">
 											<span style="line-height: 3"> <form:checkbox path="tasks" value="${task.natureOfAssignmentId}" /> <c:out value="${task.natureOfAssignmentName}" />
@@ -82,7 +82,7 @@
 								</div>
 	
 								<div class="control-group">
-									<label class="control-label">Priority</label>
+									<label class="control-label required">Priority</label>
 									<div class="controls">
 										<form:select type="text" class="form-control" path="priorityStatus" id="clients">
 											<form:option value="-1">-</form:option>
@@ -93,7 +93,7 @@
 								</div>
 	
 								<div class="control-group">
-									<label class="control-label">Status</label>
+									<label class="control-label required"> Status </label>
 									<div class="controls">
 										<form:select type="text" class="form-control" path="taskStatus" id="clients">
 											<form:option value="-1">-</form:option>
@@ -104,7 +104,7 @@
 								</div>
 	
 								<div class="control-group">
-									<label class="control-label">Assignee</label>
+									<label class="control-label required"> Assignee </label>
 									<div class="controls">
 										<form:select name="assignee" class="span11" path="taskAssigneeId.employeeId">
 											<form:option value="-1">-select assignee-</form:option>
@@ -115,7 +115,7 @@
 								</div>
 	
 								<div class="control-group">
-									<label class="control-label">Date Of Start</label>
+									<label class="control-label required"> Date Of Start </label>
 									<div class="controls">
 										<div data-date="19-11-1989" class="input-append date datepicker">
 											<form:input path="taskStartDate" type="text" value="" data-date-format="dd-mm-yyyy" class="span11" />
