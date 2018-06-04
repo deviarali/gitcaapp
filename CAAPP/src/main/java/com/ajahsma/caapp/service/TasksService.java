@@ -21,6 +21,6 @@ public interface TasksService extends DefaultManager {
 	
 	void saveTasks(TasksDto tasksDto);
 
-	List<TasksDto> listOfAssignedTasks();
+	List<TasksDto> findAssignedTasks();
 
 }

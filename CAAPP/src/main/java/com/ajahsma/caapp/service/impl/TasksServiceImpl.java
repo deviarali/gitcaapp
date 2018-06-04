@@ -168,7 +168,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	}
 
 	@Override
-	public List<TasksDto> listOfAssignedTasks() {
+	public List<TasksDto> findAssignedTasks() {
 		List<TaskModel> listOftasksModel = tasksDao.findAssignedTasks(securityContextHelper.getApplicationUser().getId());
 		List<TasksDto> listOfTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : listOftasksModel)

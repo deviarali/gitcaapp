@@ -63,6 +63,12 @@ public class TasksController
         return TaskStatus.values();
     }
 	
+	@ModelAttribute("assignedTasksList")
+    public List<TasksDto> populateAssignStatusList()
+    {
+		return tasksService.findAssignedTasks();
+    }
+	
 	@ModelAttribute("pendingTasksList")
     public List<TasksDto> findPendingTasks()
     {
@@ -104,8 +110,8 @@ public class TasksController
 	@RequestMapping(value = "/tasks/assignedTasks", method = RequestMethod.GET)
 	public String listOfAssignedTasks(Model model)
 	{
-		List<TasksDto> listOfAssignedTasks = tasksService.listOfAssignedTasks();
-		model.addAttribute("listOfAssignedTasks", listOfAssignedTasks);
+//		List<TasksDto> listOfAssignedTasks = tasksService.findAssignedTasks();
+//		model.addAttribute("listOfAssignedTasks", listOfAssignedTasks);
 		return "assignedtasks";
 	}
 	
@@ -123,6 +129,30 @@ public class TasksController
 //		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
 //		model.addAttribute("completedTasksList", completedTasksList);
 		return "completedTasks";
+	}
+	
+	@RequestMapping(value = "/tasks/updateAssignedTask", method = RequestMethod.POST)
+	public String updateAssignedTask(HttpServletRequest request, Model model)
+	{
+		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
+		String taskIds[] = request.getParameterValues("taskId");
+		String taskRemarksByEmployee[] = request.getParameterValues("taskRemarksByEmployee");
+		String taskRemarksByAdmin[] = request.getParameterValues("taskRemarksByAdmin");
+		String taskStatus[] = request.getParameterValues("taskStatus");
+		for (int i = 0; i < taskIds.length; i++) {
+			if(Arrays.asList(selectedTaskIds).contains(taskIds[i])) {
+				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, Integer.valueOf(taskIds[i]));
+				taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
+				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
+				tasksService.updateDomain(taskModel);
+			}
+		}
+		
+//		List<TasksDto> completedTasksList = tasksService.findCompletedTasks();
+//		model.addAttribute("completedTasksList", completedTasksList);
+		model.addAttribute("alert_msg", "Tasks updated successfully");
+		return "assignedtasks";
 	}
 	
 	@RequestMapping(value = "/tasks/updateCompletedTask", method = RequestMethod.POST)
