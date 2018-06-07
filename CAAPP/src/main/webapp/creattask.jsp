@@ -65,7 +65,7 @@
 											<form:option value="-1">-select client-</form:option>
 											<form:options items="${clientsList }" itemValue="clientId" itemLabel="tradeName" />
 										</form:select>
-										<form:errors path="clientDto.clientId" />
+										<form:errors path="clientDto.clientId" class="errors"/>
 	
 									</div>
 								</div>
@@ -74,10 +74,12 @@
 									<label class="control-label required">Nature Of Work </label>
 									<div class="controls" id="nature-of-assignments">
 										<c:forEach items="${taskList}" var="task" varStatus="status">
-											<span style="line-height: 3"> <form:checkbox path="tasks" value="${task.natureOfAssignmentId}" /> <c:out value="${task.natureOfAssignmentName}" />
+											<span style="line-height: 3"> 
+											<form:checkbox path="tasks" value="${task.natureOfAssignmentId}" /> <c:out value="${task.natureOfAssignmentName}" />
 											</span>
 											<br>
 										</c:forEach>
+										<form:errors class="errors" path="tasks" />
 									</div>
 								</div>
 	
@@ -85,10 +87,10 @@
 									<label class="control-label required">Priority</label>
 									<div class="controls">
 										<form:select type="text" class="form-control" path="priorityStatus" id="clients">
-											<form:option value="-1">-</form:option>
+											<form:option value="">-</form:option>
 											<form:options path="priorityStatus" items="${priorityStatusList}" itemLabel="name"/>
 										</form:select>
-										<form:errors path="priorityStatus" />
+										<form:errors path="priorityStatus" class="errors"/>
 									</div>
 								</div>
 	
@@ -96,10 +98,10 @@
 									<label class="control-label required"> Status </label>
 									<div class="controls">
 										<form:select type="text" class="form-control" path="taskStatus" id="clients">
-											<form:option value="-1">-</form:option>
+											<form:option value="">-</form:option>
 											<form:options path="taskStatus" items="${taskStatusList}" itemLabel="name"/>
 										</form:select>
-										<form:errors path="taskStatus" />
+										<form:errors path="taskStatus" class="errors"/>
 									</div>
 								</div>
 	
@@ -110,6 +112,7 @@
 											<form:option value="-1">-select assignee-</form:option>
 											<form:options items="${assigneeList}" itemValue="employeeId" itemLabel="employeeName" />
 										</form:select>
+										<form:errors path = "taskAssigneeId.employeeId" class="errors"/>
 	
 									</div>
 								</div>
@@ -118,9 +121,10 @@
 									<label class="control-label required"> Date Of Start </label>
 									<div class="controls">
 										<div data-date="19-11-1989" class="input-append date datepicker">
-											<form:input path="taskStartDate" type="text" value="" data-date-format="dd-mm-yyyy" class="span11" />
+											<form:input path="taskStartDate" type="text" data-date-format="dd-mm-yyyy" class="span11" />
 											<span class="add-on"><i class="icon-th"></i></span>
 										</div>
+											<form:errors path="taskStartDate" class="errors"/>
 									</div>
 								</div>
 	

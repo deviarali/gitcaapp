@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,7 @@ import com.ajahsma.caapp.model.PriorityStatus;
 import com.ajahsma.caapp.model.TaskModel;
 import com.ajahsma.caapp.model.TaskStatus;
 import com.ajahsma.caapp.service.TasksService;
+import com.ajahsma.caapp.validator.TasksValidator;
 
 @Controller
 @RequestMapping(value = "/caapp")
@@ -39,51 +41,45 @@ public class TasksController
 	@Autowired
 	private EmailService emailService;
 	
+	@Autowired
+	private TasksValidator tasksValidator;
+	
 	@RequestMapping(value = "/tasks/createTasks", method = RequestMethod.GET )
 	public ModelAndView createTasks(Model model)
 	{
-		List<ClientDto> clientsList = tasksService.getAllClients();
-		List<EmployeeDto> assigneeList = tasksService.getAssigneeList();
+		/*List<ClientDto> clientsList = getAllClients();
+		List<EmployeeDto> assigneeList = getAssigneeList();
 		model.addAttribute("clientsList", clientsList);
-		model.addAttribute("assigneeList", assigneeList);
+		model.addAttribute("assigneeList", assigneeList);*/
 //		model.addAttribute("priorityStatusList", PriorityStatus.values());
 //		model.addAttribute("taskStatusList", TaskStatus.values());
 		return new ModelAndView("creattask", "tasks", new TasksDto());
 	}
 	
-	@ModelAttribute("priorityStatusList")
-    public PriorityStatus[] populatePriorityStatus()
-    {
-        return PriorityStatus.values();
-    }
 	
-	@ModelAttribute("taskStatusList")
-    public TaskStatus[] populateTaskStatus()
-    {
-        return TaskStatus.values();
-    }
-	
-	@ModelAttribute("assignedTasksList")
-    public List<TasksDto> populateAssignStatusList()
-    {
-		return tasksService.findAssignedTasks();
-    }
-	
-	@ModelAttribute("pendingTasksList")
-    public List<TasksDto> findPendingTasks()
-    {
-        return tasksService.findPendingTasks();
-    }
-	
-	@ModelAttribute("completedTasksList")
-    public List<TasksDto> findCompletedTasks()
-    {
-        return tasksService.findCompletedTasks();
-    }
-	
+	@ModelAttribute("assigneeList")
+	private List<EmployeeDto> getAssigneeList() {
+		
+		return tasksService.getAssigneeList();
+	}
+
+
+
+	@ModelAttribute("clientsList")
+	private List<ClientDto> getAllClients() {
+		return tasksService.getAllClients();
+	}
+
+
+
 	@RequestMapping(value = "/tasks/saveTasks", method = RequestMethod.POST )
-	public ModelAndView saveTasks(TasksDto tasksDto, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)
+	public ModelAndView saveTasks(@Valid @ModelAttribute("tasks") TasksDto tasksDto, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)
 	{
+		tasksValidator.validate(tasksDto, result);
+		if(result.hasErrors())
+		{
+			return new ModelAndView("creattask","tasks", tasksDto);
+		}
 		tasksService.saveTasks(tasksDto);
 		redirectAttributes.addAttribute("msg", "Tasks created successfully");
 		return new ModelAndView("redirect:/caapp/tasks/createTasks");
@@ -210,7 +206,7 @@ public class TasksController
 	private void sendPartiallyCompletedEmail(Integer taskId) {
 		
 		try {
-			String[] tos= new String[] {"sharanu.ainapur@gmail.com"};
+			String[] tos= new String[] {"ganid005@gmail.com"};
 			String subject = "Task " + taskId + " waiting for Approval";
 			String body = generatePartiallyCompletedEmailBody(taskId);
 			emailService.sendEmail(tos, subject, body);
@@ -253,4 +249,34 @@ public class TasksController
 		
 		return "redirect:/caapp/tasks/pendingTasks";
 	}
+	
+	@ModelAttribute("priorityStatusList")
+    public PriorityStatus[] populatePriorityStatus()
+    {
+        return PriorityStatus.values();
+    }
+	
+	@ModelAttribute("taskStatusList")
+    public TaskStatus[] populateTaskStatus()
+    {
+        return TaskStatus.values();
+    }
+	
+	@ModelAttribute("assignedTasksList")
+    public List<TasksDto> populateAssignStatusList()
+    {
+		return tasksService.findAssignedTasks();
+    }
+	
+	@ModelAttribute("pendingTasksList")
+    public List<TasksDto> findPendingTasks()
+    {
+        return tasksService.findPendingTasks();
+    }
+	
+	@ModelAttribute("completedTasksList")
+    public List<TasksDto> findCompletedTasks()
+    {
+        return tasksService.findCompletedTasks();
+    }
 }
