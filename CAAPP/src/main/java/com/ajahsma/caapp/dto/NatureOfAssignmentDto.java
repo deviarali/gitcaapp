@@ -2,21 +2,21 @@ package com.ajahsma.caapp.dto;
 
 public class NatureOfAssignmentDto 
 {
-		private int natureOfAssignmentId;
+		private Long natureOfAssignmentId;
 		
 		private String natureOfAssignmentName;
 
 		/**
 		 * @return the natureOfAssignmentId
 		 */
-		public int getNatureOfAssignmentId() {
+		public Long getNatureOfAssignmentId() {
 			return natureOfAssignmentId;
 		}
 
 		/**
 		 * @param natureOfAssignmentId the natureOfAssignmentId to set
 		 */
-		public void setNatureOfAssignmentId(int natureOfAssignmentId) {
+		public void setNatureOfAssignmentId(Long natureOfAssignmentId) {
 			this.natureOfAssignmentId = natureOfAssignmentId;
 		}
 

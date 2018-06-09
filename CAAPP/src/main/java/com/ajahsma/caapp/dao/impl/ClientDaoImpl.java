@@ -62,7 +62,7 @@ public class ClientDaoImpl extends GenericsDaoImpl implements ClientDao{
 
 	@Override
 	public List<ClientModel> getRecentClients() {
-		Query query = getSession().createQuery("select distinct cm from ClientModel cm order by cm.clientId DESC");
+		Query query = getSession().createQuery("select distinct cm from ClientModel cm order by cm.id DESC");
 //		query.setMaxResults(3);
 		List<ClientModel> list = query.list();
 		return list;

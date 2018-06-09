@@ -44,7 +44,7 @@ public class ClientServiceImpl implements ClientService {
 		//	ClientTypeModel clientTypeModel = (ClientTypeModel) object;
 			//ClientTypeDto clientTypeDto = CaAppUtils.copyBeanProperties(clientTypeModel, ClientTypeDto.class);
 			ClientTypeDto clientTypeDto = new ClientTypeDto();
-			clientTypeDto.setClientTypeId(clientTypeModel.getClientTypeId());
+			clientTypeDto.setClientTypeId(clientTypeModel.getId());
 			clientTypeDto.setClientTypeName(clientTypeModel.getClientTypeName());
 			clientTypeDtos.add(clientTypeDto);
 		}
@@ -59,7 +59,7 @@ public class ClientServiceImpl implements ClientService {
 		{
 			//CompanyStatusDto companyStatusDto = CaAppUtils.copyBeanProperties(companyStatusModel, CompanyStatusDto.class);
 			CompanyStatusDto companyStatusDto = new CompanyStatusDto();
-			companyStatusDto.setCompanyStatusId(companyStatusModel.getCompanyStatusId());
+			companyStatusDto.setCompanyStatusId(companyStatusModel.getId());
 			companyStatusDto.setCompanyStatusName(companyStatusModel.getCompanyStatusName());
 			companyStatusDtos.add(companyStatusDto);
 		}
@@ -74,7 +74,7 @@ public class ClientServiceImpl implements ClientService {
 		{
 			//NatureOfAssignmentDto natureOfAssignmentDto = CaAppUtils.copyBeanProperties(natureOfAssignmentModel, NatureOfAssignmentDto.class);
 			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
-			natureOfAssignmentDto.setNatureOfAssignmentId(natureOfAssignmentModel.getNatureOfAssignmentId());
+			natureOfAssignmentDto.setNatureOfAssignmentId(natureOfAssignmentModel.getId());
 			natureOfAssignmentDto.setNatureOfAssignmentName(natureOfAssignmentModel.getNatureOfAssignmentName());
 			natureOfAssignmentDtos.add(natureOfAssignmentDto);
 		}
@@ -89,7 +89,7 @@ public class ClientServiceImpl implements ClientService {
 		ClientTypeModel clientTypeModel = new ClientTypeModel();
 		clientModel.setClientName(clientDto.getClientName());
 		clientModel.setTradeName(clientDto.getTradeName());
-		companyStatusModel.setCompanyStatusId(clientDto.getCompanyStatusDto().getCompanyStatusId());
+		companyStatusModel.setId(clientDto.getCompanyStatusDto().getCompanyStatusId());
 		clientModel.setCompanyStatusModel(companyStatusModel);
 		clientModel.setClientMobile(clientDto.getClientMobile());
 		clientModel.setClientEmail(clientDto.getClientEmail());
@@ -102,7 +102,7 @@ public class ClientServiceImpl implements ClientService {
 		clientModel.setClientEpf(clientDto.getClientEpf());
 		clientModel.setClientSE(clientDto.getClientSE());
 		clientModel.setClientCreatedDate(new Date());
-		clientTypeModel.setClientTypeId(clientDto.getClientTypeDto().getClientTypeId());
+		clientTypeModel.setId(clientDto.getClientTypeDto().getClientTypeId());
 		clientModel.setClientTypeModel(clientTypeModel);	
 		
 		clientDao.save(clientModel);
@@ -123,7 +123,7 @@ public class ClientServiceImpl implements ClientService {
 			NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
 			ClientNatureOfAssignmentModel clientNatureOfAssignmentModel = new ClientNatureOfAssignmentModel();
 			clientNatureOfAssignmentModel.setClientModel(clientModel);
-			natureOfAssignmentModel.setNatureOfAssignmentId(Integer.parseInt(natureOfAssignment));
+			natureOfAssignmentModel.setId(Long.parseLong(natureOfAssignment));
 			clientNatureOfAssignmentModel.setNatureOfAssignmentModel(natureOfAssignmentModel);
 			clientNatureOfAssignmentModel.setNatureOfAssignmentCreatedDate(new Date());
 			clientNatureOfAssignmentModel.setNatureStatus("CREATED");

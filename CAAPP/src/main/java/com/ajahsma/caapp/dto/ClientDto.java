@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class ClientDto 
 {
-	private int clientId;
+	private Long clientId;
 	
 	private String clientName;
 	
@@ -45,11 +45,12 @@ public class ClientDto
 	private ClientTypeDto clientTypeDto;
 	
 	private String[] natureOfAssignmentList;
-	public int getClientId() {
+	
+	public Long getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(int clientId) {
+	public void setClientId(Long clientId) {
 		this.clientId = clientId;
 	}
 

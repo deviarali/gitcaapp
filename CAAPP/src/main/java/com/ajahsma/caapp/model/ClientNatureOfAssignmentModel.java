@@ -9,9 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,60 +18,29 @@ import javax.persistence.Table;
  *
  */
 
+@SuppressWarnings("serial")
 @Entity
-@Table(name = "client_nature_of_assignment")
+@Table(name = "clientnatureofassignment")
 public class ClientNatureOfAssignmentModel extends AbstractIdDomain {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "nature_id")
-	private int natureId;
+	private ClientModel clientModel;
+	private NatureOfAssignmentModel natureOfAssignmentModel;
+	private Date natureOfAssignmentCreatedDate;
+	private String natureStatus;
+
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "client_id")
-	private ClientModel clientModel;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "nature_of_assignment_id")
-	private NatureOfAssignmentModel natureOfAssignmentModel;
-	
-	@Column(name = "nature_of_assignment_createddate")
-	private Date natureOfAssignmentCreatedDate;
-	
-	@Column(name = "nature_status")
-	private String natureStatus;
-
-	/**
-	 * @return the natureId
-	 */
-	public int getNatureId() {
-		return natureId;
-	}
-
-	/**
-	 * @param natureId the natureId to set
-	 */
-	public void setNatureId(int natureId) {
-		this.natureId = natureId;
-	}
-
-	/**
-	 * @return the clientModel
-	 */
 	public ClientModel getClientModel() {
 		return clientModel;
 	}
 
-	/**
-	 * @param clientModel the clientModel to set
-	 */
 	public void setClientModel(ClientModel clientModel) {
 		this.clientModel = clientModel;
 	}
 
-	/**
-	 * @return the natureOfAssignmentModel
-	 */
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "natureofassignment_id")
 	public NatureOfAssignmentModel getNatureOfAssignmentModel() {
 		return natureOfAssignmentModel;
 	}
@@ -86,30 +52,20 @@ public class ClientNatureOfAssignmentModel extends AbstractIdDomain {
 		this.natureOfAssignmentModel = natureOfAssignmentModel;
 	}
 
-	/**
-	 * @return the natureOfAssignmentCreatedDate
-	 */
+	@Column(name = "createddate")
 	public Date getNatureOfAssignmentCreatedDate() {
 		return natureOfAssignmentCreatedDate;
 	}
 
-	/**
-	 * @param natureOfAssignmentCreatedDate the natureOfAssignmentCreatedDate to set
-	 */
 	public void setNatureOfAssignmentCreatedDate(Date natureOfAssignmentCreatedDate) {
 		this.natureOfAssignmentCreatedDate = natureOfAssignmentCreatedDate;
 	}
 
-	/**
-	 * @return the natureStatus
-	 */
+	@Column(name = "status")
 	public String getNatureStatus() {
 		return natureStatus;
 	}
 
-	/**
-	 * @param natureStatus the natureStatus to set
-	 */
 	public void setNatureStatus(String natureStatus) {
 		this.natureStatus = natureStatus;
 	}

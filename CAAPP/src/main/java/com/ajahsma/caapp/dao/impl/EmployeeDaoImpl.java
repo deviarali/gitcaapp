@@ -37,9 +37,9 @@ public class EmployeeDaoImpl extends DefaultDaoImpl implements EmployeeDao{
 	}
 
 	@Override
-	public EmployeeModel getEmployee(Integer id) {
+	public EmployeeModel getEmployee(Long id) {
 		Criteria criteria = getSession().createCriteria(EmployeeModel.class);
-		criteria.add(Restrictions.eq("employeeId", id));
+		criteria.add(Restrictions.eq("id", id));
 		return (EmployeeModel) criteria.uniqueResult();
 	}
 

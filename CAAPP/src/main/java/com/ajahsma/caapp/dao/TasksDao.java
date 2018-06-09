@@ -8,12 +8,12 @@ import com.ajahsma.caapp.model.TaskModel;
 public interface TasksDao extends DefaultDao
 {
 
-	List<ClientNatureOfAssignmentModel> getTasksByCustomerId(Integer id);
+	List<ClientNatureOfAssignmentModel> getTasksByCustomerId(Long id);
 
-	List<TaskModel> findPendingTasks(Integer id);
+	List<TaskModel> findPendingTasks(Long id);
 	
-	List<TaskModel> findCompletedTasks(Integer id);
+	List<TaskModel> findCompletedTasks(Long id);
 	
-	List<TaskModel> findAssignedTasks(Integer id);
+	List<TaskModel> findAssignedTasks(Long id);
 
 }

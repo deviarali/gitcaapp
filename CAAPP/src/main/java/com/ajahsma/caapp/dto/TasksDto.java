@@ -2,10 +2,6 @@ package com.ajahsma.caapp.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.ajahsma.caapp.model.PriorityStatus;
@@ -13,7 +9,7 @@ import com.ajahsma.caapp.model.TaskStatus;
 
 public class TasksDto 
 {
-	private Integer id;
+	private Long id;
 	private ClientDto clientDto;
 	private NatureOfAssignmentDto natureOfAssignmentDto;
 	private String taskRemarksByEmployee;
@@ -27,7 +23,7 @@ public class TasksDto
 	@DateTimeFormat(pattern = "mm/dd/yyyy")
 	private Date taskStartDate;
 
-	private TasksStatusDto taskStatusId;
+	private TasksStatusDto tasksStatusDto;
 	private String[] tasks;
 	private String startDate;
 	private PriorityStatus priorityStatus;
@@ -48,13 +44,13 @@ public class TasksDto
 	/**
 	 * @return the id
 	 */
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	/**
@@ -154,17 +150,12 @@ public class TasksDto
 	public void setTaskStartDate(Date taskStartDate) {
 		this.taskStartDate = taskStartDate;
 	}
-	/**
-	 * @return the taskStatusId
-	 */
-	public TasksStatusDto getTaskStatusId() {
-		return taskStatusId;
+
+	public TasksStatusDto getTasksStatusDto() {
+		return tasksStatusDto;
 	}
-	/**
-	 * @param taskStatusId the taskStatusId to set
-	 */
-	public void setTaskStatusId(TasksStatusDto taskStatusId) {
-		this.taskStatusId = taskStatusId;
+	public void setTasksStatusDto(TasksStatusDto tasksStatusDto) {
+		this.tasksStatusDto = tasksStatusDto;
 	}
 	/**
 	 * @return the tasks

@@ -64,7 +64,7 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 		for(EmployeeModel employeeModel : assigneeListModel)
 		{
 			EmployeeDto employeeDto = new EmployeeDto();
-			employeeDto.setEmployeeId(employeeModel.getEmployeeId());
+			employeeDto.setEmployeeId(employeeModel.getId());
 			employeeDto.setEmployeeName(employeeModel.getEmployeeName());
 			employeeDto.setEmployeeMobile(employeeModel.getEmployeeMobile());
 			employeeDto.setEmployeeEmail(employeeModel.getEmployeeEmail());
@@ -81,10 +81,10 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 	}
 	
 	@Override
-	public EmployeeDto getEmployee(Integer id) {
+	public EmployeeDto getEmployee(Long id) {
 		EmployeeModel employeeModel= employeeDao.getEmployee(id);
 		EmployeeDto employeeDto = new EmployeeDto();
-		employeeDto.setEmployeeId(employeeModel.getEmployeeId());
+		employeeDto.setEmployeeId(employeeModel.getId());
 		employeeDto.setEmployeeName(employeeModel.getEmployeeName());
 		employeeDto.setEmployeeMobile(employeeModel.getEmployeeMobile());
 		employeeDto.setEmployeeEmail(employeeModel.getEmployeeEmail());

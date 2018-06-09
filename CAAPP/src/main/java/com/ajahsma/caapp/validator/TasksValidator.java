@@ -5,7 +5,6 @@ package com.ajahsma.caapp.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.ajahsma.caapp.dto.TasksDto;
@@ -31,7 +30,7 @@ public class TasksValidator implements Validator {
 		{
 			errors.rejectValue("clientDto.clientId", "task.client.required");
 		}
-		if(tasksDto.getTaskAssigneeId().getEmployeeId() == -1)
+		if(tasksDto.getTaskAssigneeId() == null || tasksDto.getTaskAssigneeId().getEmployeeId() == null || tasksDto.getTaskAssigneeId().getEmployeeId() == -1)
 		{
 			errors.rejectValue("taskAssigneeId.employeeId", "task.assignee.required");
 		}
@@ -39,15 +38,11 @@ public class TasksValidator implements Validator {
 		{
 			errors.rejectValue("priorityStatus", "task.priority.required");
 		}
-		if(tasksDto.getTaskStatus() == null || tasksDto.getTaskStatus().getName() == "-1")
-		{
-			errors.rejectValue("taskStatus", "task.status.required");
-		}
 		if(tasksDto.getTaskStartDate() == null)
 		{
 			errors.rejectValue("taskStartDate", "task.dateofstart.required");
 		}
-		if(tasksDto.getTasks() == null || tasksDto.getTasks().length == -1)
+		if(tasksDto.getTasks() == null || tasksDto.getTasks().length <= 0)
 		{
 			errors.rejectValue("tasks", "task.natureOfAssignment.min.one.required");
 		}

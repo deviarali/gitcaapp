@@ -33,7 +33,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 
-			<div class="span3">
+			<!-- <div class="span3">
 				<div class="widget-box">
 					<div class="widget-title">
 						<p>Important News</p>
@@ -48,9 +48,9 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
-			<div class="span7">
+			</div> -->
+			<div class="span1"></div>
+			<div class="span10">
 				<div class="widget-box">
 					<div class="widget-title">
 						<p align="center">Task Assign</p>
@@ -65,8 +65,8 @@
 											<form:option value="-1">-select client-</form:option>
 											<form:options items="${clientsList }" itemValue="clientId" itemLabel="tradeName" />
 										</form:select>
+										<br>
 										<form:errors path="clientDto.clientId" class="errors"/>
-	
 									</div>
 								</div>
 	
@@ -79,6 +79,7 @@
 											</span>
 											<br>
 										</c:forEach>
+										<br>
 										<form:errors class="errors" path="tasks" />
 									</div>
 								</div>
@@ -90,33 +91,24 @@
 											<form:option value="">-</form:option>
 											<form:options path="priorityStatus" items="${priorityStatusList}" itemLabel="name"/>
 										</form:select>
+										<br>
 										<form:errors path="priorityStatus" class="errors"/>
 									</div>
 								</div>
-	
-								<div class="control-group">
-									<label class="control-label required"> Status </label>
-									<div class="controls">
-										<form:select type="text" class="form-control" path="taskStatus" id="clients">
-											<form:option value="">-</form:option>
-											<form:options path="taskStatus" items="${taskStatusList}" itemLabel="name"/>
-										</form:select>
-										<form:errors path="taskStatus" class="errors"/>
-									</div>
-								</div>
-	
+
 								<div class="control-group">
 									<label class="control-label required"> Assignee </label>
 									<div class="controls">
 										<form:select name="assignee" class="span11" path="taskAssigneeId.employeeId">
-											<form:option value="-1">-select assignee-</form:option>
+											<form:option value="">-</form:option>
 											<form:options items="${assigneeList}" itemValue="employeeId" itemLabel="employeeName" />
 										</form:select>
+										<br>
+										<br>
 										<form:errors path = "taskAssigneeId.employeeId" class="errors"/>
-	
 									</div>
 								</div>
-	
+
 								<div class="control-group">
 									<label class="control-label required"> Date Of Start </label>
 									<div class="controls">
@@ -124,6 +116,7 @@
 											<form:input path="taskStartDate" type="text" data-date-format="dd-mm-yyyy" class="span11" />
 											<span class="add-on"><i class="icon-th"></i></span>
 										</div>
+										<br>
 											<form:errors path="taskStartDate" class="errors"/>
 									</div>
 								</div>
@@ -138,8 +131,9 @@
 					</div>
 				</div>
 			</div>
+			<div class="span1"></div>
 
-			<div class="span2">
+			<!-- <div class="span2">
 				<div class="widget-box">
 					<div class="widget-title">
 						<p>Important Links</p>
@@ -151,8 +145,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
-
+			</div> -->
 		</div>
 		<hr>
 

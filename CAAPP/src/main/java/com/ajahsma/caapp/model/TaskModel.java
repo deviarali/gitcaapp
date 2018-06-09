@@ -8,77 +8,31 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "tasks")
 public class TaskModel extends AbstractIdDomain {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "task_id")
-	private Integer id;
+
+	private ClientModel clientModel;
+	private NatureOfAssignmentModel natureOfAssignmentModel;
+	private String taskRemarksByEmployee;
+	private String taskRemarksByAdmin;
+	private String taskVerifiedBy;
+	private EmployeeModel employeeModel;
+	private Date taskCreatedDate;
+	private Date taskStartDate;
+	
+//	private TasksStatusModel tasksStatusModel;
+	
+	private PriorityStatus priorityStatus;
+	private TaskStatus taskStatus;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "client_id")
-	private ClientModel clientModel;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "nature_of_assignment_id")
-	private NatureOfAssignmentModel natureOfAssignmentModel;
-	
-	@Column(name = "employee_task_remarks")
-	private String taskRemarksByEmployee;
-	
-	@Column(name = "admin_task_remark")
-	private String taskRemarksByAdmin;
-	
-	@Column(name = "verify_by")
-	private String taskVerifiedBy;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "task_assignee_id")
-	private EmployeeModel employeeModel;
-	
-	@Column(name = "task_created_date")
-	private Date taskCreatedDate;
-	
-	@Column(name = "task_start_date")
-	private Date taskStartDate;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "task_status_id")
-	private TasksStatusModel tasksStatusModel;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "prioritystatus", nullable=false)
-	private PriorityStatus priorityStatus;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "tasktatus", nullable=false)
-	private TaskStatus taskStatus;
-	
-	/**
-	 * @return the id
-	 */
-	public Integer getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the clientDto
-	 */
 	public ClientModel getClientModel() {
 		return clientModel;
 	}
@@ -90,9 +44,8 @@ public class TaskModel extends AbstractIdDomain {
 		this.clientModel = clientModel;
 	}
 
-	/**
-	 * @return the natureOfAssignmentDto
-	 */
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "natureofassignment_id")
 	public NatureOfAssignmentModel getNatureOfAssignmentModel() {
 		return natureOfAssignmentModel;
 	}
@@ -104,9 +57,7 @@ public class TaskModel extends AbstractIdDomain {
 		this.natureOfAssignmentModel = natureOfAssignmentModel;
 	}
 
-	/**
-	 * @return the taskRemarksByEmployee
-	 */
+	@Column(name = "employeeremarks")
 	public String getTaskRemarksByEmployee() {
 		return taskRemarksByEmployee;
 	}
@@ -117,10 +68,8 @@ public class TaskModel extends AbstractIdDomain {
 	public void setTaskRemarksByEmployee(String taskRemarksByEmployee) {
 		this.taskRemarksByEmployee = taskRemarksByEmployee;
 	}
-
-	/**
-	 * @return the taskRemarksByAdmin
-	 */
+	
+	@Column(name = "adminremarks")
 	public String getTaskRemarksByAdmin() {
 		return taskRemarksByAdmin;
 	}
@@ -132,9 +81,7 @@ public class TaskModel extends AbstractIdDomain {
 		this.taskRemarksByAdmin = taskRemarksByAdmin;
 	}
 
-	/**
-	 * @return the taskVerifiedBy
-	 */
+	@Column(name = "verifyby")
 	public String getTaskVerifiedBy() {
 		return taskVerifiedBy;
 	}
@@ -146,9 +93,8 @@ public class TaskModel extends AbstractIdDomain {
 		this.taskVerifiedBy = taskVerifiedBy;
 	}
 
-	/**
-	 * @return the taskAssigneeId
-	 */
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "employee_id")
 	public EmployeeModel getTaskAssigneeId() {
 		return employeeModel;
 	}
@@ -160,9 +106,7 @@ public class TaskModel extends AbstractIdDomain {
 		this.employeeModel = employeeModel;
 	}
 
-	/**
-	 * @return the taskCreatedDate
-	 */
+	@Column(name = "createddate")
 	public Date getTaskCreatedDate() {
 		return taskCreatedDate;
 	}
@@ -174,9 +118,7 @@ public class TaskModel extends AbstractIdDomain {
 		this.taskCreatedDate = taskCreatedDate;
 	}
 
-	/**
-	 * @return the taskStartDate
-	 */
+	@Column(name = "startdate")
 	public Date getTaskStartDate() {
 		return taskStartDate;
 	}
@@ -188,20 +130,21 @@ public class TaskModel extends AbstractIdDomain {
 		this.taskStartDate = taskStartDate;
 	}
 
-	/**
-	 * @return the taskStatusId
-	 */
-	public TasksStatusModel getTaskStatusId() {
+	/*@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "taskstatus_id")
+	public TasksStatusModel getTasksStatusModel() {
 		return tasksStatusModel;
 	}
 
-	/**
+	*//**
 	 * @param taskStatusId the taskStatusId to set
-	 */
-	public void setTaskStatusId(TasksStatusModel tasksStatusModel) {
+	 *//*
+	public void setTasksStatusModel(TasksStatusModel tasksStatusModel) {
 		this.tasksStatusModel = tasksStatusModel;
-	}
+	}*/
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "prioritystatus", nullable=false)
 	public PriorityStatus getPriorityStatus() {
 		return priorityStatus;
 	}
@@ -210,6 +153,8 @@ public class TaskModel extends AbstractIdDomain {
 		this.priorityStatus = priorityStatus;
 	}
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "tasktatus", nullable=false)
 	public TaskStatus getTaskStatus() {
 		return taskStatus;
 	}

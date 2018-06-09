@@ -51,11 +51,11 @@
 												</td>
 												<td><c:out value="${completedtasks.clientDto.clientName}"></c:out></td>
 												<td><c:out value="${completedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
-												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${completedtasks.taskRemarksByEmployee}</textarea></td>
+												<td><textarea name="taskRemarksByEmployee" disabled="disabled" rows="" cols="" style="width: 350px">${completedtasks.taskRemarksByEmployee}</textarea></td>
 												<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${completedtasks.taskRemarksByAdmin}</textarea></td>
 												<td style="text-align: center;">
 													<select name="taskStatus" value="${completedtasks.taskStatus}"  style="width: 200px">
-														<c:forEach items="${taskStatusList}" var="status" varStatus="vs">
+														<c:forEach items="${completedTaskStatusList}" var="status" varStatus="vs">
 															<c:choose>
 															    <c:when test="${completedtasks.taskStatus == status }">
 															        <option value="${status }" selected="selected">${status.name}</option>

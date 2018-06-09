@@ -6,8 +6,8 @@ package com.ajahsma.caapp.model;
 
 public interface IdDomain extends Domain {
 
-//	Long getId();
-//    void setId(Long id);
+	Long getId();
+    void setId(Long id);
 	
 
 }

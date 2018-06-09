@@ -12,6 +12,6 @@ public interface EmployeeDao extends DefaultDao {
 
 	public List<EmployeeModel> findEmployees();
 	
-	public EmployeeModel getEmployee(Integer id);
+	public EmployeeModel getEmployee(Long id);
 	
 }

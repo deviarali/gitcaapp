@@ -54,7 +54,7 @@
 												<td><c:out value="${assignedtasks.clientDto.clientName}"></c:out></td>
 												<td><c:out value="${assignedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
 												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByEmployee}</textarea></td>
-												<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByAdmin}</textarea></td>
+												<td><textarea name="taskRemarksByAdmin" disabled="disabled" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByAdmin}</textarea></td>
 												<td style="text-align: center;">
 													<select name="taskStatus" value="${assignedtasks.taskStatus}"  style="width: 200px">
 														<c:forEach items="${taskStatusList}" var="status" varStatus="vs">

@@ -10,15 +10,15 @@ package com.ajahsma.caapp.dto;
 
 public class ClientTypeDto 
 {
-	private Integer clientTypeId;
+	private Long clientTypeId;
 	
 	private String clientTypeName;
 
-	public Integer getClientTypeId() {
+	public Long getClientTypeId() {
 		return clientTypeId;
 	}
 
-	public void setClientTypeId(Integer clientTypeId) {
+	public void setClientTypeId(Long clientTypeId) {
 		this.clientTypeId = clientTypeId;
 	}
 

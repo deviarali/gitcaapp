@@ -13,6 +13,6 @@ public interface EmployeeService extends DefaultManager {
 
 	public List<EmployeeDto> findEmployees();
 	
-	public EmployeeDto getEmployee(Integer id);
+	public EmployeeDto getEmployee(Long id);
 	
 }

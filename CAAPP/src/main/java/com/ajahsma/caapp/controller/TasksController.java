@@ -1,7 +1,9 @@
 package com.ajahsma.caapp.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -78,7 +80,14 @@ public class TasksController
 		tasksValidator.validate(tasksDto, result);
 		if(result.hasErrors())
 		{
-			return new ModelAndView("creattask","tasks", tasksDto);
+			List<ClientDto> clientsList = tasksService.getAllClients();
+			List<NatureOfAssignmentDto> listOfTasks = tasksService.getTasksByCustomerId(tasksDto.getClientDto().getClientId());
+			Map<String, Object> model = new HashMap<>();
+			model.put("clientsList", clientsList);
+			model.put("taskList", listOfTasks);
+			model.put("tasks", tasksDto);
+
+			return new ModelAndView("creattask", model);
 		}
 		tasksService.saveTasks(tasksDto);
 		redirectAttributes.addAttribute("msg", "Tasks created successfully");
@@ -97,7 +106,7 @@ public class TasksController
 	
 	@RequestMapping(value = "/tasks/getTasksByCustomerId/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public List<NatureOfAssignmentDto> getTasksByCustomerId(@PathVariable("id") int id)
+	public List<NatureOfAssignmentDto> getTasksByCustomerId(@PathVariable("id") Long id)
 	{
 		List<NatureOfAssignmentDto> listOfTasks = tasksService.getTasksByCustomerId(id);
 		return listOfTasks;
@@ -137,9 +146,13 @@ public class TasksController
 		String taskStatus[] = request.getParameterValues("taskStatus");
 		for (int i = 0; i < taskIds.length; i++) {
 			if(Arrays.asList(selectedTaskIds).contains(taskIds[i])) {
-				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, Integer.valueOf(taskIds[i]));
-				taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
-				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, new Long(taskIds[i]));
+				if(taskRemarksByEmployee != null) {
+					taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
+				}
+				if(taskRemarksByAdmin != null) {
+					taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				}
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
 				tasksService.updateDomain(taskModel);
 			}
@@ -161,9 +174,13 @@ public class TasksController
 		String taskStatus[] = request.getParameterValues("taskStatus");
 		for (int i = 0; i < taskIds.length; i++) {
 			if(Arrays.asList(selectedTaskIds).contains(taskIds[i])) {
-				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, Integer.valueOf(taskIds[i]));
-				taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
-				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, new Long(taskIds[i]));
+				if(taskRemarksByEmployee != null) {
+					taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
+				}
+				if(taskRemarksByAdmin != null) {
+					taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				}
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
 				tasksService.updateDomain(taskModel);
 			}
@@ -185,9 +202,13 @@ public class TasksController
 		String taskStatus[] = request.getParameterValues("taskStatus");
 		for (int i = 0; i < taskIds.length; i++) {
 			if(Arrays.asList(selectedTaskIds).contains(taskIds[i])) {
-				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, Integer.valueOf(taskIds[i]));
-				taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
-				taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				TaskModel taskModel = (TaskModel) tasksService.getDomain(TaskModel.class, new Long(taskIds[i]));
+				if(taskRemarksByEmployee != null) {
+					taskModel.setTaskRemarksByEmployee(taskRemarksByEmployee[i]);
+				}
+				if(taskRemarksByAdmin != null) {
+					taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
+				}
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
 				tasksService.updateDomain(taskModel);
 				
@@ -203,7 +224,7 @@ public class TasksController
 		return "pendingtasks";
 	}
 	
-	private void sendPartiallyCompletedEmail(Integer taskId) {
+	private void sendPartiallyCompletedEmail(Long taskId) {
 		
 		try {
 			String[] tos= new String[] {"ganid005@gmail.com"};
@@ -215,7 +236,7 @@ public class TasksController
 		}
 	}
 
-	private String generatePartiallyCompletedEmailBody(Integer taskId) {
+	private String generatePartiallyCompletedEmailBody(Long taskId) {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">");
@@ -260,6 +281,34 @@ public class TasksController
     public TaskStatus[] populateTaskStatus()
     {
         return TaskStatus.values();
+    }
+	
+	@ModelAttribute("completedTaskStatusList")
+    public TaskStatus[] completedTaskStatusList()
+    {
+		TaskStatus[] taskStatusArray = new TaskStatus[3];
+		int i = 0;
+		for (TaskStatus taskStatus : TaskStatus.values()) {
+			if(!(TaskStatus.ASSIGNED.equals(taskStatus) || TaskStatus.IN_PROGRESS.equals(taskStatus))) {
+				taskStatusArray[i] = taskStatus;
+				i++;
+			}
+		}
+        return taskStatusArray;
+    }
+	
+	@ModelAttribute("pendingTaskStatusList")
+    public TaskStatus[] pendingTaskStatusList()
+    {
+		TaskStatus[] taskStatusArray = new TaskStatus[3];
+		int i = 0;
+		for (TaskStatus taskStatus : TaskStatus.values()) {
+			if(!(TaskStatus.ASSIGNED.equals(taskStatus) || TaskStatus.COMPLETED.equals(taskStatus))) {
+				taskStatusArray[i] = taskStatus;
+				i++;
+			}
+		}
+        return taskStatusArray;
     }
 	
 	@ModelAttribute("assignedTasksList")

@@ -61,7 +61,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		for(ClientModel clientModel : clientsListModel)
 		{
 			ClientDto clientDto = new ClientDto();
-			clientDto.setClientId(clientModel.getClientId());
+			clientDto.setClientId(clientModel.getId());
 			clientDto.setTradeName(clientModel.getTradeName());
 			clientsListDto.add(clientDto);
 		}
@@ -75,7 +75,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		for(EmployeeModel employeeModel : assigneeListModel)
 		{
 			EmployeeDto employeeDto = new EmployeeDto();
-			employeeDto.setEmployeeId(employeeModel.getEmployeeId());
+			employeeDto.setEmployeeId(employeeModel.getId());
 			employeeDto.setEmployeeName(employeeModel.getEmployeeName());
 			assigneeListDto.add(employeeDto);
 		}
@@ -83,13 +83,13 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	}
 	
 	@Override
-	public List<NatureOfAssignmentDto> getTasksByCustomerId(Integer id) {
+	public List<NatureOfAssignmentDto> getTasksByCustomerId(Long id) {
 		List<ClientNatureOfAssignmentModel> clientNatureOfAssignmentModels = tasksDao.getTasksByCustomerId(id);
 		List<NatureOfAssignmentDto> natureOfAssignmentDtos = new ArrayList<>();
 		for(ClientNatureOfAssignmentModel assignmentModel : clientNatureOfAssignmentModels)
 		{
 			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
-			natureOfAssignmentDto.setNatureOfAssignmentId(assignmentModel.getNatureOfAssignmentModel().getNatureOfAssignmentId());
+			natureOfAssignmentDto.setNatureOfAssignmentId(assignmentModel.getNatureOfAssignmentModel().getId());
 			natureOfAssignmentDto.setNatureOfAssignmentName(assignmentModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
 			natureOfAssignmentDtos.add(natureOfAssignmentDto);
 		}
@@ -160,7 +160,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		for (String tasksId : tasks) {
 			TaskModel tasksModel = convertTaskDtoToTaskModel(tasksDto);
 			NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
-			natureOfAssignmentModel.setNatureOfAssignmentId(Integer.parseInt(tasksId));
+			natureOfAssignmentModel.setId(Long.parseLong(tasksId));
 			tasksModel.setNatureOfAssignmentModel(natureOfAssignmentModel);
 			tasksModel.setTaskStatus(TaskStatus.ASSIGNED);
 			tasksDao.saveDomain(tasksModel);
@@ -197,19 +197,19 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		TaskModel tasksModel = new TaskModel();
 		ClientModel clientModel = new ClientModel();
 		EmployeeModel employeeModel = new EmployeeModel();
-		TasksStatusModel tasksStatusModel = new TasksStatusModel();
-		tasksStatusModel.setTasksStatusId(1);
-		employeeModel.setEmployeeId(tasksDto.getTaskAssigneeId().getEmployeeId());
-		clientModel.setClientId(tasksDto.getClientDto().getClientId());
+		employeeModel.setId(tasksDto.getTaskAssigneeId().getEmployeeId());
+		clientModel.setId(tasksDto.getClientDto().getClientId());
 		
 		tasksModel.setId(tasksDto.getId());
 		tasksModel.setClientModel(clientModel);
 		tasksModel.setTaskAssigneeId(employeeModel);
 		tasksModel.setTaskCreatedDate(new Date());
 		tasksModel.setTaskStartDate(tasksDto.getTaskStartDate());
-		tasksModel.setTaskStatusId(tasksStatusModel);
+//		TasksStatusModel tasksStatusModel = new TasksStatusModel();
+//		tasksStatusModel.setId(new Long(1));
+//		tasksModel.setTasksStatusModel(tasksStatusModel);
 		tasksModel.setPriorityStatus(tasksDto.getPriorityStatus());
-		tasksModel.setTaskStatus(TaskStatus.ASSIGNED);
+		tasksModel.setTaskStatus(tasksDto.getTaskStatus());
 		tasksModel.setTaskRemarksByAdmin(tasksDto.getTaskRemarksByAdmin());
 		tasksModel.setTaskRemarksByEmployee(tasksDto.getTaskRemarksByEmployee());
 
@@ -229,13 +229,13 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		natureOfAssignmentDto.setNatureOfAssignmentName(tasksModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
 		employeeDto.setEmployeeName(tasksModel.getTaskAssigneeId().getEmployeeName());
 		clientDto.setClientName(tasksModel.getClientModel().getClientName());
-		tasksStatusDto.setTasksStatusName(tasksModel.getTaskStatusId().getTasksStatusName());
+//		tasksStatusDto.setTasksStatusName(tasksModel.getTasksStatusModel().getTasksStatusName());
 		tasksDto.setId(tasksModel.getId());
 		tasksDto.setTaskAssigneeId(employeeDto);
 		tasksDto.setClientDto(clientDto);
 		tasksDto.setNatureOfAssignmentDto(natureOfAssignmentDto);
 		tasksDto.setStartDate(sdf.format(tasksModel.getTaskStartDate()));
-		tasksDto.setTaskStatusId(tasksStatusDto);
+		tasksDto.setTasksStatusDto(tasksStatusDto);
 		tasksDto.setTaskCreatedDate(tasksModel.getTaskCreatedDate());
 		tasksDto.setTaskStartDate(tasksModel.getTaskStartDate());
 		tasksDto.setPriorityStatus(tasksModel.getPriorityStatus());

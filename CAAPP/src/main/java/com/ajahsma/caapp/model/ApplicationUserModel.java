@@ -7,9 +7,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -19,11 +16,12 @@ import javax.persistence.Table;
  * @author SHARAN A
  */
 
+@SuppressWarnings("serial")
 @Entity(name = "ApplicationUser")
 @Table(name = "applicationuser")
 public class ApplicationUserModel extends AbstractIdDomain {
 
-	private Integer id;
+//	private Integer id;
 	private String userName;
 	private String password;
 	private Integer loginAttempts;
@@ -31,7 +29,7 @@ public class ApplicationUserModel extends AbstractIdDomain {
 	private Boolean isActive;
 	private Set<UserRoleModel> userRoles;
 
-	@Id
+	/*@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	public Integer getId() {
@@ -40,7 +38,7 @@ public class ApplicationUserModel extends AbstractIdDomain {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
+	}*/
 
 	@Column(name = "username", nullable = false)
 	public String getUserName() {

@@ -4,16 +4,16 @@ import java.util.Date;
 
 public class HomePageDto {
 	
-	private Integer clientId;
+	private Long clientId;
 	private String custName;
 	private String companyStatus;
 	private Date custCreatedDate;
 
-	public Integer getClientId() {
+	public Long getClientId() {
 		return clientId;
 	}
 
-	public void setClientId(Integer clientId) {
+	public void setClientId(Long clientId) {
 		this.clientId = clientId;
 	}
 	

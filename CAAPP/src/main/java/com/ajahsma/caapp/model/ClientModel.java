@@ -9,9 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -21,70 +18,29 @@ import javax.persistence.Table;
  *
  */
 
+@SuppressWarnings("serial")
 @Entity
 @Table(name = "client")
 public class ClientModel extends AbstractIdDomain { 
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "client_id")
-	private Integer clientId;
-	
-	@Column(name = "client_name")
 	private String clientName;
-	
-	@Column(name = "trade_name")
 	private String tradeName;
-	
-	@Column(name = "client_mobile")
 	private String clientMobile;
-	
-	@Column(name = "client_email")
 	private String clientEmail;
-	
-	@Column(name = "pan_number")
 	private String panNumber;
-	
-	@Column(name = "aadhar_number")
 	private String aadharNumber;
-	
-	@Column(name = "gst_number")
 	private String gstNumber;
-	
-	@Column(name = "tan_number")
 	private String tanNumber;
-	
-	@Column(name = "account_details")
 	private String accountDetails;
-	
-	@Column(name = "client_esi")
 	private String clientEsi;
-	
-	@Column(name = "client_epf")
 	private String clientEpf;
-	
-	@Column(name = "client_se")
 	private String clientSE;
-	
-	@Column(name = "client_created_date")
 	private Date clientCreatedDate;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "company_status_id")
 	private CompanyStatusModel companyStatusModel;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-	@JoinColumn(name = "client_type_id")
 	private ClientTypeModel clientTypeModel;
 	
-	public Integer getClientId() {
-		return clientId;
-	}
-
-	public void setClientId(Integer clientId) {
-		this.clientId = clientId;
-	}
-
+	@Column(name = "clientname")
 	public String getClientName() {
 		return clientName;
 	}
@@ -93,6 +49,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientName = clientName;
 	}
 
+	@Column(name = "tradename")
 	public String getTradeName() {
 		return tradeName;
 	}
@@ -101,6 +58,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.tradeName = tradeName;
 	}
 
+	@Column(name = "mobile")
 	public String getClientMobile() {
 		return clientMobile;
 	}
@@ -109,6 +67,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientMobile = clientMobile;
 	}
 
+	@Column(name = "email")
 	public String getClientEmail() {
 		return clientEmail;
 	}
@@ -117,6 +76,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientEmail = clientEmail;
 	}
 
+	@Column(name = "pan")
 	public String getPanNumber() {
 		return panNumber;
 	}
@@ -125,6 +85,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.panNumber = panNumber;
 	}
 
+	@Column(name = "aadhar")
 	public String getAadharNumber() {
 		return aadharNumber;
 	}
@@ -133,6 +94,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.aadharNumber = aadharNumber;
 	}
 
+	@Column(name = "gst")
 	public String getGstNumber() {
 		return gstNumber;
 	}
@@ -141,6 +103,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.gstNumber = gstNumber;
 	}
 
+	@Column(name = "tan")
 	public String getTanNumber() {
 		return tanNumber;
 	}
@@ -149,6 +112,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.tanNumber = tanNumber;
 	}
 
+	@Column(name = "accountdetails")
 	public String getAccountDetails() {
 		return accountDetails;
 	}
@@ -157,6 +121,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.accountDetails = accountDetails;
 	}
 
+	@Column(name = "esi")
 	public String getClientEsi() {
 		return clientEsi;
 	}
@@ -165,6 +130,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientEsi = clientEsi;
 	}
 
+	@Column(name = "epf")
 	public String getClientEpf() {
 		return clientEpf;
 	}
@@ -173,6 +139,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientEpf = clientEpf;
 	}
 
+	@Column(name = "se")
 	public String getClientSE() {
 		return clientSE;
 	}
@@ -181,6 +148,7 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientSE = clientSE;
 	}
 
+	@Column(name = "createddate")
 	public Date getClientCreatedDate() {
 		return clientCreatedDate;
 	}
@@ -189,6 +157,8 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientCreatedDate = clientCreatedDate;
 	}
 
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "companystatus_id")
 	public CompanyStatusModel getCompanyStatusModel() {
 		return companyStatusModel;
 	}
@@ -197,6 +167,8 @@ public class ClientModel extends AbstractIdDomain {
 		this.companyStatusModel = companyStatusModel;
 	}
 
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+	@JoinColumn(name = "clienttype_id")
 	public ClientTypeModel getClientTypeModel() {
 		return clientTypeModel;
 	}

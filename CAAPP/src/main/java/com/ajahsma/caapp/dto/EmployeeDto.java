@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class EmployeeDto 
 {
-	private Integer employeeId;
+	private Long employeeId;
 	private String employeeName;
 	private String employeeAddress;
 	private String employeeMobile;
@@ -22,13 +22,13 @@ public class EmployeeDto
 	/**
 	 * @return the employeeId
 	 */
-	public Integer getEmployeeId() {
+	public Long getEmployeeId() {
 		return employeeId;
 	}
 	/**
 	 * @param employeeId the employeeId to set
 	 */
-	public void setEmployeeId(Integer employeeId) {
+	public void setEmployeeId(Long employeeId) {
 		this.employeeId = employeeId;
 	}
 	/**

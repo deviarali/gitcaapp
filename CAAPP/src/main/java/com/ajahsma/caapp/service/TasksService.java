@@ -13,7 +13,7 @@ public interface TasksService extends DefaultManager {
 
 	List<EmployeeDto> getAssigneeList();
 
-	List<NatureOfAssignmentDto> getTasksByCustomerId(Integer id);
+	List<NatureOfAssignmentDto> getTasksByCustomerId(Long id);
 
 	List<TasksDto> findPendingTasks();
 	

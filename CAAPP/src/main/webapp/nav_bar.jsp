@@ -1,4 +1,5 @@
-
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec"%>
+<sec:authentication var="user" property="principal" />
 <!--Header-part-->
 <div id="header">
   <!--h1>Ajahsma</h1 -->
@@ -16,8 +17,8 @@
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
 	<ul class="nav">
-		<li class=""><a title="" href="#"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
-		<li class=" dropdown" id="menu-messages"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span>
+		<li class=""><a href="/caapp/employee/${user.id}"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
+		<li class=" dropdown" id="menu-messages" style="display: none;"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span>
 				<b class="caret"></b></a>
 			<ul class="dropdown-menu">
 				<li><a class="sAdd" title="" href="#">new message</a></li>
@@ -25,8 +26,8 @@
 				<li><a class="sOutbox" title="" href="#">outbox</a></li>
 				<li><a class="sTrash" title="" href="#">trash</a></li>
 			</ul></li>
-		<li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">Settings</span></a></li>
-		<li class=""><a title="" href="/logout"><i class="icon icon-share-alt"></i> <span class="text">Logout</span></a></li>
+		<li class="" style="display: none;"><a title="" href="#"> <span class="text">${user.userName}</span></a></li>
+		<li class=""><a title="" href="/logout"><i class="icon icon-share-alt"></i> <span class="text">Logout ( ${user.userName} )</span></a></li>
 	</ul>
 </div>
 <div id="search">

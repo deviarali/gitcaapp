@@ -32,7 +32,7 @@ public class HomePageServiceImpl implements HomePageService{
 		 for(ClientModel clientModel : recentClients)
 		 {
 			 HomePageDto homePageDto = new HomePageDto();
-			 homePageDto.setClientId(clientModel.getClientId());
+			 homePageDto.setClientId(clientModel.getId());
 			 homePageDto.setCustName(clientModel.getClientName());
 			 homePageDto.setCompanyStatus(clientModel.getCompanyStatusModel().getCompanyStatusName());
 			 homePageDto.setCustCreatedDate(clientModel.getClientCreatedDate());

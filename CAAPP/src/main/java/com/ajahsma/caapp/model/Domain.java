@@ -7,9 +7,9 @@ import java.io.Serializable;
  */
 public interface Domain extends Serializable {
 
-//	boolean equals(Object other);
+	boolean equals(Object other);
 //
-//	int hashCode();
+	int hashCode();
 
 	
 }

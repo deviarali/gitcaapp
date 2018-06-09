@@ -2,15 +2,15 @@ package com.ajahsma.caapp.dto;
 
 public class CompanyStatusDto 
 {
-	private Integer companyStatusId;
+	private Long companyStatusId;
 	
 	private String companyStatusName;
 
-	public Integer getCompanyStatusId() {
+	public Long getCompanyStatusId() {
 		return companyStatusId;
 	}
 
-	public void setCompanyStatusId(Integer companyStatusId) {
+	public void setCompanyStatusId(Long companyStatusId) {
 		this.companyStatusId = companyStatusId;
 	}
 

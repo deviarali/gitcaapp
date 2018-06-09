@@ -53,7 +53,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = "/employee/{id}", method = RequestMethod.GET)
-	private String getEmployee(Model model, @PathVariable("id") Integer id) {
+	private String getEmployee(Model model, @PathVariable("id") Long id) {
 		
 		EmployeeDto employeeDto = employeeService.getEmployee(id);
 		
@@ -62,7 +62,7 @@ public class EmployeeController
 	}
 	
 	@RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.GET)
-	private String deleteEmployee(Model model, @PathVariable("id") Integer id) {
+	private String deleteEmployee(Model model, @PathVariable("id") Long id) {
 		
 		EmployeeModel employee = (EmployeeModel) employeeService.getDomain(EmployeeModel.class, id);
 		

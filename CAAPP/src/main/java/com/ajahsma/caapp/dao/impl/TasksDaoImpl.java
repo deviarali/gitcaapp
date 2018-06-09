@@ -20,8 +20,8 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 {
 
 	@Override
-	public List<ClientNatureOfAssignmentModel> getTasksByCustomerId(Integer id) {
-		Query query = getSession().createQuery("from ClientNatureOfAssignmentModel cnoam where cnoam.clientModel.clientId=:id and cnoam.natureStatus=:natureStatus");
+	public List<ClientNatureOfAssignmentModel> getTasksByCustomerId(Long id) {
+		Query query = getSession().createQuery("from ClientNatureOfAssignmentModel cnoam where cnoam.clientModel.id = :id and cnoam.natureStatus=:natureStatus");
 		query.setParameter("id", id);
 		query.setParameter("natureStatus", "CREATED");
 		List<ClientNatureOfAssignmentModel>  clientNatureOfAssignmentModels = (List<ClientNatureOfAssignmentModel>) query.list();
@@ -29,16 +29,16 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	}
 
 	
-	public List<TaskModel> findPendingTasks(Integer id) 
+	public List<TaskModel> findPendingTasks(Long id) 
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("from TaskModel tasks ");
-		builder.append("where taskStatus in ('IN_PROGRESS', 'ASSIGNED', 'RE_ASSIGNED') ");
+		builder.append("where taskStatus in ('IN_PROGRESS', 'RE_ASSIGNED', 'PARTIALLY_COMPLETED') ");
 		if(SecurityContextHelper.isAdmin()) {
 			return getSession().createQuery(builder.toString()).list();
 		}
 		if(id != null) {
-			builder.append(" and tasks.employeeModel.employeeId=:id ");
+			builder.append(" and tasks.employeeModel.id = :id ");
 		}
 		
 		Query query = getSession().createQuery(builder.toString());
@@ -51,7 +51,7 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	}
 
 	@Override
-	public List<TaskModel> findCompletedTasks(Integer id) 
+	public List<TaskModel> findCompletedTasks(Long id) 
 	{
 		StringBuilder builder = new StringBuilder();
 		builder.append("from TaskModel tasks ");
@@ -60,7 +60,7 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 			return getSession().createQuery(builder.toString()).list();
 		}
 		if(id != null) {
-			builder.append(" and tasks.employeeModel.employeeId=:id ");
+			builder.append(" and tasks.employeeModel.id = :id ");
 		}
 		
 		Query query = getSession().createQuery(builder.toString());
@@ -74,7 +74,7 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 
 
 	@Override
-	public List<TaskModel> findAssignedTasks(Integer id) {
+	public List<TaskModel> findAssignedTasks(Long id) {
 		StringBuilder builder = new StringBuilder();
 		builder.append("from TaskModel tasks ");
 		builder.append("where taskStatus in ('ASSIGNED', 'RE_ASSIGNED') ");
@@ -82,7 +82,7 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 			return getSession().createQuery(builder.toString()).list();
 		}
 		if(id != null) {
-			builder.append(" and tasks.employeeModel.employeeId=:id ");
+			builder.append(" and tasks.employeeModel.id = :id ");
 		}
 		
 		Query query = getSession().createQuery(builder.toString());
