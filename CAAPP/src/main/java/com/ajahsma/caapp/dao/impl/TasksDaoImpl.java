@@ -32,13 +32,14 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	public List<TaskModel> findPendingTasks(Long id) 
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("from TaskModel tasks ");
-		builder.append("where taskStatus in ('IN_PROGRESS', 'RE_ASSIGNED', 'PARTIALLY_COMPLETED') ");
+		builder.append("select distinct task from TaskModel task ");
+		builder.append(" inner join task.employeeModel emp ");
+		builder.append("where task.taskStatus in ('IN_PROGRESS', 'RE_ASSIGNED', 'PARTIALLY_COMPLETED') ");
 		if(SecurityContextHelper.isAdmin()) {
 			return getSession().createQuery(builder.toString()).list();
 		}
 		if(id != null) {
-			builder.append(" and tasks.employeeModel.id = :id ");
+			builder.append(" and emp.id = :id ");
 		}
 		
 		Query query = getSession().createQuery(builder.toString());
@@ -54,13 +55,14 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	public List<TaskModel> findCompletedTasks(Long id) 
 	{
 		StringBuilder builder = new StringBuilder();
-		builder.append("from TaskModel tasks ");
-		builder.append("where taskStatus in ('COMPLETED', 'PARTIALLY_COMPLETED') ");
+		builder.append("select distinct task from TaskModel task ");
+		builder.append(" inner join task.employeeModel emp ");
+		builder.append("where task.taskStatus in ('COMPLETED', 'PARTIALLY_COMPLETED') ");
 		if(SecurityContextHelper.isAdmin()) {
 			return getSession().createQuery(builder.toString()).list();
 		}
 		if(id != null) {
-			builder.append(" and tasks.employeeModel.id = :id ");
+			builder.append(" and emp.id = :id ");
 		}
 		
 		Query query = getSession().createQuery(builder.toString());
@@ -76,13 +78,14 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 	@Override
 	public List<TaskModel> findAssignedTasks(Long id) {
 		StringBuilder builder = new StringBuilder();
-		builder.append("from TaskModel tasks ");
-		builder.append("where taskStatus in ('ASSIGNED', 'RE_ASSIGNED') ");
+		builder.append("select distinct task from TaskModel task ");
+		builder.append(" inner join task.employeeModel emp ");
+		builder.append(" where task.taskStatus in ('ASSIGNED', 'RE_ASSIGNED') ");
 		if(SecurityContextHelper.isAdmin()) {
 			return getSession().createQuery(builder.toString()).list();
 		}
 		if(id != null) {
-			builder.append(" and tasks.employeeModel.id = :id ");
+			builder.append(" and emp.id = :id ");
 		}
 		
 		Query query = getSession().createQuery(builder.toString());

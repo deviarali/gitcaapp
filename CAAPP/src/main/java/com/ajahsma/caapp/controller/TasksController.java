@@ -29,13 +29,13 @@ import com.ajahsma.caapp.mail.EmailService;
 import com.ajahsma.caapp.model.PriorityStatus;
 import com.ajahsma.caapp.model.TaskModel;
 import com.ajahsma.caapp.model.TaskStatus;
+import com.ajahsma.caapp.service.EmployeeService;
 import com.ajahsma.caapp.service.TasksService;
 import com.ajahsma.caapp.validator.TasksValidator;
 
 @Controller
 @RequestMapping(value = "/caapp")
-public class TasksController 
-{
+public class TasksController  extends BaseController {
 	
 	@Autowired
 	TasksService tasksService;
@@ -45,6 +45,9 @@ public class TasksController
 	
 	@Autowired
 	private TasksValidator tasksValidator;
+	
+	@Autowired
+	private EmployeeService employeeService;
 	
 	@RequestMapping(value = "/tasks/createTasks", method = RequestMethod.GET )
 	public ModelAndView createTasks(Model model)
@@ -64,8 +67,6 @@ public class TasksController
 		
 		return tasksService.getAssigneeList();
 	}
-
-
 
 	@ModelAttribute("clientsList")
 	private List<ClientDto> getAllClients() {

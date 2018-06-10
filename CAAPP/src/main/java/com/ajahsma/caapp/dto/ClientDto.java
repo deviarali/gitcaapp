@@ -5,6 +5,8 @@ package com.ajahsma.caapp.dto;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+
 /**
  * @author Dev
  *
@@ -40,6 +42,9 @@ public class ClientDto
 	
 	private Date clientCreatedDate;
 	
+	private Boolean isActive;
+	private Boolean isRecurrent;
+
 	private CompanyStatusDto companyStatusDto;
 	
 	private ClientTypeDto clientTypeDto;
@@ -156,6 +161,22 @@ public class ClientDto
 
 	public void setClientCreatedDate(Date clientCreatedDate) {
 		this.clientCreatedDate = clientCreatedDate;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	public Boolean getIsRecurrent() {
+		return isRecurrent;
+	}
+
+	public void setIsRecurrent(Boolean isRecurrent) {
+		this.isRecurrent = isRecurrent;
 	}
 
 	public CompanyStatusDto getCompanyStatusDto() {

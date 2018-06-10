@@ -1,6 +1,7 @@
 package com.ajahsma.caapp.model;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -21,24 +22,12 @@ import javax.persistence.Table;
 @Table(name = "applicationuser")
 public class ApplicationUserModel extends AbstractIdDomain {
 
-//	private Integer id;
 	private String userName;
 	private String password;
 	private Integer loginAttempts;
 	private Calendar createDate;
 	private Boolean isActive;
 	private Set<UserRoleModel> userRoles;
-
-	/*@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}*/
 
 	@Column(name = "username", nullable = false)
 	public String getUserName() {
@@ -95,5 +84,12 @@ public class ApplicationUserModel extends AbstractIdDomain {
 		this.userRoles = userRoles;
 	}
 	
+	public void addUserRole(UserRoleModel userRole) {
+		if(getUserRoles() == null) {
+			setUserRoles(new HashSet<UserRoleModel>());
+		}
+		
+		getUserRoles().add(userRole);
+	}
 
 }

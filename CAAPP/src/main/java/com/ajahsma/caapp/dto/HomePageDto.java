@@ -2,11 +2,15 @@ package com.ajahsma.caapp.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class HomePageDto {
 	
 	private Long clientId;
 	private String custName;
 	private String companyStatus;
+	
+	@DateTimeFormat(pattern = "mm/dd/yyyy")
 	private Date custCreatedDate;
 
 	public Long getClientId() {

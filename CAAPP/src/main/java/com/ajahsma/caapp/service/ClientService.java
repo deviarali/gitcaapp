@@ -5,7 +5,6 @@ package com.ajahsma.caapp.service;
 
 import java.util.List;
 
-
 import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.ClientTypeDto;
 import com.ajahsma.caapp.dto.CompanyStatusDto;
@@ -17,7 +16,7 @@ import com.ajahsma.caapp.model.ClientModel;
  * @param <E>
  *
  */
-public interface ClientService{
+public interface ClientService extends DefaultManager {
 
 	List<ClientTypeDto> getClientTypes();
 
@@ -26,11 +25,15 @@ public interface ClientService{
 	List<NatureOfAssignmentDto> getNatureOfAssignments();
 
 	void clientRegister(ClientDto clientDto);
+	
+	public void updateClient(ClientDto clientDto);
 
 	List<ClientModel> getRecentClients();
 
 	List<ClientModel> getAllClients();
 	
-	
+	public ClientDto getClientDto(Long id);
+
+	public void natureOfAssignmentRegister(NatureOfAssignmentDto natureOfAssignment);
 
 }

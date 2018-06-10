@@ -2,9 +2,6 @@ package com.ajahsma.caapp.controller;
 
 import java.util.List;
 
-import javax.script.Invocable;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,21 +15,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ajahsma.caapp.dto.ApplicationUserDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.model.EmployeeModel;
+import com.ajahsma.caapp.service.ApplicationUserService;
 import com.ajahsma.caapp.service.EmployeeService;
 import com.ajahsma.caapp.validator.EmployeeValidator;
 
 @Controller
 @RequestMapping(value = "/caapp")
-public class EmployeeController 
-{
+public class EmployeeController extends BaseController {
+	
 	@Autowired
 	EmployeeService employeeService;
 	
 	@Autowired
 	EmployeeValidator employeeValidator; 
+	
+	@Autowired
+	ApplicationUserService applicationUserService; 
 	
 	@RequestMapping(value = "/employee", method = RequestMethod.GET)
 	private String navigateEmployee(Model model) {
@@ -104,4 +106,11 @@ public class EmployeeController
 
 		return new ModelAndView("employee", "employee", employeeDto);
 	}
+	
+	@ModelAttribute("userList")
+	private List<ApplicationUserDto> findApplicationUserDtoList() {
+		
+		return applicationUserService.findApplicationUserDtoList();
+	}
+
 }

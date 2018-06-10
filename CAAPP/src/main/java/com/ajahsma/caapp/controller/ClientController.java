@@ -24,7 +24,9 @@ import com.ajahsma.caapp.dto.ClientTypeDto;
 import com.ajahsma.caapp.dto.CompanyStatusDto;
 import com.ajahsma.caapp.dto.HomePageDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
+import com.ajahsma.caapp.model.ClientModel;
 import com.ajahsma.caapp.service.ClientService;
+import com.ajahsma.caapp.service.HomePageService;
 import com.ajahsma.caapp.utils.CaAppUtils;
 import com.ajahsma.caapp.validator.ClientValidator;
 
@@ -35,8 +37,8 @@ import com.ajahsma.caapp.validator.ClientValidator;
 
 @Controller
 @RequestMapping(value = "caapp")
-public class ClientController 
-{
+public class ClientController extends BaseController {
+	
 	private static Logger logger = Logger.getLogger(ClientController.class);
 	
 	@Autowired
@@ -45,6 +47,17 @@ public class ClientController
 	@Autowired
 	ClientValidator clientValidator; 
 	
+	@Autowired
+	HomePageService homePageService;
+
+	@RequestMapping(value = "/client", method = RequestMethod.GET)
+	public String homePage(Model model)
+	{
+		List<HomePageDto> listOfRecentClients = homePageService.getRecentClients();
+		model.addAttribute("recentClients", listOfRecentClients);
+		return "client";
+	}
+
 	@RequestMapping(value = "/client/clientRegistrationView", method = RequestMethod.GET)
 	public ModelAndView clientRegistrationView(Model model)
 	{
@@ -61,7 +74,7 @@ public class ClientController
 	}
 	
 	@RequestMapping(value = "/client/{id}", method = RequestMethod.GET)
-	public ModelAndView showClient(Model model, @PathVariable("id") Integer id)
+	public ModelAndView showClient(Model model, @PathVariable("id") Long id)
 	{
 		List<ClientTypeDto> clientTypeDtos = getClientTypes();
 		List<CompanyStatusDto> companyStatusDtos = getCompanyStatus();
@@ -69,37 +82,33 @@ public class ClientController
 		model.addAttribute("clientTypeDtos", clientTypeDtos);
 		model.addAttribute("companyStatusDtos", companyStatusDtos);
 		model.addAttribute("natureOfAssignmentDtos", natureOfAssignmentDtos);
-		ClientDto clientDto = new ClientDto();
+		ClientDto clientDto = clientService.getClientDto(id);
 		
 		/*return "clientRegistration";*/
 		return new ModelAndView("clientRegistration", "clientRegistration", clientDto);
 	}
 	
 	@RequestMapping(value = "/client/delete/{id}", method = RequestMethod.GET)
-	public ModelAndView deleteClient(Model model, @PathVariable("id") Integer id)
+	public String deleteClient(Model model, @PathVariable("id") Long id)
 	{
-//		List<HomePageDto> listOfRecentClients = homePageService.getRecentClients();
-//		model.addAttribute("recentClients", listOfRecentClients);
-//		return "homePage";
 		
-		List<ClientTypeDto> clientTypeDtos = getClientTypes();
-		List<CompanyStatusDto> companyStatusDtos = getCompanyStatus();
-		List<NatureOfAssignmentDto> natureOfAssignmentDtos = getNatureOfAssignments();
-		model.addAttribute("clientTypeDtos", clientTypeDtos);
-		model.addAttribute("companyStatusDtos", companyStatusDtos);
-		model.addAttribute("natureOfAssignmentDtos", natureOfAssignmentDtos);
-		ClientDto clientDto = new ClientDto();
+		ClientModel client = (ClientModel) clientService.getDomain(ClientModel.class, id);
 		
-		/*return "clientRegistration";*/
-		return new ModelAndView("clientRegistration", "clientRegistration", clientDto);
+		clientService.deleteDomain(client);
+		
+		return "redirect:/caapp/client";
 	}
 	
 	@RequestMapping(value = "/client/clientRegister", method = RequestMethod.POST)
 	public ModelAndView clientRegister(@Valid @ModelAttribute("clientRegistration") ClientDto clientDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes)
 	{
 		clientValidator.validate(clientDto, bindingResult);
-		if(!bindingResult.hasErrors()) {
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("alert_msg", "Problem saving Employee");
+		}
+		else {
 			clientService.clientRegister(clientDto);
+			model.addAttribute("alert_msg", "Client registered successfully");
 		}
 		redirectAttributes.addAttribute("successmsg", "Client registered successfully");
 		
@@ -140,5 +149,21 @@ public class ClientController
 		return natureOfAssignmentDtos;
 	}
 	
+	@RequestMapping(value = "/natureOfAssignment", method = RequestMethod.GET)
+	public ModelAndView navigateToApplicationUserRegister() {
+		
+		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", new NatureOfAssignmentDto());
+
+	}
+
+	@RequestMapping(value = "/natureOfAssignment/natureOfAssignmentRegister", method = RequestMethod.POST)
+	public ModelAndView homePage(@Valid @ModelAttribute("userRole") NatureOfAssignmentDto natureOfAssignment, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+		clientService.natureOfAssignmentRegister(natureOfAssignment);
+
+		model.addAttribute("alert_msg", "User Role registerd successfully");
+		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", natureOfAssignment);
+
+	}
+
 	
 }

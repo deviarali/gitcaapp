@@ -17,6 +17,8 @@ public class EmployeeDto
 	private String employeeStatus;
 	private Date employeeCreatedDate;
 	
+	private ApplicationUserDto applicationUser;
+	
 	@DateTimeFormat(pattern = "mm/dd/yyyy")
 	private Date employeeJoingDate;
 	/**
@@ -150,6 +152,14 @@ public class EmployeeDto
 	 */
 	public void setEmployeeJoingDate(Date employeeJoingDate) {
 		this.employeeJoingDate = employeeJoingDate;
+	}
+
+	public ApplicationUserDto getApplicationUser() {
+		return applicationUser;
+	}
+	
+	public void setApplicationUser(ApplicationUserDto applicationUser) {
+		this.applicationUser = applicationUser;
 	}
 	
 	

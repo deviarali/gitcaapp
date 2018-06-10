@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @SuppressWarnings("serial")
-@Entity
+@Entity(name = "Employee")
 @Table(name = "employee")
 public class EmployeeModel extends AbstractIdDomain { 
 	

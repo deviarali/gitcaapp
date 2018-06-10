@@ -26,7 +26,7 @@ public class TasksValidator implements Validator {
 	public void validate(Object taskObject, Errors errors) 
 	{
 		TasksDto tasksDto = (TasksDto) taskObject;
-		if(tasksDto.getClientDto().getClientId() == -1)
+		if(tasksDto.getClientDto().getClientId() == null || tasksDto.getClientDto().getClientId() == -1)
 		{
 			errors.rejectValue("clientDto.clientId", "task.client.required");
 		}

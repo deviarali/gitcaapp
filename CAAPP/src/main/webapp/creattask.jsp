@@ -33,22 +33,7 @@
 	<div class="container-fluid">
 		<div class="row-fluid">
 
-			<!-- <div class="span3">
-				<div class="widget-box">
-					<div class="widget-title">
-						<p>Important News</p>
-					</div>
-					<div class="widget-content">
-						<div align="left">
-							<h5>1. GST</h5>
-							<h5>2. INCOME TAX</h5>
-							<h5>3. ESI/EPF/PT</h5>
-							<h5>4. OFFICE</h5>
-							<h5>5. ROC</h5>
-						</div>
-					</div>
-				</div>
-			</div> -->
+			
 			<div class="span1"></div>
 			<div class="span10">
 				<div class="widget-box">
@@ -62,7 +47,7 @@
 									<label class="control-label required">Client Name </label>
 									<div class="controls">
 										<form:select type="text" class="form-control" path="clientDto.clientId" id="clients">
-											<form:option value="-1">-select client-</form:option>
+											<form:option value="">-</form:option>
 											<form:options items="${clientsList }" itemValue="clientId" itemLabel="tradeName" />
 										</form:select>
 										<br>
@@ -123,8 +108,8 @@
 	
 								<div class="form-actions" style="background-color: #ffffff;border: none;">
 									<button type="submit" class="btn btn-success">Save</button>
-									<button type="submit" class="btn btn-primary">Reset</button>
-									<button type="submit" class="btn btn-danger">Cancel</button>
+									<button type="reset" class="btn btn-primary">Reset</button>
+									<!-- <button type="submit" class="btn btn-danger">Cancel</button> -->
 								</div>
 							</form:form>
 						</div>
@@ -132,20 +117,7 @@
 				</div>
 			</div>
 			<div class="span1"></div>
-
-			<!-- <div class="span2">
-				<div class="widget-box">
-					<div class="widget-title">
-						<p>Important Links</p>
-					</div>
-					<div class="widget-content">
-						<div align="left">
-							<a href="WWW.GST.GOV.IN">WWW.GST.GOV.IN</a><br /> <a href="WWW.ICAI.ORG">WWW.ICAI.ORG</a><br /> <a href="WWW.MCA.GOV.IN">WWW.MCA.GOV.IN</a><br /> <a href="WWW.PT.KAR.NIC.IN">WWW.PT.KAR.NIC.IN</a><br /> <a href="WWW.ESI">WWW.ESI</a><br /> <a
-								href="WWW.EPF">WWW.EPF</a><br /> <a href="WWW. S & E">WWW. S & E</a><br /> <a href="WWW.RBI.ORG">WWW.GST.GOV.IN</a><br /> <a href="WWW.HDFCBANK.OCM">WWW.HDFCBANK.OCM</a><br />
-						</div>
-					</div>
-				</div>
-			</div> -->
+			
 		</div>
 		<hr>
 
@@ -168,7 +140,10 @@ $(document).ready(function () {
 				if(data.length > 0) {
 					for (var i = 0; i < data.length; i++) {
 					
-						option = option + "<span style='line-height: 3'><div class='checker1' id='uniform-tasks"+(i+1)+"'><span><input id='tasks"+(i+1)+"' name='tasks' class='span11' type='checkbox' value='"+data[i].natureOfAssignmentId + "' /></span></div><input type='hidden' name='_tasks' value='on'/> "+data[i].natureOfAssignmentName + "</span><br>";
+						option = option + "<span style='line-height: 3'><div class='checker1' id='uniform-tasks"+(i+1)+"'><span><input id='tasks"+(i+1)+"' name='tasks' class='span11' type='checkbox' value='"+data[i].natureOfAssignmentId + "' /></span></div><input type='hidden' name='_tasks' value='on'/> "+data[i].natureOfAssignmentName + "</span> &nbsp; &nbsp; ";
+						if ((i+1) % 5 == 0) {
+							option = option + "<br>" + (i % 5);
+						}
 					}
 					slctSubcat.append(option);
 				}

@@ -84,13 +84,13 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 	
 	@Override
 	public List<NatureOfAssignmentDto> getTasksByCustomerId(Long id) {
-		List<ClientNatureOfAssignmentModel> clientNatureOfAssignmentModels = tasksDao.getTasksByCustomerId(id);
+		ClientModel clientModel = (ClientModel) clientService.getDomain(ClientModel.class, id);
 		List<NatureOfAssignmentDto> natureOfAssignmentDtos = new ArrayList<>();
-		for(ClientNatureOfAssignmentModel assignmentModel : clientNatureOfAssignmentModels)
+		for(NatureOfAssignmentModel natureOfAssignment : clientModel.getNatureOfAssignments())
 		{
 			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
-			natureOfAssignmentDto.setNatureOfAssignmentId(assignmentModel.getNatureOfAssignmentModel().getId());
-			natureOfAssignmentDto.setNatureOfAssignmentName(assignmentModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
+			natureOfAssignmentDto.setNatureOfAssignmentId(natureOfAssignment.getId());
+			natureOfAssignmentDto.setNatureOfAssignmentName(natureOfAssignment.getNatureOfAssignmentName());
 			natureOfAssignmentDtos.add(natureOfAssignmentDto);
 		}
 		return natureOfAssignmentDtos;
@@ -98,8 +98,8 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 
 	@Override
 	public List<TasksDto> findPendingTasks() {
-		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
-		List<TaskModel> pendingTasksList = tasksDao.findPendingTasks(applicationUser.getId());
+		Long employeeId = employeeService.getEmployeeFromApplicationUser(SecurityContextHelper.getApplicationUser().getId());
+		List<TaskModel> pendingTasksList = tasksDao.findPendingTasks(employeeId);
 		List<TasksDto> pendingTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : pendingTasksList)
 		{
@@ -119,8 +119,8 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 
 	@Override
 	public List<TasksDto> findCompletedTasks() {
-		ApplicationUserModel applicationUser = securityContextHelper.getApplicationUser();
-		List<TaskModel> completedTasksList = tasksDao.findCompletedTasks(applicationUser.getId());
+		Long employeeId = employeeService.getEmployeeFromApplicationUser(SecurityContextHelper.getApplicationUser().getId());
+		List<TaskModel> completedTasksList = tasksDao.findCompletedTasks(employeeId);
 		List<TasksDto> completedTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : completedTasksList)
 		{
@@ -169,7 +169,8 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 
 	@Override
 	public List<TasksDto> findAssignedTasks() {
-		List<TaskModel> listOftasksModel = tasksDao.findAssignedTasks(securityContextHelper.getApplicationUser().getId());
+		Long employeeId = employeeService.getEmployeeFromApplicationUser(SecurityContextHelper.getApplicationUser().getId());
+		List<TaskModel> listOftasksModel = tasksDao.findAssignedTasks(employeeId);
 		List<TasksDto> listOfTasksDto = new ArrayList<>();
 		for(TaskModel tasksModel : listOftasksModel)
 		{
@@ -202,7 +203,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		
 		tasksModel.setId(tasksDto.getId());
 		tasksModel.setClientModel(clientModel);
-		tasksModel.setTaskAssigneeId(employeeModel);
+		tasksModel.setEmployeeModel(employeeModel);
 		tasksModel.setTaskCreatedDate(new Date());
 		tasksModel.setTaskStartDate(tasksDto.getTaskStartDate());
 //		TasksStatusModel tasksStatusModel = new TasksStatusModel();
@@ -227,7 +228,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
 		TasksStatusDto tasksStatusDto = new  TasksStatusDto();
 		natureOfAssignmentDto.setNatureOfAssignmentName(tasksModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
-		employeeDto.setEmployeeName(tasksModel.getTaskAssigneeId().getEmployeeName());
+		employeeDto.setEmployeeName(tasksModel.getEmployeeModel().getEmployeeName());
 		clientDto.setClientName(tasksModel.getClientModel().getClientName());
 //		tasksStatusDto.setTasksStatusName(tasksModel.getTasksStatusModel().getTasksStatusName());
 		tasksDto.setId(tasksModel.getId());

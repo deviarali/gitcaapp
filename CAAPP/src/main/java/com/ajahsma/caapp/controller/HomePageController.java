@@ -11,11 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.ajahsma.caapp.dto.ClientTypeDto;
-import com.ajahsma.caapp.dto.CompanyStatusDto;
 import com.ajahsma.caapp.dto.HomePageDto;
-import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
-import com.ajahsma.caapp.model.ClientTypeModel;
+import com.ajahsma.caapp.service.EmployeeService;
 import com.ajahsma.caapp.service.HomePageService;
 
 /**
@@ -24,11 +21,14 @@ import com.ajahsma.caapp.service.HomePageService;
  */
 
 @Controller
-@RequestMapping(value = "/caapp/")
-public class HomePageController 
-{
+@RequestMapping(value = "/caapp")
+public class HomePageController extends BaseController {
+	
 	@Autowired
 	HomePageService homePageService;
+	
+	@Autowired
+	EmployeeService employeeService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage(Model model)
@@ -37,4 +37,5 @@ public class HomePageController
 		model.addAttribute("recentClients", listOfRecentClients);
 		return "homePage";
 	}
+	
 }

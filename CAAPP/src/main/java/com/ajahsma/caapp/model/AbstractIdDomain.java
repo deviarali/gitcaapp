@@ -25,6 +25,4 @@ public abstract class AbstractIdDomain implements IdDomain {
 		this.id = id;
 	}
 	
-	
-	
 }

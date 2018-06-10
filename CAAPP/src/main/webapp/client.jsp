@@ -24,38 +24,9 @@ table thead tr th {
 		<div class="container-fluid">
 			<div class="row-fluid">
 		
-				<div class="span3">
-					<c:if test="${isAdmin}">
-						<div class="widget-box">
-							<div class="widget-title">
-								<p>Admin Management</p>
-							</div>
-							<div class="widget-content">
-								<div align="left">
-									<a href="/caapp/applicationUser">Application User</a><br /> 
-									<a href="/caapp/userRole">User Roles</a><br /> 
-									<a href="/caapp/natureOfAssignment">Nature Of Assignments</a><br /> 
-									<!-- <a href="WWW.GST.GOV.IN">Important News (marquee)</a><br /> --> 
-								</div>
-							</div>
-						</div>
-					</c:if>
-					<div class="widget-box">
-						<div class="widget-title">
-							<p>Important News</p>
-						</div>
-						<div class="widget-content">
-							<div align="left">
-								<h5>1. GST</h5>
-								<h5>2. INCOME TAX</h5>
-								<h5>3. ESI/EPF/PT</h5>
-								<h5>4. OFFICE</h5>
-								<h5>5. ROC</h5>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="span7">
+				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
+				<div class="span1"></div>
+				<div class="span10">
 					<div class="widget-box">
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-th"></i>
@@ -102,16 +73,9 @@ table thead tr th {
 					</div>
 				</div>
 		
-				<jsp:include page="/right_col.jsp"></jsp:include>
-
-				<div class="span10">
-					<marquee>
-						<div class="span4" align="center">
-							<p style="color: #000000">Arise, awake and stop not till the goal is reached.</p>
-							<p style="color: #777">By Swami Vivekananda</p>
-						</div>
-					</marquee>
-				</div>
+				<%-- <jsp:include page="/right_col.jsp"></jsp:include> --%>
+				<div class="span1"></div>
+				
 			</div>
 		</div>
 	</div>
@@ -121,8 +85,7 @@ table thead tr th {
 
 
 	<script type="text/javascript">
-  // This function is called from the pop-up menus to transfer to
-  // a different page. Ignore if the value returned is a null string:
+  // This function is called from the pop-up menus to transfer to a different page. Ignore if the value returned is a null string:
   function goPage (newURL) {
 
       // if url is empty, skip the menu dividers and reset the menu selection to default

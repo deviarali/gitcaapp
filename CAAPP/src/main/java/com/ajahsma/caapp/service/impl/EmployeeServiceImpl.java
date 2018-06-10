@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.ajahsma.caapp.constants.ErrorCodes;
 import com.ajahsma.caapp.dao.EmployeeDao;
+import com.ajahsma.caapp.dto.ApplicationUserDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.exception.BusinessException;
+import com.ajahsma.caapp.model.ApplicationUserModel;
 import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.service.EmployeeService;
 import com.ajahsma.caapp.utils.CaAppUtils;
@@ -31,24 +33,25 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 	}
 	
 	@Override
-	public void employeeRegister(EmployeeDto employeeDto) throws BusinessException{
-		EmployeeModel employeeModel = new EmployeeModel();
-		EmployeeModel isPresent = employeeDao.findByEmailOrMobile(employeeDto.getEmployeeEmail(), employeeDto.getEmployeeMobile());
-		if(CaAppUtils.isNotNull(isPresent))
-		{
-			throw new BusinessException(ErrorCodes.EORMEXISTS.name(), ErrorCodes.EORMEXISTS.value());
+	public void employeeRegister(EmployeeDto employeeDto) throws BusinessException {
+
+		EmployeeModel employeeModel = convertEmployeeDtoToEmployeeModel(employeeDto);
+
+		Integer totalEmployeesExists = employeeDao.findEmployeeCountByEmailOrMobile(employeeDto.getEmployeeEmail(), employeeDto.getEmployeeMobile());
+		if (employeeModel.getId() == null) {
+
+//			EmployeeModel isPresent = employeeDao.findByEmailOrMobile(employeeDto.getEmployeeEmail(), employeeDto.getEmployeeMobile());
+			if (totalEmployeesExists > 0) {
+				throw new BusinessException(ErrorCodes.EORMEXISTS.name(), ErrorCodes.EORMEXISTS.value());
+			}
+
+			this.saveDomain(employeeModel);
+		} else {
+			if (totalEmployeesExists > 1) {
+				throw new BusinessException(ErrorCodes.EORMEXISTS.name(), ErrorCodes.EORMEXISTS.value());
+			}
+			this.updateDomain(employeeModel);
 		}
-		employeeModel.setEmployeeName(employeeDto.getEmployeeName());
-		employeeModel.setEmployeeAddress(employeeDto.getEmployeeAddress());
-		employeeModel.setEmployeeMobile(employeeDto.getEmployeeMobile());
-		employeeModel.setEmployeeEmail(employeeDto.getEmployeeEmail());
-		employeeModel.setEmployeeAadhar(employeeDto.getEmployeeAadhar());
-		employeeModel.setEmployeePan(employeeDto.getEmployeePan());
-		employeeModel.setEmployeeParentAddress(employeeDto.getEmployeeParentAddress());
-		employeeModel.setEmployeeJoingDate(new Date());
-		employeeModel.setEmployeeJoingDate(employeeDto.getEmployeeJoingDate());
-		employeeModel.setEmployeeStatus("ACTIVE");
-		employeeDao.saveDomain(employeeModel);
 	}
 
 	@Override
@@ -63,26 +66,41 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 		List<EmployeeDto> assigneeListDto = new ArrayList<>();
 		for(EmployeeModel employeeModel : assigneeListModel)
 		{
-			EmployeeDto employeeDto = new EmployeeDto();
-			employeeDto.setEmployeeId(employeeModel.getId());
-			employeeDto.setEmployeeName(employeeModel.getEmployeeName());
-			employeeDto.setEmployeeMobile(employeeModel.getEmployeeMobile());
-			employeeDto.setEmployeeEmail(employeeModel.getEmployeeEmail());
-			employeeDto.setEmployeeAddress(employeeModel.getEmployeeAddress());
-			employeeDto.setEmployeePan(employeeModel.getEmployeePan());
-			employeeDto.setEmployeeAadhar(employeeModel.getEmployeeAadhar());
-			employeeDto.setEmployeeParentAddress(employeeModel.getEmployeeParentAddress());
-			employeeDto.setEmployeeStatus(employeeModel.getEmployeeStatus());
-			employeeDto.setEmployeeCreatedDate(employeeModel.getEmployeeCreatedDate());
-			employeeDto.setEmployeeJoingDate(employeeModel.getEmployeeJoingDate());
+			EmployeeDto employeeDto = convertEmployeeModelToEmployeeDto(employeeModel);
+
 			assigneeListDto.add(employeeDto);
+			
 		}
 		return assigneeListDto;
 	}
+
+	private EmployeeModel convertEmployeeDtoToEmployeeModel(EmployeeDto employeeDto) {
+		
+		EmployeeModel employeeModel = new EmployeeModel();
+		employeeModel.setId(employeeDto.getEmployeeId());
+		employeeModel.setEmployeeName(employeeDto.getEmployeeName());
+		employeeModel.setEmployeeAddress(employeeDto.getEmployeeAddress());
+		employeeModel.setEmployeeMobile(employeeDto.getEmployeeMobile());
+		employeeModel.setEmployeeEmail(employeeDto.getEmployeeEmail());
+		employeeModel.setEmployeeAadhar(employeeDto.getEmployeeAadhar());
+		employeeModel.setEmployeePan(employeeDto.getEmployeePan());
+		employeeModel.setEmployeeParentAddress(employeeDto.getEmployeeParentAddress());
+		employeeModel.setEmployeeJoingDate(new Date());
+		employeeModel.setEmployeeJoingDate(employeeDto.getEmployeeJoingDate());
+		employeeModel.setEmployeeStatus("ACTIVE");
+		
+		if(employeeDto.getApplicationUser() != null && employeeDto.getApplicationUser().getId() != null) {
+			ApplicationUserModel applicationUserModel = new ApplicationUserModel();
+			applicationUserModel.setId(employeeDto.getApplicationUser().getId());
+			employeeModel.setApplicationUser(applicationUserModel);
+		}
+
+		return employeeModel;
+	}
 	
-	@Override
-	public EmployeeDto getEmployee(Long id) {
-		EmployeeModel employeeModel= employeeDao.getEmployee(id);
+	private EmployeeDto convertEmployeeModelToEmployeeDto(EmployeeModel employeeModel) {
+		
+		
 		EmployeeDto employeeDto = new EmployeeDto();
 		employeeDto.setEmployeeId(employeeModel.getId());
 		employeeDto.setEmployeeName(employeeModel.getEmployeeName());
@@ -96,9 +114,28 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 		employeeDto.setEmployeeCreatedDate(employeeModel.getEmployeeCreatedDate());
 		employeeDto.setEmployeeJoingDate(employeeModel.getEmployeeJoingDate());
 		
+		if(employeeModel.getApplicationUser() != null && employeeModel.getApplicationUser().getId() != null) {
+			ApplicationUserDto applicationUserDto = new ApplicationUserDto();
+			applicationUserDto.setId(employeeModel.getApplicationUser().getId());
+			applicationUserDto.setUserName(employeeModel.getApplicationUser().getUserName());
+			employeeDto.setApplicationUser(applicationUserDto);
+		}
+
+		return employeeDto;
+	}
+
+	@Override
+	public EmployeeDto getEmployee(Long id) {
+		EmployeeModel employeeModel= employeeDao.getEmployee(id);
+		EmployeeDto employeeDto = convertEmployeeModelToEmployeeDto(employeeModel);
+		
+		
 		return employeeDto;
 		
 	}
 
-
+	@Override
+	public Long getEmployeeFromApplicationUser(Long applicationUserId) {
+		return getEmployeeDao().getEmployeeFromApplicationUser(applicationUserId);
+	}
 }

@@ -38,6 +38,7 @@
 											<th>Select</th>
 											<th>Client</th>
 											<th>Task</th>
+											<th>Employee</th>
 											<th>Employee Remarks</th>
 											<th>Manager Remarks</th>
 											<th>Status</th>
@@ -53,6 +54,7 @@
 												</td>
 												<td><c:out value="${assignedtasks.clientDto.clientName}"></c:out></td>
 												<td><c:out value="${assignedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
+												<td><c:out value="${assignedtasks.taskAssigneeId.employeeName}"></c:out></td>
 												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByEmployee}</textarea></td>
 												<td><textarea name="taskRemarksByAdmin" disabled="disabled" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByAdmin}</textarea></td>
 												<td style="text-align: center;">

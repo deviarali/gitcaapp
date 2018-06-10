@@ -95,14 +95,14 @@ public class TaskModel extends AbstractIdDomain {
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "employee_id")
-	public EmployeeModel getTaskAssigneeId() {
+	public EmployeeModel getEmployeeModel() {
 		return employeeModel;
 	}
 
 	/**
 	 * @param taskAssigneeId the taskAssigneeId to set
 	 */
-	public void setTaskAssigneeId(EmployeeModel employeeModel) {
+	public void setEmployeeModel(EmployeeModel employeeModel) {
 		this.employeeModel = employeeModel;
 	}
 

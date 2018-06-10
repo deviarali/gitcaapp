@@ -23,9 +23,10 @@ table thead tr th {
 		<div class="container-fluid">
 			<div class="row-fluid">
 		
-				<jsp:include page="/left_col.jsp"></jsp:include>
+				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
+				<div class="span1"></div>
 
-				<div class="span7">
+				<div class="span10">
 					<div class="widget-box">
 						<div class="widget-title">
 							<p align="center">Employee Management</p>
@@ -69,16 +70,10 @@ table thead tr th {
 					</div>
 				</div>
 		
-				<jsp:include page="/right_col.jsp"></jsp:include>
+				<%-- <jsp:include page="/right_col.jsp"></jsp:include> --%>
+				<div class="span1"></div>
 
-				<div class="span10">
-					<marquee>
-						<div class="span4" align="center">
-							<p style="color: #000000">Arise, awake and stop not till the goal is reached.</p>
-							<p style="color: #777">By Swami Vivekananda</p>
-						</div>
-					</marquee>
-				</div>
+				
 			</div>
 		</div>
 	</div>

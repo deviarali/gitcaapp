@@ -14,7 +14,7 @@ import com.ajahsma.caapp.model.NatureOfAssignmentModel;
  * @author Dev
  *
  */
-public interface ClientDao extends GenericsDao
+public interface ClientDao extends DefaultDao
 {
 
 	List<ClientTypeModel> getClientTypes();

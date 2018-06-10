@@ -2,14 +2,11 @@ package com.ajahsma.caapp.dao.impl;
 
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.ajahsma.caapp.dao.ClientDao;
 import com.ajahsma.caapp.model.ClientModel;
@@ -18,7 +15,7 @@ import com.ajahsma.caapp.model.CompanyStatusModel;
 import com.ajahsma.caapp.model.NatureOfAssignmentModel;
 
 @Repository
-public class ClientDaoImpl extends GenericsDaoImpl implements ClientDao{
+public class ClientDaoImpl extends DefaultDaoImpl  implements ClientDao{
 
 	
 	@Autowired

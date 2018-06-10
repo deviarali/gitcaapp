@@ -11,6 +11,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.ajahsma.caapp.dao.ClientDao;
 import com.ajahsma.caapp.dto.ClientDto;
@@ -18,7 +19,6 @@ import com.ajahsma.caapp.dto.ClientTypeDto;
 import com.ajahsma.caapp.dto.CompanyStatusDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.model.ClientModel;
-import com.ajahsma.caapp.model.ClientNatureOfAssignmentModel;
 import com.ajahsma.caapp.model.ClientTypeModel;
 import com.ajahsma.caapp.model.CompanyStatusModel;
 import com.ajahsma.caapp.model.NatureOfAssignmentModel;
@@ -29,10 +29,19 @@ import com.ajahsma.caapp.service.ClientService;
  *
  */
 @Service
-public class ClientServiceImpl implements ClientService {
+public class ClientServiceImpl extends DefaultManagerImpl implements ClientService {
 
 	@Autowired
 	private ClientDao clientDao;
+	
+	@Autowired
+	public void setDefaultDao(ClientDao defaultDao) {
+		this.defaultDao = defaultDao;
+	}
+
+	private ClientDao getClientDao() {
+		return (ClientDao) getDefaultDao();
+	}
 	
 	@Override
 	public List<ClientTypeDto> getClientTypes() {
@@ -84,13 +93,89 @@ public class ClientServiceImpl implements ClientService {
 	@Transactional
 	public void clientRegister(ClientDto clientDto) 
 	{
+		ClientModel clientModel = convertClientDtoToClientModel(clientDto);
+		if(clientModel.getId() == null) {
+			this.saveDomain(clientModel);
+		}
+		else {
+			this.updateDomain(clientModel);
+		}
+		
+	}
+	
+	@Transactional
+	public void updateClient(ClientDto clientDto) {
+		
+		ClientModel clientModel = convertClientDtoToClientModel(clientDto);
+		
+		this.updateDomain(clientModel);
+		
+	}
+	
+	@Override
+	public ClientDto getClientDto(Long id) {
+		
+		ClientModel client = (ClientModel) this.getDomain(ClientModel.class, id);
+		
+		ClientDto clientDto = convertClientModelToClientDto(client);
+		
+		return clientDto;
+	}
+
+	private ClientDto convertClientModelToClientDto(ClientModel client) {
+		
+		ClientDto clientDto = new ClientDto();
+		clientDto.setClientId(client.getId());
+		clientDto.setClientName(client.getClientName());
+		clientDto.setTradeName(client.getTradeName());
+		CompanyStatusDto companyStatusDto = new CompanyStatusDto();
+		companyStatusDto.setCompanyStatusId(client.getCompanyStatusModel().getId());
+		companyStatusDto.setCompanyStatusName(client.getCompanyStatusModel().getCompanyStatusName());
+		clientDto.setCompanyStatusDto(companyStatusDto);
+		clientDto.setClientMobile(client.getClientMobile());
+		clientDto.setClientEmail(client.getClientEmail());
+		clientDto.setPanNumber(client.getPanNumber());
+		clientDto.setAadharNumber(client.getAadharNumber());
+		clientDto.setGstNumber(client.getGstNumber());
+		clientDto.setTanNumber(client.getTanNumber());
+		clientDto.setAccountDetails(client.getAccountDetails());
+		clientDto.setClientEsi(client.getClientEsi());
+		clientDto.setClientEpf(client.getClientEpf());
+		clientDto.setClientSE(client.getClientSE());
+		clientDto.setClientCreatedDate(new Date());
+		clientDto.setIsActive(client.getIsActive());
+		clientDto.setIsRecurrent(client.getIsRecurrent());
+
+		ClientTypeDto clientTypeDto = new ClientTypeDto();
+		clientTypeDto.setClientTypeId(client.getClientTypeModel().getId());
+		clientTypeDto.setClientTypeName(client.getClientTypeModel().getClientTypeName());
+		clientDto.setClientTypeDto(clientTypeDto);	
+		
+		if(!CollectionUtils.isEmpty(client.getNatureOfAssignments())) {
+			String[] natureOfAssignmentList = new String[client.getNatureOfAssignments().size()];
+			int index = 0;
+			for (NatureOfAssignmentModel natureOfAssignment : client.getNatureOfAssignments()) {
+				natureOfAssignmentList[index] = natureOfAssignment.getId().toString();
+				index++;
+			}
+			clientDto.setNatureOfAssignmentList(natureOfAssignmentList);
+			
+		}
+		
+		return clientDto;
+	}
+
+	private ClientModel convertClientDtoToClientModel(ClientDto clientDto) {
+
 		ClientModel clientModel = new ClientModel();
-		CompanyStatusModel companyStatusModel = new CompanyStatusModel();
-		ClientTypeModel clientTypeModel = new ClientTypeModel();
+		clientModel.setId(clientDto.getClientId());
 		clientModel.setClientName(clientDto.getClientName());
 		clientModel.setTradeName(clientDto.getTradeName());
+
+		CompanyStatusModel companyStatusModel = new CompanyStatusModel();
 		companyStatusModel.setId(clientDto.getCompanyStatusDto().getCompanyStatusId());
 		clientModel.setCompanyStatusModel(companyStatusModel);
+		
 		clientModel.setClientMobile(clientDto.getClientMobile());
 		clientModel.setClientEmail(clientDto.getClientEmail());
 		clientModel.setPanNumber(clientDto.getPanNumber());
@@ -102,36 +187,23 @@ public class ClientServiceImpl implements ClientService {
 		clientModel.setClientEpf(clientDto.getClientEpf());
 		clientModel.setClientSE(clientDto.getClientSE());
 		clientModel.setClientCreatedDate(new Date());
+		clientModel.setIsActive(clientDto.getIsActive());
+		clientModel.setIsRecurrent(clientDto.getIsRecurrent());
+
+		ClientTypeModel clientTypeModel = new ClientTypeModel();
 		clientTypeModel.setId(clientDto.getClientTypeDto().getClientTypeId());
-		clientModel.setClientTypeModel(clientTypeModel);	
-		
-		clientDao.save(clientModel);
-		
-		/*List<NatureOfAssignmentDto> natureOfAssignmentDtoList = clientDto.getNatureOfAssignmentList();*/
-		/*List<NatureOfAssignmentDto> natureOfAssignmentDtoList = null;
-		List<NatureOfAssignmentModel> natureOfAssignmentModelList = new ArrayList<>();
-		for(NatureOfAssignmentDto natureOfAssignmentDto : natureOfAssignmentDtoList)
-		{
-			NatureOfAssignmentModel assignmentModel = new NatureOfAssignmentModel();
-			assignmentModel.setNatureOfAssignmentId(natureOfAssignmentDto.getNatureOfAssignmentId());
-			natureOfAssignmentModelList.add(assignmentModel);
-		}*/
+		clientModel.setClientTypeModel(clientTypeModel);
 		
 		String[] natureOfAssignmentList = clientDto.getNatureOfAssignmentList();
 		for(String natureOfAssignment : natureOfAssignmentList)
 		{
 			NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
-			ClientNatureOfAssignmentModel clientNatureOfAssignmentModel = new ClientNatureOfAssignmentModel();
-			clientNatureOfAssignmentModel.setClientModel(clientModel);
 			natureOfAssignmentModel.setId(Long.parseLong(natureOfAssignment));
-			clientNatureOfAssignmentModel.setNatureOfAssignmentModel(natureOfAssignmentModel);
-			clientNatureOfAssignmentModel.setNatureOfAssignmentCreatedDate(new Date());
-			clientNatureOfAssignmentModel.setNatureStatus("CREATED");
+			clientModel.addNatureOfAssignment(natureOfAssignmentModel);
 			
-			clientDao.save(clientNatureOfAssignmentModel);
 		}
 		
-		
+		return clientModel;
 	}
 
 	@Override
@@ -143,6 +215,20 @@ public class ClientServiceImpl implements ClientService {
 	public List<ClientModel> getAllClients() {
 		List<ClientModel> clientsList = clientDao.getAllClients();
 		return clientsList;
+	}
+
+	@Override
+	public void natureOfAssignmentRegister(NatureOfAssignmentDto natureOfAssignment) {
+		NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
+		natureOfAssignmentModel.setId(natureOfAssignment.getNatureOfAssignmentId());
+		natureOfAssignmentModel.setNatureOfAssignmentName(natureOfAssignment.getNatureOfAssignmentName());
+
+		if(natureOfAssignmentModel.getId() == null) {
+			this.saveDomain(natureOfAssignmentModel);
+		}
+		else {
+			this.updateDomain(natureOfAssignmentModel);
+		}		
 	}
 
 }

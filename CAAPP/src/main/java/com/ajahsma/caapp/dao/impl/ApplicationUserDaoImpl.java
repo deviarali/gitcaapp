@@ -17,7 +17,7 @@ import com.ajahsma.caapp.model.ApplicationUserModel;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class ApplicationUserDaoImpl extends GenericsDaoImpl implements ApplicationUserDao {
+public class ApplicationUserDaoImpl extends DefaultDaoImpl implements ApplicationUserDao {
 
 	@Override
 	public List<ApplicationUserModel> login(ApplicationUserModel applicationUser) {
@@ -63,5 +63,13 @@ public class ApplicationUserDaoImpl extends GenericsDaoImpl implements Applicati
 
 		return users;
 
+	}
+
+	@Override
+	public List<ApplicationUserModel> findApplicationUsers() {
+
+		Query query = createQuery("select distinct au from ApplicationUser au ");
+		
+		return query.list();
 	}
 }

@@ -4,12 +4,16 @@
 package com.ajahsma.caapp.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -36,9 +40,13 @@ public class ClientModel extends AbstractIdDomain {
 	private String clientEpf;
 	private String clientSE;
 	private Date clientCreatedDate;
+	private Boolean isActive;
+	private Boolean isRecurrent;
 	
 	private CompanyStatusModel companyStatusModel;
 	private ClientTypeModel clientTypeModel;
+	
+	private Set<NatureOfAssignmentModel> natureOfAssignments;
 	
 	@Column(name = "clientname")
 	public String getClientName() {
@@ -157,6 +165,24 @@ public class ClientModel extends AbstractIdDomain {
 		this.clientCreatedDate = clientCreatedDate;
 	}
 
+	@Column(name = "isactive", nullable = false)
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
+
+	@Column(name = "isrecurrent", nullable = false)
+	public Boolean getIsRecurrent() {
+		return isRecurrent;
+	}
+
+	public void setIsRecurrent(Boolean isRecurrent) {
+		this.isRecurrent = isRecurrent;
+	}
+
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
 	@JoinColumn(name = "companystatus_id")
 	public CompanyStatusModel getCompanyStatusModel() {
@@ -176,4 +202,25 @@ public class ClientModel extends AbstractIdDomain {
 	public void setClientTypeModel(ClientTypeModel clientTypeModel) {
 		this.clientTypeModel = clientTypeModel;
 	}
+
+	@ManyToMany(cascade=CascadeType.DETACH, fetch=FetchType.EAGER)
+    @JoinTable(name = "clientnatureofassignment", joinColumns = @JoinColumn(name = "client_id"), inverseJoinColumns = @JoinColumn(name = "natureofassignment_id"))
+	public Set<NatureOfAssignmentModel> getNatureOfAssignments() {
+		return natureOfAssignments;
+	}
+
+	public void setNatureOfAssignments(Set<NatureOfAssignmentModel> natureOfAssignments) {
+		this.natureOfAssignments = natureOfAssignments;
+	}
+	
+	public void addNatureOfAssignment(NatureOfAssignmentModel natureOfAssignment) {
+		if(getNatureOfAssignments() == null) {
+			setNatureOfAssignments(new HashSet<NatureOfAssignmentModel>());
+		}
+		
+		getNatureOfAssignments().add(natureOfAssignment);
+	}
+
+	
+	
 }

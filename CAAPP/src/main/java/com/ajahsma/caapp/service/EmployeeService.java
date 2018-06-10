@@ -14,5 +14,7 @@ public interface EmployeeService extends DefaultManager {
 	public List<EmployeeDto> findEmployees();
 	
 	public EmployeeDto getEmployee(Long id);
+
+	public Long getEmployeeFromApplicationUser(Long applicationUserId);
 	
 }

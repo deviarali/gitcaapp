@@ -36,6 +36,7 @@
 											<th>Select</th>
 											<th>Client</th>
 											<th>Task</th>
+											<th>Employee</th>
 											<th>Employee Remarks</th>
 											<th>Manager Remarks</th>
 											<th>Status</th>
@@ -51,8 +52,9 @@
 												</td>
 												<td><c:out value="${pendingtasks.clientDto.clientName}"></c:out></td>
 												<td><c:out value="${pendingtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
+												<td><c:out value="${pendingtasks.taskAssigneeId.employeeName}"></c:out></td>
 												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
-												<td><textarea disabled="disabled" name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByAdmin}</textarea></td>
+												<td><textarea name="taskRemarksByAdmin" disabled="disabled" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByAdmin}</textarea></td>
 												<td style="text-align: center;">
 													<select name="taskStatus" value="${pendingtasks.taskStatus}"  style="width: 200px">
 														<c:forEach items="${pendingTaskStatusList}" var="status" varStatus="vs">

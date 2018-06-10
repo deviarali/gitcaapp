@@ -11,7 +11,6 @@ package com.ajahsma.caapp.dto;
 public class ClientTypeDto 
 {
 	private Long clientTypeId;
-	
 	private String clientTypeName;
 
 	public Long getClientTypeId() {

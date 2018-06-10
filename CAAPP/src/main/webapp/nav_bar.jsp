@@ -26,7 +26,7 @@
 				<li><a class="sOutbox" title="" href="#">outbox</a></li>
 				<li><a class="sTrash" title="" href="#">trash</a></li>
 			</ul></li>
-		<li class="" style="display: none;"><a title="" href="#"> <span class="text">${user.userName}</span></a></li>
+		<li class="" style="display: none;"><a title="" href="/caapp/employee/${employeeId}"> <span class="text">${user.userName}</span></a></li>
 		<li class=""><a title="" href="/logout"><i class="icon icon-share-alt"></i> <span class="text">Logout ( ${user.userName} )</span></a></li>
 	</ul>
 </div>
