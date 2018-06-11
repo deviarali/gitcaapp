@@ -17,7 +17,7 @@
 <!--top-Header-menu-->
 <div id="user-nav" class="navbar navbar-inverse">
 	<ul class="nav">
-		<li class=""><a href="/caapp/employee/${user.id}"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
+		<li class=""><a href="/caapp/employee/applicaionUser/${user.id}"><i class="icon icon-user"></i> <span class="text">Profile</span></a></li>
 		<li class=" dropdown" id="menu-messages" style="display: none;"><a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle"><i class="icon icon-envelope"></i> <span class="text">Messages</span> <span class="label label-important">5</span>
 				<b class="caret"></b></a>
 			<ul class="dropdown-menu">

@@ -63,6 +63,15 @@ public class EmployeeController extends BaseController {
 		return "createEmployee";
 	}
 	
+	@RequestMapping(value = "/employee/applicaionUser/{id}", method = RequestMethod.GET)
+	private String getEmployeeFromApplicaionUser(Model model, @PathVariable("id") Long id) {
+		Long empId = employeeService.getEmployeeFromApplicationUser(id);
+		EmployeeDto employeeDto = employeeService.getEmployee(empId);
+		
+		model.addAttribute("employee", employeeDto);
+		return "createEmployee";
+	}
+	
 	@RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.GET)
 	private String deleteEmployee(Model model, @PathVariable("id") Long id) {
 		
