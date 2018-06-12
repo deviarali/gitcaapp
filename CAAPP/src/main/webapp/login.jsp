@@ -51,17 +51,14 @@
 	</div>
 
 
-	<div id="content">
+	<div id="content" style="min-height: 646px;">
 		<div id="content-header">
 			<div id="breadcrumb">
 				<a href="login.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> Login </a>
 			</div>
 		</div>
 		<div class="container-fluid">
-
-
 			<div>
-
 				<div class="container-fluid">
 					<div class="row-fluid">
 
@@ -147,19 +144,22 @@
 					<hr>
 
 				</div>
-				<div class="row-fluid">
-					<div id="footer" class="span12">
-						2018 &copy; AJAHSMA. Brought to you by <a href="http://Ajahsma.in">Ajahsma.in</a>
-					</div>
-				</div>
-				<script src="/js/jquery.min.js"></script>
-				<script src="/js/jquery.ui.custom.js"></script>
-				<script src="/js/bootstrap.min.js"></script>
-				<script src="/js/bootstrap-colorpicker.js"></script>
-				<script src="/js/bootstrap-datepicker.js"></script>
-				<script src="/js/jquery.uniform.js"></script>
-				<script src="/js/select2.min.js"></script>
-				<script src="/js/maruti.js"></script>
-				<script src="/js/maruti.form_common.js"></script>
+			</div>
+		</div>	
+	</div>
+	<div class="row-fluid">
+		<div id="footer" class="span12">
+			2018 &copy; AJAHSMA. Brought to you by <a href="http://Ajahsma.in">Ajahsma.in</a>
+		</div>
+	</div>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/jquery.ui.custom.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap-colorpicker.js"></script>
+	<script src="/js/bootstrap-datepicker.js"></script>
+	<script src="/js/jquery.uniform.js"></script>
+	<script src="/js/select2.min.js"></script>
+	<script src="/js/maruti.js"></script>
+	<script src="/js/maruti.form_common.js"></script>
 </body>
 </html>

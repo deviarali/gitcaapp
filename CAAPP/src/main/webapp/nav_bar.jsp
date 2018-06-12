@@ -30,7 +30,7 @@
 		<li class=""><a title="" href="/logout"><i class="icon icon-share-alt"></i> <span class="text">Logout ( ${user.userName} )</span></a></li>
 	</ul>
 </div>
-<div id="search">
+<div id="search" style="display: none;">
 	<input type="text" placeholder="Search here..." style="height: 35px;"/>
 	<button type="submit" class="tip-left" title="Search">
 		<i class="icon-search icon-white"></i>

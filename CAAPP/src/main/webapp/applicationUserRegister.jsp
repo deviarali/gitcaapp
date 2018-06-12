@@ -5,7 +5,6 @@
 <jsp:include page="/import_top_body.jsp"></jsp:include>
 <jsp:include page="/nav_bar.jsp"></jsp:include>
 
->
 <div id="content">
 
 	<jsp:include page="/sticky_nav_bar.jsp"></jsp:include>

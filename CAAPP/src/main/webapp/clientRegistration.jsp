@@ -169,9 +169,7 @@
 										<label class="control-label required">Client</label>
 										<div class="controls" align="left">
 											<c:forEach items="${clientTypeDtos}" var="clientType" varStatus="status">
-												<label> <form:radiobutton path="clientTypeDto.clientTypeId" value="${clientType.clientTypeId}" /> <c:out value="${clientType.clientTypeName}" />
-												</label>
-												<br>
+												<form:radiobutton path="clientTypeDto.clientTypeId" value="${clientType.clientTypeId}" /> <c:out value="${clientType.clientTypeName}" />  &nbsp; &nbsp;
 											</c:forEach>
 											<br>
 											<form:errors class="errors" path="clientTypeDto.clientTypeId" />

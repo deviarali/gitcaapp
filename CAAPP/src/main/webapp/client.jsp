@@ -17,7 +17,7 @@ table thead tr th {
 }
 </style>
 
-	<div id="content">
+	<div id="content" style="min-height: 646px;">
 		
 		<jsp:include page="/sticky_nav_bar.jsp"></jsp:include>
 

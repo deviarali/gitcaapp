@@ -1,5 +1,5 @@
 
-<div style="height: 150px;"></div>
+<div style="height: 150px; display: none;"></div>
 <div class="row-fluid">
 	<div id="footer" class="span12">
 		2018 &copy; AJAHSMA. Brought to you by <a href="http://Ajahsma.in">Ajahsma.in</a>

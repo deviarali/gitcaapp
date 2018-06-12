@@ -26,13 +26,12 @@
 	    display: flex;
 	}
 </style>
-<div id="content">
+<div id="content" style="min-height: 646px;">
 
 	<jsp:include page="/sticky_nav_bar.jsp"></jsp:include>
 	
 	<div class="container-fluid">
 		<div class="row-fluid">
-
 			
 			<div class="span1"></div>
 			<div class="span10">
