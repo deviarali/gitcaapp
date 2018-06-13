@@ -23,6 +23,8 @@ import com.ajahsma.caapp.dto.ApplicationUserDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
 import com.ajahsma.caapp.model.UserRoleModel;
 import com.ajahsma.caapp.service.ApplicationUserService;
+import com.ajahsma.caapp.validator.ApplicationUserValidator;
+import com.ajahsma.caapp.validator.UserRoleValidator;
 
 /**
  * @author Dev
@@ -35,25 +37,13 @@ public class ApplicationUserController extends BaseController {
 	
 	@Autowired
 	ApplicationUserService applicationUserService;
-
-	@RequestMapping(value = "/applicationUser/applicationUserRegister", method = RequestMethod.POST)
-	public ModelAndView homePage(@Valid @ModelAttribute("applicationUser") ApplicationUserDto applicationUser, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		applicationUserService.applicationUserRegister(applicationUser);
-
-		model.addAttribute("alert_msg", "Application User registerd successfully");
-		return new ModelAndView("applicationUserRegister", "applicationUser", applicationUser);
-
-	}
-
-	@RequestMapping(value = "/userRole/userRoleRegister", method = RequestMethod.POST)
-	public ModelAndView homePage(@Valid @ModelAttribute("userRole") UserRoleDto userRole, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		applicationUserService.userRoleRegister(userRole);
-
-		model.addAttribute("alert_msg", "User Role registerd successfully");
-		return new ModelAndView("userRoleRegister", "userRole", userRole);
-
-	}
-
+	
+	@Autowired
+	UserRoleValidator validator;
+	
+	@Autowired
+	ApplicationUserValidator applicationUserValidator;
+	
 	@RequestMapping(value = "/applicationUser", method = RequestMethod.GET)
 	public ModelAndView navigateToApplicationUserRegister() {
 		
@@ -61,9 +51,36 @@ public class ApplicationUserController extends BaseController {
 
 	}
 
+	@RequestMapping(value = "/applicationUser/applicationUserRegister", method = RequestMethod.POST)
+	public ModelAndView homePage(@Valid @ModelAttribute("applicationUser") ApplicationUserDto applicationUser, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+		applicationUserValidator.validate(applicationUser, bindingResult);
+		if(bindingResult.hasErrors())
+		{
+			return new ModelAndView("applicationUserRegister");
+		}
+		applicationUserService.applicationUserRegister(applicationUser);
+		model.addAttribute("alert_msg", "Application User registerd successfully");
+		return new ModelAndView("applicationUserRegister", "applicationUser", applicationUser);
+
+	}
+
 	@RequestMapping(value = "/userRole", method = RequestMethod.GET)
 	public ModelAndView navigateToUserRole() {
 		return new ModelAndView("userRoleRegister", "userRole", new UserRoleDto());
+	}
+	
+	@RequestMapping(value = "/userRole/userRoleRegister", method = RequestMethod.POST)
+	public ModelAndView homePage(@Valid @ModelAttribute("userRole") UserRoleDto userRole, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+		validator.validate(userRole, bindingResult);
+		if(bindingResult.hasErrors())
+		{
+			return new ModelAndView("userRoleRegister");
+		}
+		applicationUserService.userRoleRegister(userRole);
+
+		model.addAttribute("alert_msg", "User Role registerd successfully");
+		return new ModelAndView("userRoleRegister", "userRole", userRole);
+
 	}
 
 	@ModelAttribute("userRoleList")

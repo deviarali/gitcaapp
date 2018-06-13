@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +30,7 @@ import com.ajahsma.caapp.service.ClientService;
 import com.ajahsma.caapp.service.HomePageService;
 import com.ajahsma.caapp.utils.CaAppUtils;
 import com.ajahsma.caapp.validator.ClientValidator;
+import com.ajahsma.caapp.validator.NatureOfAssignmentValidator;
 
 /**
  * @author Dev
@@ -46,6 +48,9 @@ public class ClientController extends BaseController {
 	
 	@Autowired
 	ClientValidator clientValidator; 
+	
+	@Autowired
+	NatureOfAssignmentValidator natureOfAssignmentValidator;
 	
 	@Autowired
 	HomePageService homePageService;
@@ -158,6 +163,11 @@ public class ClientController extends BaseController {
 
 	@RequestMapping(value = "/natureOfAssignment/natureOfAssignmentRegister", method = RequestMethod.POST)
 	public ModelAndView homePage(@Valid @ModelAttribute("userRole") NatureOfAssignmentDto natureOfAssignment, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+		natureOfAssignmentValidator.validate(natureOfAssignment, bindingResult);
+		if(bindingResult.hasErrors())
+		{
+			return new ModelAndView("natureOfAssignmentRegister");
+		}
 		clientService.natureOfAssignmentRegister(natureOfAssignment);
 
 		model.addAttribute("alert_msg", "User Role registerd successfully");

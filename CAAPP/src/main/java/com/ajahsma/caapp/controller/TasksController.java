@@ -94,7 +94,7 @@ public class TasksController  extends BaseController {
 		}
 		tasksService.saveTasks(tasksDto);
 		redirectAttributes.addAttribute("msg", "Tasks created successfully");
-		return new ModelAndView("redirect:/caapp/tasks/assignedTasks");
+		return new ModelAndView("redirect:/caapp/tasks/createTasks");
 		
 		/*List<ClientDto> clientsList = tasksService.getAllClients();
 		List<EmployeeDto> assigneeList = tasksService.getAssigneeList();
@@ -282,7 +282,6 @@ public class TasksController  extends BaseController {
 	@RequestMapping(value = "/tasks/updateEmployeeRemarks/{id}/{tasksRemarksByEmployee}", method = RequestMethod.GET)
 	public String updateEmployeeRemarks(@PathVariable("id") int id, @PathVariable("tasksRemarksByEmployee") String tasksRemarksByEmployee)
 	{
-		
 		return "redirect:/caapp/tasks/pendingTasks";
 	}
 	
