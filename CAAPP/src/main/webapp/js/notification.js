@@ -22,4 +22,5 @@ $(document).ready(function(){
     	    $("#confirmOk").unbind().one('click', onConfirm).one('click', fClose);
     	    $("#confirmCancel").unbind().one("click", fClose);
         }
+        
 });		

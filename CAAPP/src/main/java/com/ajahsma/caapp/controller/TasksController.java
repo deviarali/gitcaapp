@@ -127,23 +127,29 @@ public class TasksController  extends BaseController {
 	}
 	
 	@RequestMapping(value = "/tasks/pendingTasks", method = RequestMethod.GET)
-	public String getPendingTasks(Model model)
+	public String getPendingTasks(HttpServletRequest request, Model model)
 	{
 //		List<TasksDto> pendingTasksList = tasksService.getPendingTasks();
 //		model.addAttribute("pendingTasksList", pendingTasksList);
+		if(!StringUtils.isEmpty(request.getParameter("msg"))) {
+			model.addAttribute("alert_msg", request.getParameter("msg"));
+		}
 		return "pendingtasks";
 	}
 	
 	@RequestMapping(value = "/tasks/completedTasks", method = RequestMethod.GET)
-	public String getCompletedTasks(Model model)
+	public String getCompletedTasks(HttpServletRequest request, Model model)
 	{
 //		List<TasksDto> completedTasksList = tasksService.getCompletedTasks();
 //		model.addAttribute("completedTasksList", completedTasksList);
+		if(!StringUtils.isEmpty(request.getParameter("msg"))) {
+			model.addAttribute("alert_msg", request.getParameter("msg"));
+		}
 		return "completedTasks";
 	}
 	
 	@RequestMapping(value = "/tasks/updateAssignedTask", method = RequestMethod.POST)
-	public String updateAssignedTask(HttpServletRequest request, Model model)
+	public String updateAssignedTask(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
 	{
 		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
 		String taskIds[] = request.getParameterValues("taskId");
@@ -166,12 +172,13 @@ public class TasksController  extends BaseController {
 		
 //		List<TasksDto> completedTasksList = tasksService.findCompletedTasks();
 //		model.addAttribute("completedTasksList", completedTasksList);
-		model.addAttribute("alert_msg", "Tasks updated successfully");
+		redirectAttributes.addAttribute("msg", "Tasks updated successfullys");
+
 		return "redirect:/caapp/tasks/assignedTasks";
 	}
 	
 	@RequestMapping(value = "/tasks/updateCompletedTask", method = RequestMethod.POST)
-	public String updateCompletedTask(HttpServletRequest request, Model model)
+	public String updateCompletedTask(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
 	{
 		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
 		String taskIds[] = request.getParameterValues("taskId");
@@ -195,12 +202,12 @@ public class TasksController  extends BaseController {
 		
 //		List<TasksDto> completedTasksList = tasksService.findCompletedTasks();
 //		model.addAttribute("completedTasksList", completedTasksList);
-		model.addAttribute("alert_msg", "Tasks updated successfully");
+		redirectAttributes.addAttribute("msg", "Tasks updated successfully");
 		return "redirect:/caapp/tasks/completedTasks";
 	}
 	
 	@RequestMapping(value = "/tasks/updatePendingTask", method = RequestMethod.POST)
-	public String updatePendingTask(HttpServletRequest request, Model model)
+	public String updatePendingTask(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
 	{
 		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
 		String taskIds[] = request.getParameterValues("taskId");
@@ -228,7 +235,7 @@ public class TasksController  extends BaseController {
 		
 //		List<TasksDto> pendingTasksList = tasksService.findPendingTasks();
 //		model.addAttribute("pendingTasksList", pendingTasksList);
-		model.addAttribute("alert_msg", "Tasks updated successfully");
+		redirectAttributes.addAttribute("msg", "Tasks updated successfully");
 		return "redirect:/caapp/tasks/pendingTasks";
 	}
 	
