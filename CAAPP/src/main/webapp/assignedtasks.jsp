@@ -15,8 +15,10 @@
 
 			<div class="span10">
 				<div class="widget-box">
-					<div class="widget-title">
-						<p align="center">Assigned Tasks</p>
+					<div class="widget-title" align="center">
+						<span class="icon"> <i class="icon-th"></i>
+						</span>
+						<h5>Assigned Tasks</h5>
 					</div>
 					<div class="widget-content nopadding">
 						<div>
@@ -56,7 +58,7 @@
 												<td><c:out value="${assignedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
 												<td><c:out value="${assignedtasks.taskAssigneeId.employeeName}"></c:out></td>
 												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByEmployee}</textarea></td>
-												<td><textarea name="taskRemarksByAdmin" disabled="disabled" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByAdmin}</textarea></td>
+												<td><c:out value="${assignedtasks.taskRemarksByAdmin}"></c:out></td>
 												<td style="text-align: center;">
 													<select name="taskStatus" value="${assignedtasks.taskStatus}"  style="width: 200px">
 														<c:forEach items="${taskStatusList}" var="status" varStatus="vs">

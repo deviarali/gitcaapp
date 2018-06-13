@@ -36,8 +36,10 @@
 			<div class="span1"></div>
 			<div class="span10">
 				<div class="widget-box">
-					<div class="widget-title">
-						<p align="center">Task Assign</p>
+					<div class="widget-title" align="center">
+						<span class="icon"> <i class="icon-th"></i>
+						</span>
+						<h5>Task Assignment</h5>
 					</div>
 					<div class="widget-content nopadding">
 						<div style="padding-right: 300px">

@@ -1,8 +1,10 @@
 
 <div class="span2">
 	<div class="widget-box">
-		<div class="widget-title">
-			<p>Important Links</p>
+		<div class="widget-title" align="center">
+			<span class="icon"> <i class="icon-th"></i>
+			</span>
+			<h5>Important Links</h5>
 		</div>
 		<div class="widget-content">
 			<div align="left">

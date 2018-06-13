@@ -1,5 +1,6 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!-- Import Top Body -->
 <jsp:include page="/import_top_body.jsp"></jsp:include>
@@ -13,8 +14,10 @@
 			<div class="span1"></div>
 			<div class="span10">
 				<div class="widget-box">
-					<div class="widget-title">
-						<p align="center">Pending Tasks</p>
+					<div class="widget-title" align="center">
+						<span class="icon"> <i class="icon-th"></i>
+						</span>
+						<h5>Pending Tasks</h5>
 					</div>
 					<div class="widget-content nopadding">
 						<div>
@@ -36,39 +39,67 @@
 											<th>Select</th>
 											<th>Client</th>
 											<th>Task</th>
+											<th>Priority</th>
 											<th>Employee</th>
 											<th>Employee Remarks</th>
 											<th>Manager Remarks</th>
+											<th>Completed Date</th>
 											<th>Status</th>
 										</tr>
 									</thead>
 									<tbody>
 										<c:forEach items="${pendingTasksList}" var="pendingtasks" varStatus="status">
-											<tr>	
+											<tr style="
+												<c:choose>
+												    <c:when test="${pendingtasks.taskStatus eq 'COMPLETED'}">
+														background-color:#CCC;
+												    </c:when>    
+												    <c:otherwise>
+														<c:if test="${pendingtasks.priorityStatus eq 'EMERGENCY'}">
+															background-color:#ee5f5b;
+															color: #fff;
+														</c:if>
+												    </c:otherwise>
+												</c:choose>
+												" 
+											>	
 												<td style="text-align: center;"><c:out value="${status.index + 1}"></c:out></td>
 												<td>
-													<input type="checkbox" class="selectedTaskIds" name="selectedTaskIds" value="${pendingtasks.id }">
+													<input type="checkbox" <c:if test="${pendingtasks.taskStatus eq 'COMPLETED'}">disabled="disabled"</c:if> class="selectedTaskIds" name="selectedTaskIds" value="${pendingtasks.id }">
 													<input type="hidden" name="taskId" value="${pendingtasks.id }">
 												</td>
 												<td><c:out value="${pendingtasks.clientDto.clientName}"></c:out></td>
+												<td><c:out value="${pendingtasks.priorityStatus.name}"></c:out></td>
 												<td><c:out value="${pendingtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
 												<td><c:out value="${pendingtasks.taskAssigneeId.employeeName}"></c:out></td>
-												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
-												<td><textarea name="taskRemarksByAdmin" disabled="disabled" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByAdmin}</textarea></td>
-												<td style="text-align: center;">
-													<select name="taskStatus" value="${pendingtasks.taskStatus}"  style="width: 200px">
-														<c:forEach items="${pendingTaskStatusList}" var="status" varStatus="vs">
-															<c:choose>
-															    <c:when test="${pendingtasks.taskStatus == status }">
-															        <option value="${status }" selected="selected">${status.name}</option>
-															    </c:when>    
-															    <c:otherwise>
-															        <option value="${status }">${status.name}</option>
-															    </c:otherwise>
-															</c:choose>
-														</c:forEach>
-													</select>
-												</td>
+												<c:choose>
+												    <c:when test="${pendingtasks.taskStatus eq 'COMPLETED'}">
+														<td><c:out value="${pendingtasks.taskRemarksByEmployee}"></c:out></td>
+														<td><c:out value="${pendingtasks.taskRemarksByAdmin}"></c:out></td>
+														<td><fmt:formatDate pattern="MM/dd/yyyy" value="${pendingtasks.completedDate.time}" type="date" /></td>
+														<td>${pendingtasks.taskStatus.name}</td>
+												    </c:when>    
+												    <c:otherwise>
+														<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
+														<td><c:out value="${pendingtasks.taskRemarksByAdmin}"></c:out></td>
+														<td><fmt:formatDate pattern="MM/dd/yyyy" value="${pendingtasks.completedDate.time}" type="date" /></td>
+														<td style="text-align: center;">
+															<select name="taskStatus" value="${pendingtasks.taskStatus}" <c:if test="${pendingtasks.taskStatus eq 'COMPLETED'}">disabled="disabled"</c:if> style="width: 200px">
+																<c:forEach items="${pendingTaskStatusList}" var="status" varStatus="vs">
+																	<c:choose>
+																	    <c:when test="${pendingtasks.taskStatus == status }">
+																	        <option value="${status }" selected="selected">${status.name}</option>
+																	    </c:when>    
+																	    <c:otherwise>
+																	        <option value="${status }">${status.name}</option>
+																	    </c:otherwise>
+																	</c:choose>
+																</c:forEach>
+															</select>
+														</td>
+												    </c:otherwise>
+												</c:choose>
+												
 											</tr>
 										</c:forEach>							
 									</tbody>

@@ -1,6 +1,6 @@
 package com.ajahsma.caapp.dto;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -18,27 +18,31 @@ public class TasksDto
 	private EmployeeDto taskAssigneeId;
 
 	@DateTimeFormat(pattern = "mm/dd/yyyy")
-	private Date taskCreatedDate;
+	private Calendar taskCreatedDate;
 
 	@DateTimeFormat(pattern = "mm/dd/yyyy")
-	private Date taskStartDate;
+	private Calendar taskStartDate;
+
+	@DateTimeFormat(pattern = "mm/dd/yyyy")
+	private Calendar completedDate;
+
+	private Calendar startDate;
 
 	private TasksStatusDto tasksStatusDto;
 	private String[] tasks;
-	private String startDate;
 	private PriorityStatus priorityStatus;
 	private TaskStatus taskStatus;
 
 	/**
 	 * @return the startDate
 	 */
-	public String getStartDate() {
+	public Calendar getStartDate() {
 		return startDate;
 	}
 	/**
 	 * @param startDate the startDate to set
 	 */
-	public void setStartDate(String startDate) {
+	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
 	/**
@@ -128,27 +132,35 @@ public class TasksDto
 	/**
 	 * @return the taskCreatedDate
 	 */
-	public Date getTaskCreatedDate() {
+	public Calendar getTaskCreatedDate() {
 		return taskCreatedDate;
 	}
 	/**
 	 * @param taskCreatedDate the taskCreatedDate to set
 	 */
-	public void setTaskCreatedDate(Date taskCreatedDate) {
+	public void setTaskCreatedDate(Calendar taskCreatedDate) {
 		this.taskCreatedDate = taskCreatedDate;
 	}
 	/**
 	 * @return the taskStartDate
 	 */
 	
-	public Date getTaskStartDate() {
+	public Calendar getTaskStartDate() {
 		return taskStartDate;
 	}
 	/**
 	 * @param taskStartDate the taskStartDate to set
 	 */
-	public void setTaskStartDate(Date taskStartDate) {
+	public void setTaskStartDate(Calendar taskStartDate) {
 		this.taskStartDate = taskStartDate;
+	}
+
+	public Calendar getCompletedDate() {
+		return completedDate;
+	}
+
+	public void setCompletedDate(Calendar completedDate) {
+		this.completedDate = completedDate;
 	}
 
 	public TasksStatusDto getTasksStatusDto() {

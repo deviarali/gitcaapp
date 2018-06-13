@@ -19,10 +19,12 @@
 					<c:out value="${msg}"></c:out>
 				</c:if>
 				<div class="widget-box">
+					
 					<div class="widget-title">
-						<p align="center">Application User Registration</p>
+						<span class="icon"> <i class="icon-th"></i>
+						</span>
+						<h5>Application User Registration</h5>
 					</div>
-
 					<div class="widget-content nopadding">
 						<div style="padding-right: 300px">
 							<form:form action="/caapp/applicationUser/applicationUserRegister" method="post" modelAttribute="applicationUser" class="form-horizontal">

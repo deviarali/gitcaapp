@@ -2,6 +2,7 @@ package com.ajahsma.caapp.service.impl;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -204,8 +205,9 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		tasksModel.setId(tasksDto.getId());
 		tasksModel.setClientModel(clientModel);
 		tasksModel.setEmployeeModel(employeeModel);
-		tasksModel.setTaskCreatedDate(new Date());
+		tasksModel.setTaskCreatedDate(Calendar.getInstance());
 		tasksModel.setTaskStartDate(tasksDto.getTaskStartDate());
+		tasksModel.setCompletedDate(tasksDto.getCompletedDate());
 //		TasksStatusModel tasksStatusModel = new TasksStatusModel();
 //		tasksStatusModel.setId(new Long(1));
 //		tasksModel.setTasksStatusModel(tasksStatusModel);
@@ -235,10 +237,10 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		tasksDto.setTaskAssigneeId(employeeDto);
 		tasksDto.setClientDto(clientDto);
 		tasksDto.setNatureOfAssignmentDto(natureOfAssignmentDto);
-		tasksDto.setStartDate(sdf.format(tasksModel.getTaskStartDate()));
 		tasksDto.setTasksStatusDto(tasksStatusDto);
 		tasksDto.setTaskCreatedDate(tasksModel.getTaskCreatedDate());
 		tasksDto.setTaskStartDate(tasksModel.getTaskStartDate());
+		tasksDto.setCompletedDate(tasksModel.getCompletedDate());
 		tasksDto.setPriorityStatus(tasksModel.getPriorityStatus());
 		tasksDto.setTaskStatus(tasksModel.getTaskStatus());
 		tasksDto.setTaskRemarksByAdmin(tasksModel.getTaskRemarksByAdmin());

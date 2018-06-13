@@ -28,3 +28,17 @@
 	margin: 0;
 	z-index: 1;
 }
+th {
+	font-size: 16px !important;
+    font-weight: 100 !important;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif !important;
+    font-style: normal !important;
+    line-height: 20px !important;;
+    padding: 8px !important;;
+    vertical-align: middle !important;;
+    background-color: #223577 !important;;
+    color: #fff !important;
+}
+td {
+	vertical-align: middle !important;
+}

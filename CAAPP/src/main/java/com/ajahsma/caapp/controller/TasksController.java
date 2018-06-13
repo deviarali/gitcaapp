@@ -1,6 +1,7 @@
 package com.ajahsma.caapp.controller;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -92,7 +94,7 @@ public class TasksController  extends BaseController {
 		}
 		tasksService.saveTasks(tasksDto);
 		redirectAttributes.addAttribute("msg", "Tasks created successfully");
-		return new ModelAndView("redirect:/caapp/tasks/createTasks");
+		return new ModelAndView("redirect:/caapp/tasks/assignedTasks");
 		
 		/*List<ClientDto> clientsList = tasksService.getAllClients();
 		List<EmployeeDto> assigneeList = tasksService.getAssigneeList();
@@ -114,10 +116,13 @@ public class TasksController  extends BaseController {
 	}
 	
 	@RequestMapping(value = "/tasks/assignedTasks", method = RequestMethod.GET)
-	public String listOfAssignedTasks(Model model)
+	public String listOfAssignedTasks(HttpServletRequest request, Model model)
 	{
+		
 //		List<TasksDto> listOfAssignedTasks = tasksService.findAssignedTasks();
-//		model.addAttribute("listOfAssignedTasks", listOfAssignedTasks);
+		if(!StringUtils.isEmpty(request.getParameter("msg"))) {
+			model.addAttribute("alert_msg", request.getParameter("msg"));
+		}
 		return "assignedtasks";
 	}
 	
@@ -162,7 +167,7 @@ public class TasksController  extends BaseController {
 //		List<TasksDto> completedTasksList = tasksService.findCompletedTasks();
 //		model.addAttribute("completedTasksList", completedTasksList);
 		model.addAttribute("alert_msg", "Tasks updated successfully");
-		return "assignedtasks";
+		return "redirect:/caapp/tasks/assignedTasks";
 	}
 	
 	@RequestMapping(value = "/tasks/updateCompletedTask", method = RequestMethod.POST)
@@ -183,6 +188,7 @@ public class TasksController  extends BaseController {
 					taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
 				}
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
+				taskModel.setCompletedDate(Calendar.getInstance());
 				tasksService.updateDomain(taskModel);
 			}
 		}
@@ -190,7 +196,7 @@ public class TasksController  extends BaseController {
 //		List<TasksDto> completedTasksList = tasksService.findCompletedTasks();
 //		model.addAttribute("completedTasksList", completedTasksList);
 		model.addAttribute("alert_msg", "Tasks updated successfully");
-		return "completedTasks";
+		return "redirect:/caapp/tasks/completedTasks";
 	}
 	
 	@RequestMapping(value = "/tasks/updatePendingTask", method = RequestMethod.POST)
@@ -211,6 +217,7 @@ public class TasksController  extends BaseController {
 					taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
 				}
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
+				taskModel.setCompletedDate(Calendar.getInstance());
 				tasksService.updateDomain(taskModel);
 				
 				if(TaskStatus.PARTIALLY_COMPLETED.equals(TaskStatus.valueOf(taskStatus[i]))) {
@@ -222,7 +229,7 @@ public class TasksController  extends BaseController {
 //		List<TasksDto> pendingTasksList = tasksService.findPendingTasks();
 //		model.addAttribute("pendingTasksList", pendingTasksList);
 		model.addAttribute("alert_msg", "Tasks updated successfully");
-		return "pendingtasks";
+		return "redirect:/caapp/tasks/pendingTasks";
 	}
 	
 	private void sendPartiallyCompletedEmail(Long taskId) {

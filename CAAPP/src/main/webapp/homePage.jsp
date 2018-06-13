@@ -27,8 +27,10 @@ table thead tr th {
 				<div class="span3">
 					<c:if test="${isAdmin}">
 						<div class="widget-box">
-							<div class="widget-title">
-								<p>Admin Management</p>
+							<div class="widget-title" align="center">
+								<span class="icon"> <i class="icon-th"></i>
+								</span>
+								<h5>Admin Management</h5>
 							</div>
 							<div class="widget-content">
 								<div align="left">
@@ -41,8 +43,10 @@ table thead tr th {
 						</div>
 					</c:if>
 					<div class="widget-box">
-						<div class="widget-title">
-							<p>Important News</p>
+						<div class="widget-title" align="center">
+							<span class="icon"> <i class="icon-th"></i>
+							</span>
+							<h5>Important News</h5>
 						</div>
 						<div class="widget-content">
 							<div align="left">

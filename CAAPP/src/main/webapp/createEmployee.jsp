@@ -20,8 +20,10 @@
 					<c:out value="${msg}"></c:out>
 				</c:if>
 				<div class="widget-box">
-					<div class="widget-title">
-						<p align="center">Employee Registration</p>
+					<div class="widget-title" align="center">
+						<span class="icon"> <i class="icon-th"></i>
+						</span>
+						<h5>Employee Registration</h5>
 					</div>
 
 					<div class="widget-content nopadding">

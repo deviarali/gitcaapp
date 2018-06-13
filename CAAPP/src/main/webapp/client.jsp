@@ -31,7 +31,7 @@ table thead tr th {
 						<div class="widget-title">
 							<span class="icon"> <i class="icon-th"></i>
 							</span>
-							<h5>NEW CLINET ADDED TO SANJAY K & CO</h5>
+							<h5>Clients Added to Sanjay K & CO</h5>
 						</div>
 						<div class="widget-content nopadding">
 

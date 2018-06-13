@@ -19,13 +19,14 @@
 				<div class="span1"></div>
 				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
 				<div class="span10">
+					<c:if test="${not empty successmsg }">
+		          		${successmsg}
+		          	</c:if>
 					<div class="widget-box">
-						<div class="widget-title">
-							<c:if test="${not empty successmsg }">
-						          ${successmsg}
-						          </c:if>
-
-							<p align="center">Client Registration</p>
+						<div class="widget-title" align="center">
+							<span class="icon"> <i class="icon-th"></i>
+							</span>
+							<h5>Client Registration</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<div style="padding-right: 100px">

@@ -28,8 +28,10 @@ table thead tr th {
 
 				<div class="span10">
 					<div class="widget-box">
-						<div class="widget-title">
-							<p align="center">Employee Management</p>
+						<div class="widget-title" align="center">
+							<span class="icon"> <i class="icon-th"></i>
+							</span>
+							<h5>Employee Management</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<div>

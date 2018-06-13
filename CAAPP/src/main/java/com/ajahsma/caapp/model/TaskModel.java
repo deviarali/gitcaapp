@@ -1,6 +1,6 @@
 package com.ajahsma.caapp.model;
 
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,8 +23,9 @@ public class TaskModel extends AbstractIdDomain {
 	private String taskRemarksByAdmin;
 	private String taskVerifiedBy;
 	private EmployeeModel employeeModel;
-	private Date taskCreatedDate;
-	private Date taskStartDate;
+	private Calendar taskCreatedDate;
+	private Calendar taskStartDate;
+	private Calendar completedDate;
 	
 //	private TasksStatusModel tasksStatusModel;
 	
@@ -107,27 +108,37 @@ public class TaskModel extends AbstractIdDomain {
 	}
 
 	@Column(name = "createddate")
-	public Date getTaskCreatedDate() {
+	public Calendar getTaskCreatedDate() {
 		return taskCreatedDate;
 	}
 
 	/**
 	 * @param taskCreatedDate the taskCreatedDate to set
 	 */
-	public void setTaskCreatedDate(Date taskCreatedDate) {
+	public void setTaskCreatedDate(Calendar taskCreatedDate) {
 		this.taskCreatedDate = taskCreatedDate;
 	}
 
 	@Column(name = "startdate")
-	public Date getTaskStartDate() {
+	public Calendar getTaskStartDate() {
 		return taskStartDate;
 	}
 
 	/**
 	 * @param taskStartDate the taskStartDate to set
 	 */
-	public void setTaskStartDate(Date taskStartDate) {
+	public void setTaskStartDate(Calendar taskStartDate) {
 		this.taskStartDate = taskStartDate;
+	}
+
+	
+	@Column(name = "completeddate", nullable = true)
+	public Calendar getCompletedDate() {
+		return completedDate;
+	}
+
+	public void setCompletedDate(Calendar completedDate) {
+		this.completedDate = completedDate;
 	}
 
 	/*@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
