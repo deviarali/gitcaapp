@@ -42,6 +42,9 @@
 						<h5>Task Assignment</h5>
 					</div>
 					<div class="widget-content nopadding">
+						<c:if test="${not empty alert_msg }">
+							<label class="info"><c:out value="${alert_msg}"></c:out></label>
+						</c:if>
 						<div style="padding-right: 300px">
 							<form:form action="/caapp/tasks/saveTasks" method="post" class="form-horizontal" modelAttribute="tasks">
 								<div class="control-group">
