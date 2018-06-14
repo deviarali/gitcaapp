@@ -39,7 +39,7 @@ table thead tr th {
 								<div class="span12">
 									<div class="span10"></div>
 									<div class="span2">
-										<br /> <a href="/caapp/client/clientRegistrationView" class="btn btn-primary"> New Client</a>
+										<br /> <a href="/caapp/client/clientRegistrationView" class="btn btn-primary"  title="Register New Client"> New Client</a>
 									</div>
 								</div>
 							</div>

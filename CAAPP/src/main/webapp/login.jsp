@@ -105,13 +105,13 @@
 										<div class="control-group">
 											<label class="control-label">User Name :</label>
 											<div class="controls">
-												<input type="text" class="span6" name="userName" required="" />
+												<input id="userName" type="text" class="span6" name="userName" required="" />
 											</div>
 										</div>
 										<div class="control-group">
 											<label class="control-label">password :</label>
 											<div class="controls">
-												<input type="password" class="span6" name="password" required="" />
+												<input id="password" type="password" class="span6" name="password" required="" />
 											</div>
 										</div>
 										<sec:csrfInput />
@@ -130,7 +130,7 @@
 						
 										<div class="control-group">
 											<div class="controls">
-												<label><input type="checkbox"> Remember me</label> <input type="submit" class="span5 btn btn-primary" value="Login" />
+												<label><input id="rememberMe" type="checkbox"> Remember me</label> <input id="loginBtn" type="submit" class="span5 btn btn-primary" value="Login" />
 											</div>
 										</div>
 									</form>
@@ -161,5 +161,36 @@
 	<script src="/js/select2.min.js"></script>
 	<script src="/js/maruti.js"></script>
 	<script src="/js/maruti.form_common.js"></script>
+	
+<script>
+$(document).ready(function(){
+
+ 	if (localStorage.chkbx && localStorage.chkbx != '') {
+          $('#rememberMe').attr('checked', 'checked');
+          $('#userName').val(localStorage.usrname);
+          $('#password').val(localStorage.pass);
+      } else {
+          $('#rememberMe').removeAttr('checked');
+          $('#userName').val('');
+          $('#password').val('');
+      }
+	$("#loginBtn").click(function() {
+		if ($('#rememberMe').is(':checked')) {
+             // save username and password
+             
+             localStorage.usrname = $('#userName').val();
+             localStorage.pass = $('#password').val();
+             localStorage.rememberMe = $('#rememberMe').val();
+         } else {
+             localStorage.usrname = '';
+             localStorage.pass = '';
+             localStorage.rememberMe = '';
+         }
+		
+	});
+
+	});
+</script>	
+	
 </body>
 </html>

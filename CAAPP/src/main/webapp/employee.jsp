@@ -38,7 +38,7 @@ table thead tr th {
 								<div class="span12">
 									<div class="span10"></div>
 									<div class="span2">
-										<br /> <a href="/caapp/employee/createEmployee" class="btn btn-primary"> Add Employee</a>
+										<br /> <a href="/caapp/employee/createEmployee" class="btn btn-primary" title="Register New Employee"> Add Employee</a>
 									</div>
 								</div>
 							</div>
