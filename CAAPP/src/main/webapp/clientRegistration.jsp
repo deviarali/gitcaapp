@@ -19,9 +19,6 @@
 				<div class="span1"></div>
 				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
 				<div class="span10">
-					<c:if test="${not empty successmsg }">
-		          		${successmsg}
-		          	</c:if>
 					<div class="widget-box">
 						<div class="widget-title" align="center">
 							<span class="icon"> <i class="icon-th"></i>
@@ -29,6 +26,9 @@
 							<h5>Client Registration</h5>
 						</div>
 						<div class="widget-content nopadding">
+							<c:if test="${not empty alert_msg }">
+								<label class="info"><c:out value="${alert_msg}"></c:out></label>
+							</c:if>
 							<div style="padding-right: 100px">
 								<form:form action="../client/clientRegister" method="post" class="form-horizontal" modelAttribute="clientRegistration">
 									

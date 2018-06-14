@@ -15,9 +15,6 @@
 			<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
 			<div class="span1"></div>
 			<div class="span10">
-				<c:if test="${not empty msg }">
-					<c:out value="${msg}"></c:out>
-				</c:if>
 				<div class="widget-box">
 					<div class="widget-title">
 						<span class="icon"> <i class="icon-th"></i>
@@ -25,11 +22,9 @@
 						<h5>Application User Registration</h5>
 					</div>
 					<div class="widget-content nopadding">
-					<div style="padding: 10px">
 						<c:if test="${not empty alert_msg }">
 							<label class="info"><c:out value="${alert_msg}"></c:out></label>
 						</c:if>
-					</div>
 						<div style="padding-right: 300px">
 							<form:form id="au-form" action="/caapp/applicationUser/applicationUserRegister" method="post" modelAttribute="applicationUser" class="form-horizontal" >
 							

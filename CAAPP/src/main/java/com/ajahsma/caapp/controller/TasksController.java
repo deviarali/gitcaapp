@@ -27,6 +27,7 @@ import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
+import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.mail.EmailService;
 import com.ajahsma.caapp.model.PriorityStatus;
 import com.ajahsma.caapp.model.TaskModel;
@@ -78,33 +79,32 @@ public class TasksController  extends BaseController {
 
 
 	@RequestMapping(value = "/tasks/saveTasks", method = RequestMethod.POST )
-	public ModelAndView saveTasks(@Valid @ModelAttribute("tasks") TasksDto tasksDto, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)
+	public ModelAndView saveTasks(@Valid @ModelAttribute("tasks") TasksDto tasksDto, Model model, BindingResult result, Errors errors, RedirectAttributes redirectAttributes)
 	{
-		tasksValidator.validate(tasksDto, result);
-		if(result.hasErrors())
-		{
-			List<ClientDto> clientsList = tasksService.getAllClients();
-			List<NatureOfAssignmentDto> listOfTasks = tasksService.getTasksByCustomerId(tasksDto.getClientDto().getClientId());
-			Map<String, Object> model = new HashMap<>();
-			model.put("clientsList", clientsList);
-			model.put("taskList", listOfTasks);
-			model.put("tasks", tasksDto);
+//		Map<String, Object> model = new HashMap<>();
+		try {
+			tasksValidator.validate(tasksDto, result);
+			if(result.hasErrors())
+			{
+				List<ClientDto> clientsList = tasksService.getAllClients();
+				List<NatureOfAssignmentDto> listOfTasks = tasksService.getTasksByCustomerId(tasksDto.getClientDto().getClientId());
+				model.addAttribute("taskList", listOfTasks);
+				model.addAttribute("clientsList", clientsList);
+				model.addAttribute("tasks", tasksDto);
 
-			return new ModelAndView("creattask", model);
+				model.addAttribute("alert_msg", "There are arrors!..");
+			}
+			else {
+				tasksService.saveTasks(tasksDto);
+				model.addAttribute("alert_msg", "Tasks created successfully");
+			}
+			
+		} catch (BusinessException e) {
+			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+		} catch (Exception e) {
+			model.addAttribute("alert_msg", "Something went wrong, check logs");
 		}
-		tasksService.saveTasks(tasksDto);
-		redirectAttributes.addAttribute("msg", "Tasks created successfully");
-		return new ModelAndView("redirect:/caapp/tasks/createTasks");
-		
-		/*List<ClientDto> clientsList = tasksService.getAllClients();
-		List<EmployeeDto> assigneeList = tasksService.getAssigneeList();
-		List<NatureOfAssignmentDto> listOfTasks = tasksService.getTasksByCustomerId(tasksDto.getClientDto().getClientId());
-		Map<String, Object> model = new HashMap<>();
-		model.put("clientsList", clientsList);
-		model.put("assigneeList", assigneeList);
-		model.put("taskList", listOfTasks);
-		model.put("tasks", tasksDto);
-		return new ModelAndView("creattask", model);*/
+		return new ModelAndView("creattask");
 	}
 	
 	@RequestMapping(value = "/tasks/getTasksByCustomerId/{id}", method = RequestMethod.GET)
