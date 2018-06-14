@@ -14,8 +14,10 @@ import org.springframework.util.CollectionUtils;
 
 import com.ajahsma.caapp.dao.ApplicationUserDao;
 import com.ajahsma.caapp.dto.ApplicationUserDto;
+import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
 import com.ajahsma.caapp.model.ApplicationUserModel;
+import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.model.UserRoleModel;
 import com.ajahsma.caapp.service.ApplicationUserService;
 
@@ -73,6 +75,31 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		}
 	}
 
+	@Override
+	public void userRoleRegister(UserRoleDto userRole) {
+		
+		UserRoleModel userRoleModel = new UserRoleModel();
+		userRoleModel.setId(userRole.getId());
+		userRoleModel.setRoleName(userRole.getRoleName());
+
+		if(userRoleModel.getId() == null) {
+			this.saveDomain(userRoleModel);
+		}
+		else {
+			this.updateDomain(userRoleModel);
+		}
+	}
+
+	@Override
+	public ApplicationUserDto getApplicationUserDto(Long id) {
+		ApplicationUserModel applicationUserModel= (ApplicationUserModel) this.getDomain(ApplicationUserModel.class, id);
+		ApplicationUserDto applicationUserDto = convertApplicationUserModelToApplicationUserDto(applicationUserModel);
+		
+		
+		return applicationUserDto;
+		
+	}
+
 	private ApplicationUserModel convertApplicationUserDtoToApplicationUserModel(ApplicationUserDto applicationUser) {
 		
 		ApplicationUserModel applicationUserModel = new ApplicationUserModel();
@@ -93,19 +120,30 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		return applicationUserModel;
 	}
 
-	@Override
-	public void userRoleRegister(UserRoleDto userRole) {
+	private ApplicationUserDto convertApplicationUserModelToApplicationUserDto(ApplicationUserModel applicationUser) {
 		
-		UserRoleModel userRoleModel = new UserRoleModel();
-		userRoleModel.setId(userRole.getId());
-		userRoleModel.setRoleName(userRole.getRoleName());
-
-		if(userRoleModel.getId() == null) {
-			this.saveDomain(userRoleModel);
+		ApplicationUserDto applicationUserDto = new ApplicationUserDto();
+		applicationUserDto.setUserName(applicationUser.getUserName());
+		applicationUserDto.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
+		applicationUserDto.setIsActive(applicationUser.getIsActive());
+		applicationUserDto.setCreateDate(Calendar.getInstance());
+		applicationUserDto.setLoginAttempts(0);
+		
+		if(!CollectionUtils.isEmpty(applicationUser.getUserRoles())) {
+			String[] userRoles = new String[applicationUser.getUserRoles().size()];
+			int index = 0;
+			for (UserRoleModel userrRole : applicationUser.getUserRoles()) {
+				userRoles[index] = userrRole.getId().toString();
+				UserRoleDto userRoleDto = new UserRoleDto();
+				userRoleDto.setId(userrRole.getId());
+				userRoleDto.setRoleName(userrRole.getRoleName());
+				applicationUserDto.addUserRole(userRoleDto);
+				index++;
+			}
+			applicationUserDto.setUserRoles(userRoles);
 		}
-		else {
-			this.updateDomain(userRoleModel);
-		}
+		
+		return applicationUserDto;
 	}
 
 }

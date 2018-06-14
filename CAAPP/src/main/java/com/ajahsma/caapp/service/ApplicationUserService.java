@@ -21,4 +21,5 @@ public interface ApplicationUserService extends DefaultManager {
 
 	public void userRoleRegister(UserRoleDto userRole);
 
+	public ApplicationUserDto getApplicationUserDto(Long id);
 }

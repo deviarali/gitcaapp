@@ -14,14 +14,18 @@ import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ajahsma.caapp.dto.ApplicationUserDto;
+import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
+import com.ajahsma.caapp.model.ApplicationUserModel;
+import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.model.UserRoleModel;
 import com.ajahsma.caapp.service.ApplicationUserService;
 import com.ajahsma.caapp.validator.ApplicationUserValidator;
@@ -46,6 +50,17 @@ public class ApplicationUserController extends BaseController {
 	ApplicationUserValidator applicationUserValidator;
 	
 	@RequestMapping(value = "/applicationUser", method = RequestMethod.GET)
+	public String navigateToApplicationUser(Model model) {
+		
+		List<ApplicationUserDto> applicationUsers = applicationUserService.findApplicationUserDtoList();
+		
+		model.addAttribute("applicationUsers", applicationUsers);
+//		model.addAttribute("applicationUser", new ApplicationUserDto());
+
+		return "applicationUser";
+	}
+
+	@RequestMapping(value = "/applicationUser/createApplicationUser", method = RequestMethod.GET)
 	public ModelAndView navigateToApplicationUserRegister() {
 		
 		ApplicationUserDto applicationUserDto = new ApplicationUserDto();
@@ -53,6 +68,30 @@ public class ApplicationUserController extends BaseController {
 
 		return new ModelAndView("applicationUserRegister", "applicationUser", applicationUserDto);
 
+	}
+	
+	@RequestMapping(value = "/applicationUser/{id}", method = RequestMethod.GET)
+	private String getApplicationUser(Model model, @PathVariable("id") Long id) {
+		
+		ApplicationUserDto applicationUserDto = applicationUserService.getApplicationUserDto(id);
+		
+		model.addAttribute("applicationUser", applicationUserDto);
+		return "applicationUserRegister";
+	}
+	
+	@RequestMapping(value = "/applicationUser/delete/{id}", method = RequestMethod.GET)
+	private String deleteApplicationUser(Model model, @PathVariable("id") Long id) {
+		
+		ApplicationUserModel applicationUser = (ApplicationUserModel) applicationUserService.getDomain(ApplicationUserModel.class, id);
+		
+		applicationUserService.deleteDomain(applicationUser);
+		
+		List<ApplicationUserDto> applicationUsers = applicationUserService.findApplicationUserDtoList();
+		
+		model.addAttribute("applicationUsers", applicationUsers);
+		model.addAttribute("applicationUser", new ApplicationUserDto());
+		
+		return "redirect:/caapp/applicationUser";
 	}
 
 	@RequestMapping(value = "/applicationUser/applicationUserRegister", method = RequestMethod.POST)

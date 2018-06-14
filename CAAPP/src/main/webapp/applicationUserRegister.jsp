@@ -27,13 +27,14 @@
 					</div>
 					<div class="widget-content nopadding">
 						<div style="padding-right: 300px">
-							<form:form action="/caapp/applicationUser/applicationUserRegister" method="post" modelAttribute="applicationUser" class="form-horizontal">
+							<form:form id="au-form" action="/caapp/applicationUser/applicationUserRegister" method="post" modelAttribute="applicationUser" class="form-horizontal" >
 							
 							<form:hidden path="id"/>
+							
 							<div class="control-group">
 								<label class="control-label required">User Name :</label>
 								<div class="controls">
-									<form:input path="userName" class="span11"  />
+									<form:input path="userName" class="span11" />
 									<br>
 									<form:errors class="errors" path="userName" />
 								</div>

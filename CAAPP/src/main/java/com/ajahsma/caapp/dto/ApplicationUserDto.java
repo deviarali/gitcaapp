@@ -1,7 +1,10 @@
 package com.ajahsma.caapp.dto;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Set;
+
+import com.ajahsma.caapp.model.UserRoleModel;
 
 /**
  * @author SHARAN A
@@ -17,6 +20,8 @@ public class ApplicationUserDto  {
 	private Boolean isActive;
 	
 	private String[] userRoles;
+
+	private Set<UserRoleDto> userRoleDtos;
 
 	public Long getId() {
 		return id;
@@ -74,4 +79,20 @@ public class ApplicationUserDto  {
 		this.userRoles = userRoles;
 	}
 
+	public Set<UserRoleDto> getUserRoleDtos() {
+		return userRoleDtos;
+	}
+
+	public void setUserRoleDtos(Set<UserRoleDto> userRoleDtos) {
+		this.userRoleDtos = userRoleDtos;
+	}
+	
+	public void addUserRole(UserRoleDto userRole) {
+		if(getUserRoleDtos() == null) {
+			setUserRoleDtos(new HashSet<UserRoleDto>());
+		}
+		
+		getUserRoleDtos().add(userRole);
+	}
+	
 }
