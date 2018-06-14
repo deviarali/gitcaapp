@@ -48,14 +48,13 @@ public class ApplicationUserDaoImpl extends DefaultDaoImpl implements Applicatio
 	
 	@Override
 	public List<ApplicationUserModel> findUsers(String userRoleName) {
-		Query query = null;
-		
+
 		StringBuilder builder = new StringBuilder();
 		builder.append("SELECT user FROM ApplicationUser user ");
 		builder.append("inner join user.userRoles role ");
 		builder.append("where role.roleName = :roleName ");
 		
-		query = getSession().createQuery(builder.toString());
+		Query query = getSession().createQuery(builder.toString());
 		
 		query.setParameter("roleName", userRoleName);
 		
@@ -71,5 +70,36 @@ public class ApplicationUserDaoImpl extends DefaultDaoImpl implements Applicatio
 		Query query = createQuery("select distinct au from ApplicationUser au ");
 		
 		return query.list();
+	}
+
+	@Override
+	public Integer getApplicationUserCount(String userName, Long excludeId) {
+
+		String hqlQuery = "SELECT count(*) FROM ApplicationUser applicationuser where applicationuser.userName=:userName and applicationuser.id != :id";
+		
+		Query query = getSession().createQuery(hqlQuery);
+		
+		query.setParameter("userName", userName);
+		query.setParameter("id", excludeId);
+
+		Long userCount = (Long) query.uniqueResult();
+
+		return userCount.intValue();
+	}
+
+	@Override
+	public Integer getApplicationUserCount(String userName) {
+
+		Query query = null;
+		
+		String hqlQuery = "SELECT count(applicationuser.id) FROM ApplicationUser applicationuser where applicationuser.userName=:userName";
+		
+		query = getSession().createQuery(hqlQuery);
+		
+		query.setParameter("userName", userName);
+
+		Integer userCount = (Integer) query.uniqueResult();
+
+		return userCount;
 	}
 }

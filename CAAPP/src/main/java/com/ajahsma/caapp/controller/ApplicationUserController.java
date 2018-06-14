@@ -96,13 +96,25 @@ public class ApplicationUserController extends BaseController {
 
 	@RequestMapping(value = "/applicationUser/applicationUserRegister", method = RequestMethod.POST)
 	public ModelAndView homePage(@Valid @ModelAttribute("applicationUser") ApplicationUserDto applicationUser, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		applicationUserValidator.validate(applicationUser, bindingResult);
-		if(bindingResult.hasErrors())
-		{
-			return new ModelAndView("applicationUserRegister");
+		try {
+			applicationUserValidator.validate(applicationUser, bindingResult);
+			if(bindingResult.hasErrors())
+			{
+				model.addAttribute("alert_msg", "Oops! something went wrong...");
+				return new ModelAndView("applicationUserRegister");
+			}
+			
+			if(applicationUser.getId() != null) {
+				applicationUserService.updateApplicationUser(applicationUser);
+			}
+			else {
+				applicationUserService.saveApplicationUser(applicationUser);
+			}
+				
+			model.addAttribute("alert_msg", "Application User registerd successfully");
+		} catch (Exception e) {
+			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
 		}
-		applicationUserService.applicationUserRegister(applicationUser);
-		model.addAttribute("alert_msg", "Application User registerd successfully");
 		return new ModelAndView("applicationUserRegister", "applicationUser", applicationUser);
 
 	}

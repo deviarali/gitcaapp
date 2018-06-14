@@ -49,6 +49,7 @@ table thead tr th {
 										<tr>
 											<th>User Name</th>
 											<th>Active</th>
+											<th>Roles</th>
 											<th></th>
 											<th></th>
 										</tr>
@@ -57,7 +58,14 @@ table thead tr th {
 										<c:forEach items="${applicationUsers}" var="applicationUserVar">
 											<tr>
 												<td><c:out value="${applicationUserVar.userName}"></c:out></td>
-												<td><c:out value="${applicationUserVar.isActive}"></c:out></td>
+												<td>
+													<input type="checkbox" disabled="disabled" <c:if test="${applicationUserVar.isActive}">checked="checked"</c:if>  />
+												</td>
+												<td>
+													<c:forEach items="${applicationUserVar.userRoleDtos}" var="userRole">
+														<c:out value="${userRole.roleName}, "></c:out>
+													</c:forEach>
+												</td>
 												<td style="text-align: center;"><a href="/caapp/applicationUser/${applicationUserVar.id}"><i class="fa fa-edit" style="font-size: 28px; color: blue;"></i></a></td>
 												<td style="text-align: center;"><a href="/caapp/applicationUser/delete/${applicationUserVar.id}" class="confirmation"><i class="fa fa-trash" style="font-size: 28px; color: red"></i></a></td>
 											</tr>

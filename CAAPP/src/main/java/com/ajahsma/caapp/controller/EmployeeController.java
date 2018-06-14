@@ -94,7 +94,7 @@ public class EmployeeController extends BaseController {
 		{
 			employeeValidator.validate(employeeDto, bindingResult);
 			if(bindingResult.hasErrors()) {
-				model.addAttribute("alert_msg", "Problem saving Employee");
+				model.addAttribute("alert_msg", "Oops! something went wrong...");
 				return new ModelAndView("createEmployee", "employee", employeeDto);
 			}
 			employeeService.employeeRegister(employeeDto);
@@ -102,8 +102,7 @@ public class EmployeeController extends BaseController {
 		}
 		catch(BusinessException businessException)
 		{
-			model.addAttribute("alert_msg", businessException.getErrorMsg());
-			model.addAttribute("alert_msg", "Problem saving Employee");
+			model.addAttribute("alert_msg", "Oops! " + businessException.getErrorCode() + " : " + businessException.getErrorMsg());
 			return new ModelAndView("createEmployee", "employee", employeeDto);
 		}
 		redirectAttributes.addFlashAttribute("msg", "Employee saved successfully");

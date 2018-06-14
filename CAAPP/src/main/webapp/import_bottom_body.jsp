@@ -9,7 +9,7 @@
 <div class="modal" id="confirmModal" style="display: none; z-index: 1050;top:40%;">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body" id="confirmMessage"></div>
+			<div class="modal-body info" id="confirmMessage"></div>
 			<div class="modal-footer"  style="text-align: center;">
 				<a href="" class="btn btn-primary" id="confirmOk" style="width: 65px;"> OK </a>
 				<button type="button" class="btn btn-danger" id="confirmCancel" style="width: 90px;"> Cancel </button>
@@ -20,7 +20,7 @@
 <div class="modal" id="alertModal" style="display: none; z-index: 1050;top:40%;">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<div class="modal-body" id="alertMessage"></div>
+			<div class="modal-body info" id="alertMessage"></div>
 			<div class="modal-footer"  style="text-align: center;">
 				<p class="btn btn-primary" id="alertOk" style="width: 65px;"> OK </p>
 			</div>

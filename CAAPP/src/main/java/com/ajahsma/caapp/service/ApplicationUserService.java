@@ -17,7 +17,9 @@ public interface ApplicationUserService extends DefaultManager {
 
 	public List<ApplicationUserDto> findApplicationUserDtoList();
 
-	public void applicationUserRegister(ApplicationUserDto applicationUser);
+	public void saveApplicationUser(ApplicationUserDto applicationUser) throws Exception;
+
+	public void updateApplicationUser(ApplicationUserDto applicationUser) throws Exception;
 
 	public void userRoleRegister(UserRoleDto userRole);
 

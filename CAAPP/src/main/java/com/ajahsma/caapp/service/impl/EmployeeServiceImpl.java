@@ -15,7 +15,6 @@ import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.model.ApplicationUserModel;
 import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.service.EmployeeService;
-import com.ajahsma.caapp.utils.CaAppUtils;
 
 @Service
 public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeService{
@@ -33,7 +32,7 @@ public class EmployeeServiceImpl extends DefaultManagerImpl implements EmployeeS
 	}
 	
 	@Override
-	public void employeeRegister(EmployeeDto employeeDto) throws BusinessException {
+	public void employeeRegister(EmployeeDto employeeDto) {
 
 		EmployeeModel employeeModel = convertEmployeeDtoToEmployeeModel(employeeDto);
 

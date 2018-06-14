@@ -11,11 +11,15 @@
 }
 .info::before { 
     content: " * ";
-    color: #000000;
+    color: blueviolet;
     font-size: 20px;
     position: relative;
     top: 7px;
 
+}
+.info {
+    color: blueviolet;
+    font-size: 15px;
 }
 .black-blue {
 	background-color: #083C5D;
@@ -41,4 +45,7 @@ th {
 }
 td {
 	vertical-align: middle !important;
+}
+.modal-body {
+	line-height: 2;
 }
