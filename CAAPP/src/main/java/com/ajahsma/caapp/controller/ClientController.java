@@ -109,7 +109,7 @@ public class ClientController extends BaseController {
 	{
 		clientValidator.validate(clientDto, bindingResult);
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("alert_msg", "Problem saving Employee");
+			model.addAttribute("alert_msg", "Problem with Client registered");
 		}
 		else {
 			clientService.clientRegister(clientDto);
@@ -155,14 +155,14 @@ public class ClientController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/natureOfAssignment", method = RequestMethod.GET)
-	public ModelAndView navigateToApplicationUserRegister() {
+	public ModelAndView navigateToNatureOfAssignmentRegister() {
 		
 		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", new NatureOfAssignmentDto());
 
 	}
 
 	@RequestMapping(value = "/natureOfAssignment/natureOfAssignmentRegister", method = RequestMethod.POST)
-	public ModelAndView homePage(@Valid @ModelAttribute("userRole") NatureOfAssignmentDto natureOfAssignment, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
+	public ModelAndView homePage(@Valid @ModelAttribute("natureOfAssignment") NatureOfAssignmentDto natureOfAssignment, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		natureOfAssignmentValidator.validate(natureOfAssignment, bindingResult);
 		if(bindingResult.hasErrors())
 		{

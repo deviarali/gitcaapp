@@ -1,4 +1,4 @@
-$(document).ready(function(){
+//$(document).ready(function(){
 	var YOUR_MESSAGE_STRING_CONST = "Are you sure?";
 
       $('.confirmation').on('click', function(e){
@@ -23,4 +23,15 @@ $(document).ready(function(){
     	    $("#confirmCancel").unbind().one("click", fClose);
         }
         
-});		
+        function alertMessage(message) {
+    	    var fClose = function(){
+    			  modal.modal("hide");
+    	    };
+    	    var modal = $("#alertModal");
+    	    modal.modal("show");
+    	    $("#alertMessage").empty().append(message);
+    	    $("#alertOk").one('click', fClose);
+    	    
+    	}
+        
+//});		

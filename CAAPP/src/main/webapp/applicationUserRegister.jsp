@@ -68,6 +68,7 @@
 											<br>
 										</c:if>
 									</c:forEach>
+									<br>
 									<form:errors class="errors" path="userRoles" />
 								</div>
 							</div>

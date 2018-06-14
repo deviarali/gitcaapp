@@ -37,14 +37,7 @@ $(document).ready(function(){
 		alertMessage(message)
 	}
 	
-	function alertMessage(message) {
-		$('#alertMessage').append(message);;
-		$('#alertModal').show();
-	}
-	$('#alertOk').on('click', function(e){
-		$("#confirmMessage").empty();
-		$('#alertModal').hide();
-   	});
+	
 });
 </script>
 

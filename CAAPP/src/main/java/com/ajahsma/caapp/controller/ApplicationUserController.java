@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ajahsma.caapp.dto.ApplicationUserDto;
+import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
 import com.ajahsma.caapp.model.UserRoleModel;
 import com.ajahsma.caapp.service.ApplicationUserService;
@@ -47,7 +48,10 @@ public class ApplicationUserController extends BaseController {
 	@RequestMapping(value = "/applicationUser", method = RequestMethod.GET)
 	public ModelAndView navigateToApplicationUserRegister() {
 		
-		return new ModelAndView("applicationUserRegister", "applicationUser", new ApplicationUserDto());
+		ApplicationUserDto applicationUserDto = new ApplicationUserDto();
+		applicationUserDto.setIsActive(Boolean.TRUE);
+
+		return new ModelAndView("applicationUserRegister", "applicationUser", applicationUserDto);
 
 	}
 

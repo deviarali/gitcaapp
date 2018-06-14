@@ -136,7 +136,7 @@ $(document).ready(function(){
 		if ($selectedTaskIds.length > 0) {
 			return true;
 		}
-		alert('Select atleast one tasks to update');
+		alertMessage('Select atleast one tasks to update');
 		return false;
 	});
 
