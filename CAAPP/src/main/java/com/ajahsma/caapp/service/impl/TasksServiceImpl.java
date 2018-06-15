@@ -230,6 +230,7 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
 		TasksStatusDto tasksStatusDto = new  TasksStatusDto();
 		natureOfAssignmentDto.setNatureOfAssignmentName(tasksModel.getNatureOfAssignmentModel().getNatureOfAssignmentName());
+		employeeDto.setEmployeeId(tasksModel.getEmployeeModel().getId());
 		employeeDto.setEmployeeName(tasksModel.getEmployeeModel().getEmployeeName());
 		clientDto.setClientName(tasksModel.getClientModel().getClientName());
 //		tasksStatusDto.setTasksStatusName(tasksModel.getTasksStatusModel().getTasksStatusName());

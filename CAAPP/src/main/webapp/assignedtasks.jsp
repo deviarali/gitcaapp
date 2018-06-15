@@ -21,26 +21,25 @@
 						<h5>Assigned Tasks</h5>
 					</div>
 					<div class="widget-content nopadding">
+						<c:if test="${not empty alert_msg }">
+							<label class="info"><c:out value="${alert_msg}"></c:out></label>
+						</c:if>
 						<div>
 							<form method="post" action="/caapp/tasks/updateAssignedTask">
-								<div style="padding: 10px">
-									<c:if test="${not empty alert_msg }">
-										<label class="info"><c:out value="${alert_msg}"></c:out></label>
-									</c:if>
-								</div>
 								<c:if test="${not empty assignedTasksList }">
 									<div align="right" style="padding: 10px;">
 										<input type="submit" id="updateAssignedTask" class="btn btn-primary" value="Update All" title="Update Selected">
 									</div>
 								</c:if>
-								<table class="table table-bordered table-striped">
+								<table class="table table-bordered">
 									<thead style="background: #CCC;">
 										<tr>
 											<th>SN#</th>
 											<th>Select</th>
 											<th>Client</th>
 											<th>Task</th>
-											<th>Employee</th>
+											<th>Priority</th>
+											<th>Assign</th>
 											<th>Employee Remarks</th>
 											<th>Manager Remarks</th>
 											<th>Status</th>
@@ -48,7 +47,20 @@
 									</thead>
 									<tbody>
 										<c:forEach items="${assignedTasksList}" var="assignedtasks" varStatus="status">
-											<tr>	
+											<tr style="
+												<c:choose>
+												    <c:when test="${assignedtasks.taskStatus eq 'COMPLETED'}">
+														background-color:#CCC;
+												    </c:when>    
+												    <c:otherwise>
+														<c:if test="${assignedtasks.priorityStatus eq 'EMERGENCY'}">
+															background-color:#ee5f5b;
+															color: #fff;
+														</c:if>
+												    </c:otherwise>
+												</c:choose>
+												" 
+											>	
 												<td style="text-align: center;"><c:out value="${status.index + 1}"></c:out></td>
 												<td>
 													<input type="checkbox" class="selectedTaskIds" name="selectedTaskIds" value="${assignedtasks.id }">
@@ -56,7 +68,22 @@
 												</td>
 												<td><c:out value="${assignedtasks.clientDto.clientName}"></c:out></td>
 												<td><c:out value="${assignedtasks.natureOfAssignmentDto.natureOfAssignmentName}"></c:out></td>
-												<td><c:out value="${assignedtasks.taskAssigneeId.employeeName}"></c:out></td>
+												<td><c:out value="${assignedtasks.priorityStatus.name}"></c:out></td>
+												<td>
+													<select name="assigneeIds" value="${assignedtasks.taskStatus}"  style="width: 200px">
+														<c:forEach items="${assigneeList}" var="assignee" varStatus="vs">
+															<c:choose>
+															    <c:when test="${assignee.employeeId eq assignedtasks.taskAssigneeId.employeeId }">
+															        <option value="${assignee.employeeId}" selected="selected">${assignee.employeeName}</option>
+															    </c:when>    
+															    <c:otherwise>
+															        <option value="${assignee.employeeId}">${assignee.employeeName}</option>
+															    </c:otherwise>
+															</c:choose>
+														</c:forEach>
+													</select>
+													
+												</td>
 												<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${assignedtasks.taskRemarksByEmployee}</textarea></td>
 												<td><c:out value="${assignedtasks.taskRemarksByAdmin}"></c:out></td>
 												<td style="text-align: center;">

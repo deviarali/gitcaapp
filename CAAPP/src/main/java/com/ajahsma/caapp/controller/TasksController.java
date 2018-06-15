@@ -29,6 +29,7 @@ import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.TasksDto;
 import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.mail.EmailService;
+import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.model.PriorityStatus;
 import com.ajahsma.caapp.model.TaskModel;
 import com.ajahsma.caapp.model.TaskStatus;
@@ -153,6 +154,7 @@ public class TasksController  extends BaseController {
 	{
 		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
 		String taskIds[] = request.getParameterValues("taskId");
+		String assigneeIds[] = request.getParameterValues("assigneeIds");
 		String taskRemarksByEmployee[] = request.getParameterValues("taskRemarksByEmployee");
 		String taskRemarksByAdmin[] = request.getParameterValues("taskRemarksByAdmin");
 		String taskStatus[] = request.getParameterValues("taskStatus");
@@ -165,6 +167,9 @@ public class TasksController  extends BaseController {
 				if(taskRemarksByAdmin != null) {
 					taskModel.setTaskRemarksByAdmin(taskRemarksByAdmin[i]);
 				}
+				EmployeeModel employeeModel = new EmployeeModel();
+				employeeModel.setId(Long.valueOf(assigneeIds[i]));
+				taskModel.setEmployeeModel(employeeModel);
 				taskModel.setTaskStatus(TaskStatus.valueOf(taskStatus[i]));
 				tasksService.updateDomain(taskModel);
 			}
