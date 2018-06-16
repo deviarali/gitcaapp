@@ -44,7 +44,20 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			
 			List<GrantedAuthority> authorities = new ArrayList<>();
 			ApplicationUserModel user = repo.findByUserName(token.getName());
+			
 			if (user != null) {
+				if (!DESEncryptionUtil.decrypt(user.getPassword()).equalsIgnoreCase(token.getCredentials().toString())) {
+					throw new BadCredentialsException("The credentials are invalid");
+				}
+				authorities = buildUserAuthority(user.getUserRoles());
+
+				buildUserForAuthentication(user, authorities);
+
+			} else {
+				throw new BadCredentialsException("The credentials are invalid");
+			}
+			
+			/*if (user != null) {
 				
 				authorities = buildUserAuthority(user.getUserRoles());
 
@@ -52,7 +65,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 				
 			} else {
 				throw new BadCredentialsException("The credentials are invalid");
-			}
+			}*/
 
 
 			return new UsernamePasswordAuthenticationToken(user, user.getPassword(), authorities);

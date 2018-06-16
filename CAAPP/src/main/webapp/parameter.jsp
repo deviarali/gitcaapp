@@ -16,7 +16,7 @@ table thead tr th {
 }
 </style>
 
-	<div id="content" style="min-height: 646px;">
+	<div id="content" style="min-height: 560px;">
 		
 		<jsp:include page="/sticky_nav_bar.jsp"></jsp:include>
 
@@ -31,14 +31,18 @@ table thead tr th {
 						<div class="widget-title" align="center">
 							<span class="icon"> <i class="icon-th"></i>
 							</span>
-							<h5>Employee Management</h5>
+							<h5>System Parameter</h5>
 						</div>
 						<div class="widget-content nopadding">
 							<div>
 								<div class="span12">
-									<div class="span10"></div>
+									<div class="span10">
+										<c:if test="${not empty alert_msg }">
+											<label class="info"><c:out value="${alert_msg}"></c:out></label>
+										</c:if>
+									</div>
 									<div class="span2" align="right" style="padding: 10px">
-										<br /> <a href="/caapp/employee/createEmployee" class="btn btn-primary" title="Register New Employee"> Add Employee</a>
+										<br /> <a href="/caapp/parameter/createParameter" class="btn btn-primary" title="Register New Employee"> Add New Parameter</a>
 									</div>
 								</div>
 							</div>
@@ -47,21 +51,19 @@ table thead tr th {
 								<table class="table table-bordered table-striped table-responsive">
 									<thead style="background: #777;">
 										<tr>
-											<th>Employee Name</th>
-											<th>Phone</th>
-											<th>Email</th>
+											<th>Name</th>
+											<th>Value</th>
 											<th></th>
 											<th></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:forEach items="${employees}" var="employee">
+										<c:forEach items="${parameterList}" var="parameterVar">
 											<tr>
-												<td><c:out value="${employee.employeeName}"></c:out></td>
-												<td><c:out value="${employee.employeeMobile}"></c:out></td>
-												<td><c:out value="${employee.employeeEmail}"></c:out></td>
-												<td style="text-align: center;"><a href="/caapp/employee/${employee.employeeId}"><i class="fa fa-edit" style="font-size: 28px; color: blue;"></i></a></td>
-												<td style="text-align: center;"><a href="/caapp/employee/delete/${employee.employeeId}" class="confirmation"><i class="fa fa-trash" style="font-size: 28px; color: red"></i></a></td>
+												<td><c:out value="${parameterVar.description}"></c:out></td>
+												<td><c:out value="${parameterVar.value}"></c:out></td>
+												<td style="text-align: center;"><a href="/caapp/parameter/${parameterVar.id}"><i class="fa fa-edit" style="font-size: 28px; color: blue;"></i></a></td>
+												<td style="text-align: center;"><a href="/caapp/parameter/delete/${parameterVar.id}" class="confirmation"><i class="fa fa-trash" style="font-size: 28px; color: red"></i></a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
@@ -74,7 +76,6 @@ table thead tr th {
 		
 				<%-- <jsp:include page="/right_col.jsp"></jsp:include> --%>
 				<div class="span1"></div>
-
 				
 			</div>
 		</div>

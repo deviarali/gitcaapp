@@ -87,6 +87,7 @@
 		
 	</dependencies>
 	<build>
+		<finalName>caapp</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

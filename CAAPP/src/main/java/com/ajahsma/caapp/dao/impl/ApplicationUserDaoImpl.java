@@ -45,7 +45,7 @@ public class ApplicationUserDaoImpl extends DefaultDaoImpl implements Applicatio
 		return user;
 		
 	}
-	
+
 	@Override
 	public List<ApplicationUserModel> findUsers(String userRoleName) {
 
@@ -74,6 +74,32 @@ public class ApplicationUserDaoImpl extends DefaultDaoImpl implements Applicatio
 
 	@Override
 	public Integer getApplicationUserCount(String userName, Long excludeId) {
+		Query query = null;
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(" SELECT count(applicationuser) FROM ApplicationUser applicationuser ");
+		builder.append(" where applicationuser.userName=:userName ");
+		if(excludeId != null) {
+			builder.append(" and applicationuser.id != :id ");
+		}
+//		String hqlQuery = "SELECT counnt(applicationuser) FROM ApplicationUser applicationuser where applicationuser.userName=:userName";
+		
+		query = getSession().createQuery(builder.toString());
+		
+		query.setParameter("userName", userName);
+
+		if(excludeId != null) {
+			query.setParameter("id", excludeId);
+		}
+		
+		Integer result = ((Long)query.uniqueResult()).intValue();
+		
+		return result;
+		
+	}
+	
+	/*@Override
+	public Integer getApplicationUserCount(String userName, Long excludeId) {
 
 		String hqlQuery = "SELECT count(*) FROM ApplicationUser applicationuser where applicationuser.userName=:userName and applicationuser.id != :id";
 		
@@ -85,7 +111,7 @@ public class ApplicationUserDaoImpl extends DefaultDaoImpl implements Applicatio
 		Long userCount = (Long) query.uniqueResult();
 
 		return userCount.intValue();
-	}
+	}*/
 
 	@Override
 	public Integer getApplicationUserCount(String userName) {

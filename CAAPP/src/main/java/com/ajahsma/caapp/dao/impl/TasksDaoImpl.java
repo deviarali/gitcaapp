@@ -28,7 +28,32 @@ public class TasksDaoImpl extends DefaultDaoImpl implements TasksDao
 		return clientNatureOfAssignmentModels;
 	}
 
-	
+	@Override
+	public Integer getTasksCountBy(Long clientId, Long employeeId, Long natureOfAssignmentId) {
+
+		StringBuilder builder = new StringBuilder();
+		builder.append("select count(task) from TaskModel task ");
+		builder.append(" inner join task.employeeModel emp ");
+		builder.append(" inner join task.clientModel client ");
+		builder.append(" inner join task.natureOfAssignmentModel natureOfAssignment ");
+		
+		builder.append(" where task.taskStatus in ('IN_PROGRESS', 'RE_ASSIGNED', 'ASSIGNED') ");
+		builder.append(" and emp.id = :employeeId ");
+		builder.append(" and client.id = :clientId ");
+		builder.append(" and natureOfAssignment.id = :natureOfAssignmentId ");
+		
+		Query query = createQuery(builder.toString());
+		
+		query.setParameter("employeeId", employeeId);
+		query.setParameter("clientId", clientId);
+		query.setParameter("natureOfAssignmentId", natureOfAssignmentId);
+		
+
+		Integer result = ((Long)query.uniqueResult()).intValue();
+		
+		return result;
+	}
+
 	public List<TaskModel> findPendingTasks(Long id) 
 	{
 		StringBuilder builder = new StringBuilder();

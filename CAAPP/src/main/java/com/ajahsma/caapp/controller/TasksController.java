@@ -2,9 +2,7 @@ package com.ajahsma.caapp.controller;
 
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -23,9 +21,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ajahsma.caapp.constants.CaAppConstants;
 import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
+import com.ajahsma.caapp.dto.ParameterDto;
 import com.ajahsma.caapp.dto.TasksDto;
 import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.mail.EmailService;
@@ -34,6 +34,7 @@ import com.ajahsma.caapp.model.PriorityStatus;
 import com.ajahsma.caapp.model.TaskModel;
 import com.ajahsma.caapp.model.TaskStatus;
 import com.ajahsma.caapp.service.EmployeeService;
+import com.ajahsma.caapp.service.ParameterService;
 import com.ajahsma.caapp.service.TasksService;
 import com.ajahsma.caapp.validator.TasksValidator;
 
@@ -43,6 +44,9 @@ public class TasksController  extends BaseController {
 	
 	@Autowired
 	TasksService tasksService;
+	
+	@Autowired
+	ParameterService parameterService;
 	
 	@Autowired
 	private EmailService emailService;
@@ -233,6 +237,7 @@ public class TasksController  extends BaseController {
 				tasksService.updateDomain(taskModel);
 				
 				if(TaskStatus.PARTIALLY_COMPLETED.equals(TaskStatus.valueOf(taskStatus[i]))) {
+					
 					sendPartiallyCompletedEmail(taskModel.getId());
 				}
 			}
@@ -247,7 +252,16 @@ public class TasksController  extends BaseController {
 	private void sendPartiallyCompletedEmail(Long taskId) {
 		
 		try {
-			String[] tos= new String[] {"ganid005@gmail.com"};
+			String deliveryEmailParameter = parameterService.getParameterValue(CaAppConstants.PARAMETER_DELIVERY_EMAIL_FOR_PARTIALLY_COMPLETE_NOTIFICATION, String.class);
+
+			int totalEmail = deliveryEmailParameter.split(",").length;
+			String[] tos = new String[totalEmail];
+			int count = 0;
+			for (String email : deliveryEmailParameter.split(",")) {
+				tos[count] = email;
+				count++;
+			}
+//			String[] tos= new String[] {deliveryEmailParameter};
 			String subject = "Task " + taskId + " waiting for Approval";
 			String body = generatePartiallyCompletedEmailBody(taskId);
 			emailService.sendEmail(tos, subject, body);

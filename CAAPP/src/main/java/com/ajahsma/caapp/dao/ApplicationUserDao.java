@@ -17,7 +17,7 @@ public interface ApplicationUserDao extends DefaultDao {
 	
 	public Integer getApplicationUserCount(String userRoleName);
 
-	public Integer getApplicationUserCount(String userRoleName, Long excludeId);
+	public Integer getApplicationUserCount(String userName, Long excludeId);
 
 	public List<ApplicationUserModel> findApplicationUsers();
 }

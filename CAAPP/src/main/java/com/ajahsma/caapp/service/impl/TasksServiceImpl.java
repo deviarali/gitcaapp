@@ -249,5 +249,9 @@ public class TasksServiceImpl extends DefaultManagerImpl implements TasksService
 		
 		return tasksDto;
 	}
-	
+
+	@Override
+	public Integer getTasksCountBy(Long clientId, Long employeeId, Long natureOfAssignmentId) {
+		return getTasksDao().getTasksCountBy(clientId, employeeId, natureOfAssignmentId);
+	}
 }

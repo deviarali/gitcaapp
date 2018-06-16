@@ -32,7 +32,7 @@ WshShell = ActiveXObject("WScript.Shell")
 								</div>
 								<c:if test="${not empty completedTasksList }">
 									<div align="right" style="padding: 10px;">
-										<input type="submit" id="updateCompletedTask" class="btn btn-primary" value="Update All" title="Update Selected">
+										<input type="submit" id="updateCompletedTask" class="btn btn-primary" value="Update" title="Update Selected tasks">
 									</div>
 								</c:if>
 								<table class="table table-bordered ">
@@ -80,6 +80,9 @@ WshShell = ActiveXObject("WScript.Shell")
 												</c:if>
 												<c:choose>
 												    <c:when test="${completedtasks.taskStatus eq 'COMPLETED'}">
+														<input type="hidden" name="taskRemarksByEmployee" value="${completedtasks.taskRemarksByEmployee }">
+														<input type="hidden" name="taskRemarksByAdmin" value="${completedtasks.taskRemarksByAdmin }">
+														<input type="hidden" name="taskStatus" value="${completedtasks.taskStatus }">
 														<td><c:out value="${completedtasks.taskRemarksByEmployee}"></c:out></td>
 														<td><c:out value="${completedtasks.taskRemarksByAdmin}"></c:out></td>
 														<td><fmt:formatDate pattern="MM/dd/yyyy" value="${completedtasks.completedDate.time}" type="date" /></td>
@@ -87,6 +90,7 @@ WshShell = ActiveXObject("WScript.Shell")
 												    </c:when>    
 												    <c:otherwise>
 														<td><c:out value="${completedtasks.taskRemarksByEmployee}"></c:out></td>
+														<input type="hidden" name="taskRemarksByEmployee" value="${completedtasks.taskRemarksByEmployee }">
 														<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${completedtasks.taskRemarksByAdmin}</textarea></td>
 														<td><fmt:formatDate pattern="MM/dd/yyyy" value="${completedtasks.completedDate.time}" type="date" /></td>
 														<td style="text-align: center;">

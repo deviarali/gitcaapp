@@ -28,7 +28,7 @@
 							<form method="post" action="/caapp/tasks/updateAssignedTask">
 								<c:if test="${not empty assignedTasksList }">
 									<div align="right" style="padding: 10px;">
-										<input type="submit" id="updateAssignedTask" class="btn btn-primary" value="Update All" title="Update Selected">
+										<input type="submit" id="updateAssignedTask" class="btn btn-primary" value="Update" title="Update Selected">
 									</div>
 								</c:if>
 								<table class="table table-bordered">

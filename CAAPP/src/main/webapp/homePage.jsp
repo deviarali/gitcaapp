@@ -33,10 +33,11 @@ table thead tr th {
 								<h5>Admin Management</h5>
 							</div>
 							<div class="widget-content">
-								<div align="left">
+								<div align="left" style="line-height: 1.6">
 									<a href="/caapp/applicationUser">Application User</a><br /> 
 									<a href="/caapp/userRole">User Roles</a><br /> 
 									<a href="/caapp/natureOfAssignment">Nature Of Assignments</a><br /> 
+									<a href="/caapp/parameter">System Parameters</a><br /> 
 									<!-- <a href="WWW.GST.GOV.IN">Important News (marquee)</a><br /> --> 
 								</div>
 							</div>
@@ -71,8 +72,8 @@ table thead tr th {
 							<div>
 								<div class="span12">
 									<div class="span10"></div>
-									<div class="span2">
-										<br /> <a href="/caapp/client/clientRegistrationView" class="btn btn-primary"> New Client</a>
+									<div class="span2" align="right" style="padding: 10px">
+										<br /> <a href="/caapp/client/clientRegistrationView" class="btn btn-primary" title="Register New Client"> Add Client</a>
 									</div>
 								</div>
 							</div>

@@ -29,7 +29,7 @@
 								</div>
 								<c:if test="${not empty pendingTasksList }">
 									<div align="right" style="padding: 10px;">
-										<input type="submit" id="updatePendingTask" class="btn btn-primary" value="Update All" title="Update Selected">
+										<input type="submit" id="updatePendingTask" class="btn btn-primary" value="Update" title="Update Selected">
 									</div>
 								</c:if>
 								<table class="table table-bordered table-striped">
@@ -74,13 +74,17 @@
 												<td><c:out value="${pendingtasks.taskAssigneeId.employeeName}"></c:out></td>
 												<c:choose>
 												    <c:when test="${pendingtasks.taskStatus eq 'COMPLETED'}">
+														<input type="hidden" name="taskRemarksByEmployee" value="${pendingtasks.taskRemarksByEmployee }">
+														<input type="hidden" name="taskRemarksByAdmin" value="${pendingtasks.taskRemarksByAdmin }">
+														<input type="hidden" name="taskStatus" value="${pendingtasks.taskStatus }">
 														<td><c:out value="${pendingtasks.taskRemarksByEmployee}"></c:out></td>
 														<td><c:out value="${pendingtasks.taskRemarksByAdmin}"></c:out></td>
 														<td><fmt:formatDate pattern="MM/dd/yyyy" value="${pendingtasks.completedDate.time}" type="date" /></td>
 														<td>${pendingtasks.taskStatus.name}</td>
 												    </c:when>    
 												    <c:otherwise>
-														<td><textarea name="taskRemarksByAdmin" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
+														<input type="hidden" name="taskRemarksByAdmin" value="${pendingtasks.taskRemarksByAdmin}">
+														<td><textarea name="taskRemarksByEmployee" rows="" cols="" style="width: 350px">${pendingtasks.taskRemarksByEmployee}</textarea></td>
 														<td><c:out value="${pendingtasks.taskRemarksByAdmin}"></c:out></td>
 														<td><fmt:formatDate pattern="MM/dd/yyyy" value="${pendingtasks.completedDate.time}" type="date" /></td>
 														<td style="text-align: center;">

@@ -37,7 +37,7 @@ table thead tr th {
 							<div>
 								<div class="span12">
 									<div class="span10"></div>
-									<div class="span2">
+									<div class="span2" align="right" style="padding: 10px">
 										<br /> <a href="/caapp/applicationUser/createApplicationUser" class="btn btn-primary" title="Register New Employee"> Add User</a>
 									</div>
 								</div>

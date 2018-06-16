@@ -8,15 +8,9 @@
 <title>DEV</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="/css/bootstrap.min.css" />
-<link rel="stylesheet" href="/css/bootstrap-responsive.min.css" />
-<link rel="stylesheet" href="/css/fullcalendar.css" />
-<link rel="stylesheet" href="/css/maruti-style.css" />
-<link rel="stylesheet" href="/css/maruti-media.css" class="skin-color" />
-<link rel="stylesheet" href="/css/uniform.css" />
 
-<!-- Added -->
-<link rel="stylesheet" href="css/select2.css" />
+<jsp:include page="/import_css.jsp"></jsp:include>
+
 </head>
 <body>
 
@@ -38,7 +32,7 @@
 	<!--close-top-Header-messaages-->
 
 	<!--top-Header-menu-->
-	<div id="search">
+	<div id="search" style="display: none;">
 		<input type="text" placeholder="Search here..." />
 		<button type="submit" class="tip-left" title="Search">
 			<i class="icon-search icon-white"></i>
@@ -152,16 +146,7 @@
 			2018 &copy; AJAHSMA. Brought to you by <a href="http://Ajahsma.in">Ajahsma.in</a>
 		</div>
 	</div>
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/jquery.ui.custom.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/js/bootstrap-colorpicker.js"></script>
-	<script src="/js/bootstrap-datepicker.js"></script>
-	<script src="/js/jquery.uniform.js"></script>
-	<script src="/js/select2.min.js"></script>
-	<script src="/js/maruti.js"></script>
-	<script src="/js/maruti.form_common.js"></script>
-	
+	<jsp:include page="/import_js.jsp"></jsp:include>
 <script>
 $(document).ready(function(){
 

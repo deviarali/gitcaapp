@@ -16,4 +16,5 @@ public interface TasksDao extends DefaultDao
 	
 	List<TaskModel> findAssignedTasks(Long id);
 
+	public Integer getTasksCountBy(Long clientId, Long employeeId, Long natureOfAssignmentId);
 }

@@ -18,6 +18,7 @@ import com.ajahsma.caapp.dto.UserRoleDto;
 import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.model.ApplicationUserModel;
 import com.ajahsma.caapp.model.UserRoleModel;
+import com.ajahsma.caapp.security.DESEncryptionUtil;
 import com.ajahsma.caapp.service.ApplicationUserService;
 
 /**
@@ -30,9 +31,6 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 	@Autowired
 	private ApplicationUserDao applicationUserDao;
 	
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     @Autowired
 	public void setDefaultDao(ApplicationUserDao defaultDao) {
 		this.defaultDao = defaultDao;
@@ -111,7 +109,7 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		ApplicationUserModel applicationUserModel = new ApplicationUserModel();
 		applicationUserModel.setId(applicationUser.getId());
 		applicationUserModel.setUserName(applicationUser.getUserName());
-		applicationUserModel.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
+		applicationUserModel.setPassword(DESEncryptionUtil.encrypt(applicationUser.getPassword()));
 		applicationUserModel.setIsActive(applicationUser.getIsActive());
 		applicationUserModel.setCreateDate(Calendar.getInstance());
 		applicationUserModel.setLoginAttempts(0);
@@ -132,7 +130,7 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		ApplicationUserDto applicationUserDto = new ApplicationUserDto();
 		applicationUserDto.setId(applicationUser.getId());
 		applicationUserDto.setUserName(applicationUser.getUserName());
-		applicationUserDto.setPassword(bCryptPasswordEncoder.encode(applicationUser.getPassword()));
+		applicationUserDto.setPassword(DESEncryptionUtil.decrypt(applicationUser.getPassword()));
 		applicationUserDto.setIsActive(applicationUser.getIsActive());
 		applicationUserDto.setCreateDate(Calendar.getInstance());
 		applicationUserDto.setLoginAttempts(0);
@@ -154,4 +152,8 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		return applicationUserDto;
 	}
 
+	@Override
+	public Integer getApplicationUserCount(String userName, Long excludeId) {
+		return getApplicationUserDao().getApplicationUserCount(userName, excludeId);
+	}
 }

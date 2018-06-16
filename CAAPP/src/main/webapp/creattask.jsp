@@ -64,9 +64,9 @@
 									<div class="controls" id="nature-of-assignments">
 										<c:forEach items="${taskList}" var="task" varStatus="status">
 											<span style="line-height: 3"> 
-											<form:checkbox path="tasks" value="${task.natureOfAssignmentId}" /> <c:out value="${task.natureOfAssignmentName}" />
+												<form:checkbox path="tasks" value="${task.natureOfAssignmentId}" /> <c:out value="${task.natureOfAssignmentName}" />
 											</span>
-											<br>
+											
 										</c:forEach>
 										<br>
 										<form:errors class="errors" path="tasks" />

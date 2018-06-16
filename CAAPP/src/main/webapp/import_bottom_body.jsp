@@ -2,7 +2,7 @@
 <div style="height: 150px; display: none;"></div>
 <div class="row-fluid">
 	<div id="footer" class="span12">
-		2018 &copy; AJAHSMA. Brought to you by <a href="http://Ajahsma.in">Ajahsma.in</a>
+		Copyright 2018 Sanjay K & CO. | All Rights Reserved | Designed and developed by <u><a href="www.ajahsma.com" style="color: #ffffff;">Ajahsma.com</a></u>
 	</div>
 </div>
 

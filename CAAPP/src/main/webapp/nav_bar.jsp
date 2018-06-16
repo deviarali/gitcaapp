@@ -41,7 +41,7 @@
 <div id="sidebar">
 	<marquee>
 		<div class="span4" align="center">
-			<p style="color: #000000; padding-top: 5px;">GST: Due date is on 30th of this month.</p>
+			<p style="color: #000000; padding-top: 5px;">${notificationMorque}</p>
 		</div>
 	</marquee>
 	

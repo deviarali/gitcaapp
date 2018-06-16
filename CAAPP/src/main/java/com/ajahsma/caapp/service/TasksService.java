@@ -23,4 +23,6 @@ public interface TasksService extends DefaultManager {
 
 	List<TasksDto> findAssignedTasks();
 
+	public Integer getTasksCountBy(Long clientId, Long employeeId, Long natureOfAssignmentId);
+	
 }
