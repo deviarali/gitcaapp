@@ -24,6 +24,8 @@ public interface ClientService extends DefaultManager {
 
 	List<NatureOfAssignmentDto> getNatureOfAssignments();
 
+	public NatureOfAssignmentDto getNatureOfAssignmentDto(Long id);
+
 	void clientRegister(ClientDto clientDto);
 	
 	public void updateClient(ClientDto clientDto);

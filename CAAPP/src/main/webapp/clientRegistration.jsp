@@ -148,6 +148,18 @@
 									</div>
 
 									<div class="control-group">
+										<label class="control-label required">Client</label>
+										<div class="controls" align="left">
+												<form:select type="text" class="form-control" path="clientTypeDto.clientTypeId">
+													<form:option value="">-</form:option>
+													<form:options items="${clientTypeDtos}" itemValue="clientTypeId" itemLabel="clientTypeName" />
+												</form:select>
+											<br>
+											<form:errors class="errors" path="clientTypeDto.clientTypeId" />
+										</div>
+									</div>
+
+									<div class="control-group">
 										<label class="control-label required">Is Active</label>
 										<div class="controls">
 											<form:checkbox path="isActive"/>
@@ -165,23 +177,11 @@
 										</div>
 									</div>
 							
-
-									<div class="control-group">
-										<label class="control-label required">Client</label>
-										<div class="controls" align="left">
-											<c:forEach items="${clientTypeDtos}" var="clientType" varStatus="status">
-												<form:radiobutton path="clientTypeDto.clientTypeId" value="${clientType.clientTypeId}" /> <c:out value="${clientType.clientTypeName}" />  &nbsp; &nbsp;
-											</c:forEach>
-											<br>
-											<form:errors class="errors" path="clientTypeDto.clientTypeId" />
-										</div>
-									</div>
-
 									<div class="control-group">
 										<label class="control-label required">Nature Of Assignment :</label>
 										<div class="controls" align="left">
-											<c:forEach items="${natureOfAssignmentDtos}" var="role" varStatus="status">
-												<span style="line-height: 3"> <form:checkbox path="natureOfAssignmentList" value="${role.natureOfAssignmentId}" /><c:out value="${role.natureOfAssignmentName} " /> &nbsp; &nbsp; 
+											<c:forEach items="${natureOfAssignmentDtos}" var="natureOfAssignment" varStatus="status">
+												<span style="line-height: 3"> <form:checkbox path="natureOfAssignmentList" value="${natureOfAssignment.natureOfAssignmentId}" /><c:out value="${natureOfAssignment.description} " /> &nbsp; &nbsp; 
 												</span>
 												
 												<c:if test="${(status.index + 1) % 5 == '0'}">

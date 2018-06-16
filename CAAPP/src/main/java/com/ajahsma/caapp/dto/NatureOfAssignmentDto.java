@@ -3,8 +3,8 @@ package com.ajahsma.caapp.dto;
 public class NatureOfAssignmentDto 
 {
 		private Long natureOfAssignmentId;
-		
 		private String natureOfAssignmentName;
+		private String description;
 
 		/**
 		 * @return the natureOfAssignmentId
@@ -32,6 +32,15 @@ public class NatureOfAssignmentDto
 		 */
 		public void setNatureOfAssignmentName(String natureOfAssignmentName) {
 			this.natureOfAssignmentName = natureOfAssignmentName;
+		}
+
+		
+		public String getDescription() {
+			return description;
+		}
+
+		public void setDescription(String description) {
+			this.description = description;
 		}
 
 		/* (non-Javadoc)

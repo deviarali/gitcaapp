@@ -124,8 +124,8 @@ public class ApplicationUserDaoImpl extends DefaultDaoImpl implements Applicatio
 		
 		query.setParameter("userName", userName);
 
-		Integer userCount = (Integer) query.uniqueResult();
+		Integer result = ((Long)query.uniqueResult()).intValue();
 
-		return userCount;
+		return result;
 	}
 }

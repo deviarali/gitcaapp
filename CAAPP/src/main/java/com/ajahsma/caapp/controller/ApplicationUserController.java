@@ -24,6 +24,7 @@ import com.ajahsma.caapp.dto.ApplicationUserDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
+import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.model.ApplicationUserModel;
 import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.model.UserRoleModel;
@@ -112,8 +113,10 @@ public class ApplicationUserController extends BaseController {
 			}
 				
 			model.addAttribute("alert_msg", "Application User registerd successfully");
-		} catch (Exception e) {
+		} catch (BusinessException e) {
 			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+		} catch (Exception e) {
+			model.addAttribute("alert_msg", "Oops! Something went wrong please checck logs");
 		}
 		return new ModelAndView("applicationUserRegister", "applicationUser", applicationUser);
 

@@ -10,14 +10,24 @@ import javax.persistence.Table;
 public class NatureOfAssignmentModel extends AbstractIdDomain {
 	
 	private String natureOfAssignmentName;
+	private String description;
 
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	public String getNatureOfAssignmentName() {
 		return natureOfAssignmentName;
 	}
 
 	public void setNatureOfAssignmentName(String natureOfAssignmentName) {
 		this.natureOfAssignmentName = natureOfAssignmentName;
+	}
+
+	@Column(name = "description", nullable = false)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 }

@@ -85,6 +85,7 @@ public class ClientServiceImpl extends DefaultManagerImpl implements ClientServi
 			NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
 			natureOfAssignmentDto.setNatureOfAssignmentId(natureOfAssignmentModel.getId());
 			natureOfAssignmentDto.setNatureOfAssignmentName(natureOfAssignmentModel.getNatureOfAssignmentName());
+			natureOfAssignmentDto.setDescription(natureOfAssignmentModel.getDescription());
 			natureOfAssignmentDtos.add(natureOfAssignmentDto);
 		}
 		return natureOfAssignmentDtos;
@@ -222,6 +223,7 @@ public class ClientServiceImpl extends DefaultManagerImpl implements ClientServi
 		NatureOfAssignmentModel natureOfAssignmentModel = new NatureOfAssignmentModel();
 		natureOfAssignmentModel.setId(natureOfAssignment.getNatureOfAssignmentId());
 		natureOfAssignmentModel.setNatureOfAssignmentName(natureOfAssignment.getNatureOfAssignmentName());
+		natureOfAssignmentModel.setDescription(natureOfAssignment.getDescription());
 
 		if(natureOfAssignmentModel.getId() == null) {
 			this.saveDomain(natureOfAssignmentModel);
@@ -229,6 +231,17 @@ public class ClientServiceImpl extends DefaultManagerImpl implements ClientServi
 		else {
 			this.updateDomain(natureOfAssignmentModel);
 		}		
+	}
+
+	@Override
+	public NatureOfAssignmentDto getNatureOfAssignmentDto(Long id) {
+		NatureOfAssignmentModel natureOfAssignment = (NatureOfAssignmentModel) this.getDomain(NatureOfAssignmentModel.class, id);
+		NatureOfAssignmentDto natureOfAssignmentDto = new NatureOfAssignmentDto();
+		natureOfAssignmentDto.setNatureOfAssignmentId(natureOfAssignment.getId());
+		natureOfAssignmentDto.setNatureOfAssignmentName(natureOfAssignment.getNatureOfAssignmentName());
+		natureOfAssignmentDto.setDescription(natureOfAssignment.getDescription());
+
+		return natureOfAssignmentDto;
 	}
 
 }

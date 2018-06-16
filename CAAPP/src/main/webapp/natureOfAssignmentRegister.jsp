@@ -30,11 +30,29 @@
 							
 							<form:hidden path="natureOfAssignmentId"/>
 							<div class="control-group">
-								<label class="control-label required">Name :</label>
+								<label class="control-label required">Name</label>
 								<div class="controls">
-									<form:input path="natureOfAssignmentName" class="span11"  />
+
+									<c:choose>
+										<c:when test="${natureOfAssignment.natureOfAssignmentId != null}">
+											<c:out value="${natureOfAssignment.natureOfAssignmentName}"></c:out>
+											<form:hidden path="natureOfAssignmentName"/>
+										</c:when>
+										<c:otherwise>
+											<form:input path="natureOfAssignmentName" class="span11" 	/>
+										</c:otherwise>
+									</c:choose>
 									<br>
 									<form:errors class="errors" path="natureOfAssignmentName" />
+								</div>
+							</div>
+							
+							<div class="control-group">
+								<label class="control-label required">Description</label>
+								<div class="controls">
+									<form:input path="description" class="span11"  />
+									<br>
+									<form:errors class="errors" path="description" />
 								</div>
 							</div>
 							

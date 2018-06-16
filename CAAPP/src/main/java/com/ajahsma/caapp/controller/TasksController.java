@@ -25,7 +25,6 @@ import com.ajahsma.caapp.constants.CaAppConstants;
 import com.ajahsma.caapp.dto.ClientDto;
 import com.ajahsma.caapp.dto.EmployeeDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
-import com.ajahsma.caapp.dto.ParameterDto;
 import com.ajahsma.caapp.dto.TasksDto;
 import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.mail.EmailService;
@@ -218,6 +217,7 @@ public class TasksController  extends BaseController {
 	@RequestMapping(value = "/tasks/updatePendingTask", method = RequestMethod.POST)
 	public String updatePendingTask(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes)
 	{
+		
 		String selectedTaskIds[] = request.getParameterValues("selectedTaskIds");
 		String taskIds[] = request.getParameterValues("taskId");
 		String taskRemarksByEmployee[] = request.getParameterValues("taskRemarksByEmployee");
@@ -238,7 +238,7 @@ public class TasksController  extends BaseController {
 				
 				if(TaskStatus.PARTIALLY_COMPLETED.equals(TaskStatus.valueOf(taskStatus[i]))) {
 					
-					sendPartiallyCompletedEmail(taskModel.getId());
+					sendPartiallyCompletedEmail(request, taskModel.getId());
 				}
 			}
 		}
@@ -249,7 +249,7 @@ public class TasksController  extends BaseController {
 		return "redirect:/caapp/tasks/pendingTasks";
 	}
 	
-	private void sendPartiallyCompletedEmail(Long taskId) {
+	private void sendPartiallyCompletedEmail(HttpServletRequest request, Long taskId) {
 		
 		try {
 			String deliveryEmailParameter = parameterService.getParameterValue(CaAppConstants.PARAMETER_DELIVERY_EMAIL_FOR_PARTIALLY_COMPLETE_NOTIFICATION, String.class);
@@ -263,15 +263,17 @@ public class TasksController  extends BaseController {
 			}
 //			String[] tos= new String[] {deliveryEmailParameter};
 			String subject = "Task " + taskId + " waiting for Approval";
-			String body = generatePartiallyCompletedEmailBody(taskId);
+			String body = generatePartiallyCompletedEmailBody(request, taskId);
 			emailService.sendEmail(tos, subject, body);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private String generatePartiallyCompletedEmailBody(Long taskId) {
+	private String generatePartiallyCompletedEmailBody(HttpServletRequest request, Long taskId) {
 
+		String serverPath = request.getServerName() + ":" + request.getServerPort();
+		
 		StringBuilder builder = new StringBuilder();
 		builder.append("<link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css\">");
 		builder.append("<div class=\"container\">");
@@ -280,8 +282,8 @@ public class TasksController  extends BaseController {
 		builder.append("<div class=\"col-sm-12 col-md-12\">");
 		builder.append("<p>Hi</p>");
 		builder.append("<br>");
-		builder.append("<p>I just wanted to remind you that the task '<a href=\"http://localhost:8095/caapp/tasks/completedTasks\">"+taskId+"</a>'  is waiting for your approval. </p>");
-		builder.append("<p>You can approve it on <a href=\"http://localhost:8095/caapp/tasks/completedTasks\">http://localhost:8095/caapp.</a></p>");
+		builder.append("<p>I just wanted to remind you that the task '<a href=\"http://"+serverPath+"/caapp/tasks/completedTasks\">"+taskId+"</a>'  is waiting for your approval. </p>");
+		builder.append("<p>You can approve it on <a href=\"http://"+serverPath+"/caapp/tasks/completedTasks\">http://localhost:8095/caapp.</a></p>");
 		builder.append("<br>");
 		builder.append("<p style=\"font-size: 10px;\">This email was sent by:");
 		builder.append("<br>");

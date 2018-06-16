@@ -70,10 +70,10 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 
 	@Override
 	public void saveApplicationUser(ApplicationUserDto applicationUser) throws Exception {
-		Integer userCount = getApplicationUserDao().getApplicationUserCount(applicationUser.getUserName());
+		/*Integer userCount = getApplicationUserDao().getApplicationUserCount(applicationUser.getUserName());
 		if(userCount > 0) {
-			throw new Exception("User already exists with user name");
-		}
+			throw new BusinessException("User already exists with user name " + applicationUser.getUserName());
+		}*/
 		ApplicationUserModel applicationUserModel = convertApplicationUserDtoToApplicationUserModel(applicationUser);
 		
 		this.saveDomain(applicationUserModel);

@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ import com.ajahsma.caapp.dto.CompanyStatusDto;
 import com.ajahsma.caapp.dto.HomePageDto;
 import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.model.ClientModel;
+import com.ajahsma.caapp.model.NatureOfAssignmentModel;
 import com.ajahsma.caapp.service.ClientService;
 import com.ajahsma.caapp.service.HomePageService;
 import com.ajahsma.caapp.utils.CaAppUtils;
@@ -113,9 +115,11 @@ public class ClientController extends BaseController {
 		clientValidator.validate(clientDto, bindingResult);
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("alert_msg", "Problem with Client registered");
+			model.addAttribute("clientRegistration", clientDto);
 		}
 		else {
 			clientService.clientRegister(clientDto);
+			model.addAttribute("clientRegistration", new ClientDto());
 			model.addAttribute("alert_msg", "Client registered successfully");
 		}
 		redirectAttributes.addAttribute("successmsg", "Client registered successfully");
@@ -127,7 +131,7 @@ public class ClientController extends BaseController {
 		model.addAttribute("companyStatusDtos", companyStatusDtos);
 		model.addAttribute("natureOfAssignmentDtos", natureOfAssignmentDtos);
 		
-		return new ModelAndView("clientRegistration", "clientRegistration", clientDto);
+		return new ModelAndView("clientRegistration");
 	}
 
 	public List<ClientTypeDto> getClientTypes() {
@@ -158,25 +162,76 @@ public class ClientController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/natureOfAssignment", method = RequestMethod.GET)
-	public ModelAndView navigateToNatureOfAssignmentRegister() {
+	public ModelAndView navigateToNatureOfAssignmentRegister(Model model) {
 		
-		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", new NatureOfAssignmentDto());
+		List<NatureOfAssignmentDto> natureOfAssignmentDtos = getNatureOfAssignments();
+		model.addAttribute("natureOfAssignments", natureOfAssignmentDtos);
+//		model.addAttribute("natureOfAssignment", new NatureOfAssignmentDto());
+		return new ModelAndView("natureOfAssignment");
 
+	}
+	
+	@RequestMapping(value = "/natureOfAssignment/createNatureOfAssignment", method = RequestMethod.GET)
+	public ModelAndView createNatureOfAssignment(Model model) {
+		
+		List<NatureOfAssignmentDto> natureOfAssignmentDtos = getNatureOfAssignments();
+		model.addAttribute("natureOfAssignments", natureOfAssignmentDtos);
+		model.addAttribute("natureOfAssignment", new NatureOfAssignmentDto());
+		return new ModelAndView("natureOfAssignmentRegister");
+
+	}
+	
+	@RequestMapping(value = "/natureOfAssignment/{id}", method = RequestMethod.GET)
+	public ModelAndView showNatureOfAssignment(Model model, @PathVariable("id") Long id)
+	{
+		List<NatureOfAssignmentDto> natureOfAssignmentDtos = getNatureOfAssignments();
+		model.addAttribute("natureOfAssignments", natureOfAssignmentDtos);
+		NatureOfAssignmentDto natureOfAssignmentDto = clientService.getNatureOfAssignmentDto(id);
+		
+		model.addAttribute("natureOfAssignment", natureOfAssignmentDto);
+		return new ModelAndView("natureOfAssignmentRegister");
+	}
+	
+	@RequestMapping(value = "/natureOfAssignment/delete/{id}", method = RequestMethod.GET)
+	public String deleteNatureOfAssignment(Model model, @PathVariable("id") Long id, RedirectAttributes redirectAttributes)
+	{
+		try {
+			NatureOfAssignmentModel natureOfAssignment = (NatureOfAssignmentModel) clientService.getDomain(NatureOfAssignmentModel.class, id);
+			
+			clientService.deleteDomain(natureOfAssignment);
+			model.addAttribute("alert_msg", "Deleted Successfully");
+			redirectAttributes.addFlashAttribute("alert_msg", "Deleted Successfully");
+			
+		} catch (Exception e) {
+			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+			redirectAttributes.addFlashAttribute("alert_msg", "Oops! " + e.getMessage());
+		}
+		
+		return "redirect:/caapp/natureOfAssignment";
 	}
 
 	@RequestMapping(value = "/natureOfAssignment/natureOfAssignmentRegister", method = RequestMethod.POST)
 	public ModelAndView homePage(@Valid @ModelAttribute("natureOfAssignment") NatureOfAssignmentDto natureOfAssignment, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		natureOfAssignmentValidator.validate(natureOfAssignment, bindingResult);
-		if(bindingResult.hasErrors())
-		{
-			return new ModelAndView("natureOfAssignmentRegister");
-		}
-		clientService.natureOfAssignmentRegister(natureOfAssignment);
+		try {
+			natureOfAssignmentValidator.validate(natureOfAssignment, bindingResult);
+			if(bindingResult.hasErrors())
+			{
+				return new ModelAndView("natureOfAssignmentRegister");
+			}
+			if(StringUtils.hasText(natureOfAssignment.getNatureOfAssignmentName()) && natureOfAssignment.getNatureOfAssignmentName().contains(" ")) {
+				natureOfAssignment.setNatureOfAssignmentName(natureOfAssignment.getNatureOfAssignmentName().toUpperCase().replaceAll(" ", "_"));
+			}
+			clientService.natureOfAssignmentRegister(natureOfAssignment);
 
-		model.addAttribute("alert_msg", "User Role registerd successfully");
+			model.addAttribute("alert_msg", "Nature Of Assignment Register successfully");
+		} catch (Exception e) {
+			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+		}
 		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", natureOfAssignment);
 
 	}
+	
+	
 
 	
 }
