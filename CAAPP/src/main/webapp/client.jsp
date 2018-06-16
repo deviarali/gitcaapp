@@ -48,9 +48,9 @@ table thead tr th {
 								<table class="table table-bordered table-striped table-responsive">
 									<thead style="background: #777;">
 										<tr>
-											<th>Name of the client</th>
+											<th>Client Name</th>
 											<th>Company Status</th>
-											<th>Created date</th>
+											<th>Created Date</th>
 											<th></th>
 											<th></th>
 										</tr>

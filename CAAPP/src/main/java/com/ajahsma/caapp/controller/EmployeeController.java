@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -73,12 +74,22 @@ public class EmployeeController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/employee/delete/{id}", method = RequestMethod.GET)
-	private String deleteEmployee(Model model, @PathVariable("id") Long id) {
+	private String deleteEmployee(Model model, @PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
 		
-		EmployeeModel employee = (EmployeeModel) employeeService.getDomain(EmployeeModel.class, id);
-		
-		employeeService.deleteDomain(employee);
-		
+		try {
+			EmployeeModel employee = (EmployeeModel) employeeService.getDomain(EmployeeModel.class, id);
+			
+			employeeService.deleteDomain(employee);
+			
+		} catch (DataIntegrityViolationException e) {
+			model.addAttribute("alert_msg", "Oops! Employee already used in task assignment");
+			redirectAttributes.addFlashAttribute("alert_msg", "Oops! Employee already used in task assignment");
+		}
+		 catch (Exception e) {
+				model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+				redirectAttributes.addFlashAttribute("alert_msg", "Oops! " + e.getMessage());
+		}
+
 		List<EmployeeDto> employees = employeeService.findEmployees();
 		
 		model.addAttribute("employees", employees);

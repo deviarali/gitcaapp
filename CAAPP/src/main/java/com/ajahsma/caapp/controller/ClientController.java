@@ -93,12 +93,16 @@ public class ClientController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/client/delete/{id}", method = RequestMethod.GET)
-	public String deleteClient(Model model, @PathVariable("id") Long id)
+	public String deleteClient(Model model, @PathVariable("id") Long id, RedirectAttributes redirectAttributes)
 	{
-		
-		ClientModel client = (ClientModel) clientService.getDomain(ClientModel.class, id);
-		
-		clientService.deleteDomain(client);
+		try {
+			ClientModel client = (ClientModel) clientService.getDomain(ClientModel.class, id);
+			
+			clientService.deleteDomain(client);
+		} catch (Exception e) {
+			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+			redirectAttributes.addFlashAttribute("alert_msg", "Oops! " + e.getMessage());
+		}
 		
 		return "redirect:/caapp/client";
 	}
