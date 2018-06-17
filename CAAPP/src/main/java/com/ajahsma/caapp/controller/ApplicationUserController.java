@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ajahsma.caapp.dto.ApplicationUserDto;
-import com.ajahsma.caapp.dto.EmployeeDto;
-import com.ajahsma.caapp.dto.NatureOfAssignmentDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
 import com.ajahsma.caapp.exception.BusinessException;
 import com.ajahsma.caapp.model.ApplicationUserModel;
-import com.ajahsma.caapp.model.EmployeeModel;
 import com.ajahsma.caapp.model.UserRoleModel;
 import com.ajahsma.caapp.service.ApplicationUserService;
 import com.ajahsma.caapp.validator.ApplicationUserValidator;
@@ -129,15 +127,25 @@ public class ApplicationUserController extends BaseController {
 	
 	@RequestMapping(value = "/userRole/userRoleRegister", method = RequestMethod.POST)
 	public ModelAndView homePage(@Valid @ModelAttribute("userRole") UserRoleDto userRole, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
-		validator.validate(userRole, bindingResult);
-		if(bindingResult.hasErrors())
-		{
-			return new ModelAndView("userRoleRegister");
-		}
-		applicationUserService.userRoleRegister(userRole);
+		try {
+			validator.validate(userRole, bindingResult);
+			if(bindingResult.hasErrors())
+			{
+				model.addAttribute("userRole", userRole);
+				return new ModelAndView("userRoleRegister");
+			}
+			if(StringUtils.hasText(userRole.getRoleName()) && userRole.getRoleName().contains(" ")) {
+				userRole.setRoleName("ROLE_" + userRole.getRoleName().toUpperCase().replaceAll(" ", "_"));
+			}
 
-		model.addAttribute("alert_msg", "User Role registerd successfully");
-		return new ModelAndView("userRoleRegister", "userRole", userRole);
+			applicationUserService.userRoleRegister(userRole);
+
+			model.addAttribute("alert_msg", "User Role registerd successfully");
+		} catch (Exception e) {
+			model.addAttribute("userRole", userRole);
+			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
+		}
+		return new ModelAndView("userRoleRegister", "userRole", new UserRoleDto());
 
 	}
 
@@ -150,6 +158,8 @@ public class ApplicationUserController extends BaseController {
 				UserRoleDto userRoleDto = new UserRoleDto();
 				userRoleDto.setId(userRoleModel.getId());
 				userRoleDto.setRoleName(userRoleModel.getRoleName());
+				userRoleDto.setDescription(userRoleModel.getDescription());
+				
 				userRoleDtos.add(userRoleDto);
 			}
 		}

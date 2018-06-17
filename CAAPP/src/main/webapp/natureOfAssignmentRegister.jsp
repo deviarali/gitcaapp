@@ -12,8 +12,10 @@
 		<div class="row-fluid">
 
 			<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-			<div class="span1"></div>
-			<div class="span10">
+				<div class="span3">
+						<jsp:include page="adminPanel.jsp"></jsp:include>
+				</div>
+				<div class="span7">
 				<c:if test="${not empty msg }">
 					<c:out value="${msg}"></c:out>
 				</c:if>

@@ -24,9 +24,10 @@ table thead tr th {
 			<div class="row-fluid">
 		
 				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-				<div class="span1"></div>
-
-				<div class="span10">
+				<div class="span3">
+						<jsp:include page="adminPanel.jsp"></jsp:include>
+				</div>
+				<div class="span7">
 					<div class="widget-box">
 						<div class="widget-title" align="center">
 							<span class="icon"> <i class="icon-th"></i>
@@ -36,8 +37,8 @@ table thead tr th {
 						<div class="widget-content nopadding">
 							<div>
 								<div class="span12">
-									<div class="span9"></div>
-									<div class="span3" align="right" style="padding: 10px">
+									<div class="span8"></div>
+									<div class="span4" align="right" style="padding: 10px">
 										<br /> <a href="/caapp/natureOfAssignment/createNatureOfAssignment" class="btn btn-primary" title="Register New Nature Of Assignment"> Add Nature Of Assignment</a>
 									</div>
 								</div>

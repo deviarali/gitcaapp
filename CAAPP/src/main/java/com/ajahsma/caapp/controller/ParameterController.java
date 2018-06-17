@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ajahsma.caapp.constants.CaAppConstants;
 import com.ajahsma.caapp.dto.ParameterDto;
 import com.ajahsma.caapp.dto.UserRoleDto;
 import com.ajahsma.caapp.model.ParameterModel;
@@ -107,8 +108,10 @@ public class ParameterController extends BaseController {
 		} catch (Exception e) {
 			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
 		}
+		String notificationMorqueParameter = parameterService.getParameterValue(CaAppConstants.PARAMETER_NOTIFICATION_MORQUE, String.class);
 		List<ParameterDto> parameters = parameterService.findParameterDtoList();
 		model.addAttribute("parameterList", parameters);
+		model.addAttribute("notificationMorque", notificationMorqueParameter);
 		return new ModelAndView("parameter", "parameter", parameter);
 
 	}

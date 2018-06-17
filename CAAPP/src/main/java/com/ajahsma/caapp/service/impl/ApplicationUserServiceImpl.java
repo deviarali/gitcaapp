@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -85,6 +84,7 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		UserRoleModel userRoleModel = new UserRoleModel();
 		userRoleModel.setId(userRole.getId());
 		userRoleModel.setRoleName(userRole.getRoleName());
+		userRoleModel.setDescription(userRole.getDescription());
 
 		if(userRoleModel.getId() == null) {
 			this.saveDomain(userRoleModel);
@@ -138,11 +138,13 @@ public class ApplicationUserServiceImpl extends DefaultManagerImpl implements Ap
 		if(!CollectionUtils.isEmpty(applicationUser.getUserRoles())) {
 			String[] userRoles = new String[applicationUser.getUserRoles().size()];
 			int index = 0;
-			for (UserRoleModel userrRole : applicationUser.getUserRoles()) {
-				userRoles[index] = userrRole.getId().toString();
+			for (UserRoleModel userRole : applicationUser.getUserRoles()) {
+				userRoles[index] = userRole.getId().toString();
 				UserRoleDto userRoleDto = new UserRoleDto();
-				userRoleDto.setId(userrRole.getId());
-				userRoleDto.setRoleName(userrRole.getRoleName());
+				userRoleDto.setId(userRole.getId());
+				userRoleDto.setRoleName(userRole.getRoleName());
+				userRoleDto.setDescription(userRole.getDescription());
+
 				applicationUserDto.addUserRole(userRoleDto);
 				index++;
 			}

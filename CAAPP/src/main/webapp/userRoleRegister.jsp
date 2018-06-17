@@ -5,8 +5,8 @@
 <jsp:include page="/import_top_body.jsp"></jsp:include>
 <jsp:include page="/nav_bar.jsp"></jsp:include>
 
->
-<div id="content">
+
+<div id="content" style="min-height: 560px;">
 
 	<jsp:include page="/sticky_nav_bar.jsp"></jsp:include>
 
@@ -14,8 +14,10 @@
 		<div class="row-fluid">
 
 			<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-			<div class="span1"></div>
-			<div class="span10">
+				<div class="span3">
+						<jsp:include page="adminPanel.jsp"></jsp:include>
+				</div>
+				<div class="span7">
 				<c:if test="${not empty msg }">
 					<c:out value="${msg}"></c:out>
 				</c:if>
@@ -32,11 +34,20 @@
 							
 							<form:hidden path="id"/>
 							<div class="control-group">
-								<label class="control-label required">Role Name :</label>
+								<label class="control-label required">Role Name</label>
 								<div class="controls">
 									<form:input path="roleName" class="span11"  />
 									<br>
 									<form:errors class="errors" path="roleName" />
+								</div>
+							</div>
+							
+							<div class="control-group">
+								<label class="control-label required">Description</label>
+								<div class="controls">
+									<form:input path="description" class="span11"  />
+									<br>
+									<form:errors class="errors" path="description" />
 								</div>
 							</div>
 							

@@ -4,6 +4,7 @@ public class UserRoleDto {
 
 	private Long id;
 	private String roleName;
+	private String description;
 
 	public Long getId() {
 		return id;
@@ -19,6 +20,14 @@ public class UserRoleDto {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

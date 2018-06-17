@@ -24,9 +24,10 @@ table thead tr th {
 			<div class="row-fluid">
 		
 				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-				<div class="span1"></div>
-
-				<div class="span10">
+				<div class="span3">
+						<jsp:include page="adminPanel.jsp"></jsp:include>
+				</div>
+				<div class="span7">
 					<div class="widget-box">
 						<div class="widget-title" align="center">
 							<span class="icon"> <i class="icon-th"></i>
@@ -36,12 +37,12 @@ table thead tr th {
 						<div class="widget-content nopadding">
 							<div>
 								<div class="span12">
-									<div class="span10">
+									<div class="span9">
 										<c:if test="${not empty alert_msg }">
 											<label class="info"><c:out value="${alert_msg}"></c:out></label>
 										</c:if>
 									</div>
-									<div class="span2" align="right" style="padding: 10px">
+									<div class="span3" align="right" style="padding: 10px">
 										<br /> <a href="/caapp/parameter/createParameter" class="btn btn-primary" title="Register New Employee"> Add New Parameter</a>
 									</div>
 								</div>

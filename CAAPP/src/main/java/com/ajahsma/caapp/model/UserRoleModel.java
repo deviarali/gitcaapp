@@ -11,6 +11,7 @@ import javax.persistence.Table;
 public class UserRoleModel extends AbstractIdDomain {
 
 	private String roleName;
+	private String description;
 
 	@Column(name = "rolename", nullable = false, length = 45)
 	public String getRoleName() {
@@ -19,6 +20,15 @@ public class UserRoleModel extends AbstractIdDomain {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	@Column(name = "description", nullable = false)
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 }

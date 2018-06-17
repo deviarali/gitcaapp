@@ -216,6 +216,7 @@ public class ClientController extends BaseController {
 			natureOfAssignmentValidator.validate(natureOfAssignment, bindingResult);
 			if(bindingResult.hasErrors())
 			{
+				model.addAttribute("natureOfAssignment", natureOfAssignment);
 				return new ModelAndView("natureOfAssignmentRegister");
 			}
 			if(StringUtils.hasText(natureOfAssignment.getNatureOfAssignmentName()) && natureOfAssignment.getNatureOfAssignmentName().contains(" ")) {
@@ -225,9 +226,10 @@ public class ClientController extends BaseController {
 
 			model.addAttribute("alert_msg", "Nature Of Assignment Register successfully");
 		} catch (Exception e) {
+			model.addAttribute("natureOfAssignment", natureOfAssignment);
 			model.addAttribute("alert_msg", "Oops! " + e.getMessage());
 		}
-		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", natureOfAssignment);
+		return new ModelAndView("natureOfAssignmentRegister", "natureOfAssignment", new NatureOfAssignmentDto());
 
 	}
 	

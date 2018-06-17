@@ -12,9 +12,10 @@
 	<div class="container-fluid" >
 		<div class="row-fluid">
 
-			<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-			<div class="span1"></div>
-			<div class="span10">
+			<div class="span3">
+					<jsp:include page="adminPanel.jsp"></jsp:include>
+			</div>
+			<div class="span7">
 				<div class="widget-box">
 					<div class="widget-title">
 						<span class="icon"> <i class="icon-th"></i>
@@ -61,7 +62,7 @@
 								<label class="control-label required">Roles</label>
 								<div class="controls" align="left">
 									<c:forEach items="${userRoleList}" var="role" varStatus="status">
-										<span style="line-height: 3"> <form:checkbox path="userRoles" value="${role.id}" /><c:out value="${role.roleName} " /> &nbsp; &nbsp; 
+										<span style="line-height: 3"> <form:checkbox path="userRoles" value="${role.id}" /><c:out value="${role.description} " /> &nbsp; &nbsp; 
 										</span>
 										
 										<c:if test="${(status.index + 1) % 4 == '0'}">

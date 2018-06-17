@@ -13,8 +13,10 @@
 		<div class="row-fluid">
 
 			<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-			<div class="span1"></div>
-			<div class="span10">
+				<div class="span3">
+						<jsp:include page="adminPanel.jsp"></jsp:include>
+				</div>
+				<div class="span7">
 				<div class="widget-box">
 					<div class="widget-title">
 						<span class="icon"> <i class="icon-th"></i>

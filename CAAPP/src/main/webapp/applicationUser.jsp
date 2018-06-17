@@ -23,10 +23,10 @@ table thead tr th {
 		<div class="container-fluid">
 			<div class="row-fluid">
 		
-				<%-- <jsp:include page="/left_col.jsp"></jsp:include> --%>
-				<div class="span1"></div>
-
-				<div class="span10">
+				<div class="span3">
+						<jsp:include page="adminPanel.jsp"></jsp:include>
+				</div>
+				<div class="span7">
 					<div class="widget-box">
 						<div class="widget-title" align="center">
 							<span class="icon"> <i class="icon-th"></i>
@@ -62,8 +62,11 @@ table thead tr th {
 													<input type="checkbox" disabled="disabled" <c:if test="${applicationUserVar.isActive}">checked="checked"</c:if>  />
 												</td>
 												<td>
-													<c:forEach items="${applicationUserVar.userRoleDtos}" var="userRole">
-														<c:out value="${userRole.roleName}, "></c:out>
+													<c:forEach items="${applicationUserVar.userRoleDtos}" var="userRole" varStatus="vs">
+														<c:out value="${userRole.description}"></c:out>
+														<c:if test="${(vs.index+1) lt applicationUserVar.userRoleDtos.size()}">
+															<c:out value=", "></c:out>
+														</c:if>
 													</c:forEach>
 												</td>
 												<td style="text-align: center;"><a href="/caapp/applicationUser/${applicationUserVar.id}"><i class="fa fa-edit" style="font-size: 28px; color: blue;"></i></a></td>
